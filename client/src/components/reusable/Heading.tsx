@@ -16,15 +16,15 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
   }, [])
 
   return (
-    <div className='bg relative flex items-center justify-center'>
+    <div className='bg min-h-heroHeight relative flex items-center justify-center'>
       <BlobBackground />
-      <div className='mt-[82px] flex flex-col items-center text-center'>
+      <div className='flex flex-col items-center text-center'>
         {/* Page Not Found */}
         {PageNotFound && (
           <>
-            <h1 className='text-white'>404</h1>
-            <h2 className='text-white'>PAGE NOT FOUND</h2>
-            <Link href='/' className='button-transparent mt-8 text-xl'>
+            <h1 className='relative text-white'>404</h1>
+            <h2 className='relative text-white'>PAGE NOT FOUND</h2>
+            <Link href='/' className='button-transparent relative mt-8 text-xl'>
               GO TO HOME
             </Link>
           </>

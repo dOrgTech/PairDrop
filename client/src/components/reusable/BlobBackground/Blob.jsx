@@ -3,7 +3,7 @@ import { RGBELoader } from 'three-stdlib'
 import { useFrame, useLoader } from '@react-three/fiber'
 import { CubeCamera, Float, useMatcapTexture, useTexture } from '@react-three/drei'
 import { Displace, Fresnel, Gradient, LayerMaterial, Matcap, Noise } from 'lamina'
-import { Leva, useControls } from 'leva'
+import { useControls } from 'leva'
 import { MathUtils } from 'three'
 import { indigo, aquamarine, yellow, magenta } from './index'
 
@@ -16,7 +16,7 @@ export default function Blob({ ...props }) {
   const cubeRef = useRef()
 
   const matcap = useMatcapTexture(2)
-  const displace = useTexture('./assets/textures/disp-texture.jpeg')
+  const displace = useTexture('./assets/textures/disp_texture.webp')
   const texture = useLoader(RGBELoader, './assets/hdri/art_studio_1k.hdr')
 
   const {
@@ -30,15 +30,15 @@ export default function Blob({ ...props }) {
     roughness,
     envMapIntensity,
   } = useControls({
-    transmission: { min: 0, max: 1, value: 0.67 },
+    transmission: { min: 0, max: 1, value: 0.15 }, //0.67
     bumpScale: { min: 0, max: 0.01, value: 0.005 },
     sheenColor: { value: indigo[600] },
-    sheen: { min: 0, max: 10, value: 3.6 },
-    clearcoat: { min: 0, max: 1, value: 0.2 },
+    sheen: { min: 0, max: 10, value: 3.7 },
+    clearcoat: { min: 0, max: 1, value: 0.5 },
     clearcoatRoughness: { min: 0, max: 1, value: 0.9 },
-    metalness: { min: 0, max: 1, value: 0.4 },
-    roughness: { min: 0, max: 1, value: 0.8 },
-    envMapIntensity: { min: 0, max: 5, value: 3.9 },
+    metalness: { min: 0, max: 1, value: 0.9 },
+    roughness: { min: 0, max: 3, value: 1.0 },
+    envMapIntensity: { min: 0, max: 5, value: 3.0 }, //3.9
   })
 
   const handlePointerEnter = () => {
@@ -80,14 +80,14 @@ export default function Blob({ ...props }) {
                 clearcoat={clearcoat}
                 clearcoatRoughness={clearcoatRoughness}
                 metalness={metalness}
-                roughnessMap={displace}
                 roughness={roughness}
+                roughnessMap={displace}
                 envMap={texture}
                 envMapIntensity={envMapIntensity}
               >
                 <Gradient colorA={aquamarine[400]} colorB={sheenColor} start={0} end={1} mode='hardlight' alpha={0.9} />
                 <Displace ref={displaceRef} strength={strength.current} scale={0.5} />
-                <Fresnel color={magenta[400]} mode={'softlight'} bias={Math.random() + 0.5 * 2} alpha={0.7} />
+                <Fresnel color={magenta[400]} mode={'softlight'} bias={Math.random() + 0.5 * 2} alpha={0.9} />
                 <Noise
                   scale={Math.random() * 0.5 + 0.4}
                   colorA={aquamarine[300]}
@@ -102,7 +102,6 @@ export default function Blob({ ...props }) {
           </Float>
         )}
       </CubeCamera>
-      <Leva hidden />
     </group>
   )
 }

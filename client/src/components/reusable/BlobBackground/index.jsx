@@ -1,26 +1,34 @@
 import Config from '../../../../tailwind.config.ts'
 import { Canvas } from '@react-three/fiber'
-import { Environment, Loader } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { LayerMaterial, Color, Noise, Gradient } from 'lamina'
 import { EffectComposer, DepthOfField, Noise as PostNoise } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
+import { Leva } from 'leva'
 import Blob from './Blob'
 import Ripples from './Ripples'
 import * as THREE from 'three'
+import { useEffect, useState } from 'react'
 
 export const { indigo, aquamarine, yellow, magenta } = Config.theme.extend.colors
 
 export default function BlobBackground() {
-  // const devicePixelRatio = useRef(window.devicePixelRatio)
+  const [loaded, setLoaded] = useState(false)
+  const [canvasOpacity, setCanvasOpacity] = useState(0)
 
-  // useEffect(() => {
-  //   devicePixelRatio.current = window.devicePixelRatio
-  // })
+  useEffect(() => {
+    setTimeout(() => {
+      setCanvasOpacity(1)
+    }, 2500)
+    if (!loaded) {
+      setLoaded(true)
+    }
+  }, [loaded])
 
   return (
     <>
-      <div className='bg fixed bottom-0 left-0 right-0 top-0 -mt-[82px] h-screen'>
-        <Canvas>
+      <div className='bg min-h-heroHeight absolute bottom-0 left-0 right-0 top-0'>
+        <Canvas className='transition-opacity duration-[2000ms] ease-in-out' style={{ opacity: canvasOpacity }}>
           <ambientLight intensity={Math.PI / 2} />
           <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
           <spotLight
@@ -51,11 +59,13 @@ export default function BlobBackground() {
           </Environment>
           <Ripples />
           <Blob />
+          <OrbitControls target={[0, 0.4, 0]} enableRotate={false} enablePan={false} enableZoom={false} />
           <EffectComposer>
             <DepthOfField />
-            <PostNoise opacity={0.3} blendFunction={BlendFunction.OVERLAY} />
+            <PostNoise opacity={0.2} blendFunction={BlendFunction.OVERLAY} />
           </EffectComposer>
         </Canvas>
+        <Leva />
       </div>
     </>
   )
