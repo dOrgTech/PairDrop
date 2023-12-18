@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "title": "Project Title 1",
+    "description": "Project Description for project 1. An insightful summary about the project objectives and scope.",
+    "categories": ["Education", "Technology", "Environment", "Infrastructure"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 2,
+    "title": "Project Title 2",
+    "description": "Project Description for project 2. An insightful summary about the project objectives and scope.",
+    "categories": ["Community"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 3,
+    "title": "Project Title 3",
+    "description": "Project Description for project 3. An insightful summary about the project objectives and scope.",
+    "categories": ["Environment", "Community"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 4,
+    "title": "Project Title 4",
+    "description": "Project Description for project 4. An insightful summary about the project objectives and scope.",
+    "categories": ["Technology", "Environment", "Arts", "Education", "Healthcare", "Infrastructure", "Community"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 5,
+    "title": "Project Title 5",
+    "description": "Project Description for project 5. An insightful summary about the project objectives and scope.",
+    "categories": ["Environment", "Healthcare"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 6,
+    "title": "Project Title 6",
+    "description": "Project Description for project 6. An insightful summary about the project objectives and scope.",
+    "categories": ["Environment"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 7,
+    "title": "Project Title 7",
+    "description": "Project Description for project 7. An insightful summary about the project objectives and scope.",
+    "categories": ["Healthcare", "Infrastructure", "Environment"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 8,
+    "title": "Project Title 8",
+    "description": "Project Description for project 8. An insightful summary about the project objectives and scope.",
+    "categories": ["Healthcare"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 9,
+    "title": "Project Title 9",
+    "description": "Project Description for project 9. An insightful summary about the project objectives and scope.",
+    "categories": ["Environment", "Technology", "Arts", "Infrastructure", "Healthcare"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 10,
+    "title": "Project Title 10",
+    "description": "Project Description for project 10. An insightful summary about the project objectives and scope.",
+    "categories": ["Technology"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 11,
+    "title": "Project Title 11",
+    "description": "Project Description for project 11. An insightful summary about the project objectives and scope.",
+    "categories": ["Education", "Healthcare", "Arts"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 12,
+    "title": "Project Title 12",
+    "description": "Project Description for project 12. An insightful summary about the project objectives and scope.",
+    "categories": ["Healthcare", "Education"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 13,
+    "title": "Project Title 13",
+    "description": "Project Description for project 13. An insightful summary about the project objectives and scope.",
+    "categories": ["Community", "Technology", "Arts", "Education"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 14,
+    "title": "Project Title 14",
+    "description": "Project Description for project 14. An insightful summary about the project objectives and scope.",
+    "categories": ["Environment", "Education"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 15,
+    "title": "Project Title 15",
+    "description": "Project Description for project 15. An insightful summary about the project objectives and scope.",
+    "categories": ["Community", "Technology"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 16,
+    "title": "Project Title 16",
+    "description": "Project Description for project 16. An insightful summary about the project objectives and scope.",
+    "categories": ["Community", "Technology", "Arts"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 17,
+    "title": "Project Title 17",
+    "description": "Project Description for project 17. An insightful summary about the project objectives and scope.",
+    "categories": ["Community", "Healthcare"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 18,
+    "title": "Project Title 18",
+    "description": "Project Description for project 18. An insightful summary about the project objectives and scope.",
+    "categories": ["Arts", "Community", "Technology", "Environment"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 19,
+    "title": "Project Title 19",
+    "description": "Project Description for project 19. An insightful summary about the project objectives and scope.",
+    "categories": ["Community", "Infrastructure"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  },
+  {
+    "id": 20,
+    "title": "Project Title 20",
+    "description": "Project Description for project 20. An insightful summary about the project objectives and scope.",
+    "categories": ["Arts", "Environment"],
+    "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg=="
+  }
+]

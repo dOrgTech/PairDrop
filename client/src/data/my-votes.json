@@ -1,0 +1,19 @@
+[
+  {
+    "firstProjectID": 4,
+    "secondProjectID": 16,
+    "status": "voted",
+    "votedProjectID": 4
+  },
+  {
+    "firstProjectID": 12,
+    "secondProjectID": 7,
+    "status": "voted",
+    "votedProjectID": 7
+  },
+  {
+    "firstProjectID": 17,
+    "secondProjectID": 5,
+    "status": "vote"
+  }
+]
