@@ -65,7 +65,7 @@ export default function BlobBackground() {
             <PostNoise opacity={0.2} blendFunction={BlendFunction.OVERLAY} />
           </EffectComposer>
         </Canvas>
-        <Leva />
+        <Leva hidden />
       </div>
     </>
   )
