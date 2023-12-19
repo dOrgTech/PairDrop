@@ -33,12 +33,12 @@ export default function Blob({ ...props }) {
     transmission: { min: 0, max: 1, value: 0.15 }, //0.67
     bumpScale: { min: 0, max: 0.01, value: 0.005 },
     sheenColor: { value: indigo[600] },
-    sheen: { min: 0, max: 10, value: 3.7 },
+    sheen: { min: 0, max: 10, value: 4.5 },
     clearcoat: { min: 0, max: 1, value: 0.5 },
     clearcoatRoughness: { min: 0, max: 1, value: 0.9 },
-    metalness: { min: 0, max: 1, value: 0.9 },
-    roughness: { min: 0, max: 3, value: 1.0 },
-    envMapIntensity: { min: 0, max: 5, value: 3.0 }, //3.9
+    metalness: { min: 0, max: 1, value: 0.7 },
+    roughness: { min: 0, max: 3, value: 1.15 },
+    envMapIntensity: { min: 0, max: 5, value: 2.8 }, //3.9
   })
 
   const handlePointerEnter = () => {

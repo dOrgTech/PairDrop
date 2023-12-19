@@ -29,16 +29,6 @@ export default function BlobBackground() {
     <>
       <div className='bg min-h-heroHeight absolute bottom-0 left-0 right-0 top-0'>
         <Canvas className='transition-opacity duration-[2000ms] ease-in-out' style={{ opacity: canvasOpacity }}>
-          <ambientLight intensity={Math.PI / 2} />
-          <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            decay={0}
-            intensity={Math.PI * 8}
-            color={magenta[500]}
-          />
           <ambientLight />
           <Environment background resolution={64}>
             <mesh scale={100}>

@@ -50,7 +50,10 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
               </>
             )}
 
-            <Link href='/about' className='button-transparent relative mt-6'>
+            <Link
+              href='/about'
+              className='button-transparent relative mt-6 [text-shadow:_0_1px_16px_rgba(60,29,254,0.25)]'
+            >
               LEARN MORE
             </Link>
           </>

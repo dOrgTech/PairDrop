@@ -12,7 +12,7 @@ const AnimatedCircle = ({ radius, amplitude, frequency, phaseOffset }) => {
 
   return (
     <Torus rotation={[Math.PI / 2.3, 0, 0]} args={[radius, 0.006, 8, 100]} ref={ref}>
-      <meshStandardMaterial roughness={0.9} transparent metalness={0.2} opacity={0.1} />
+      <meshStandardMaterial roughness={0.9} transparent opacity={0.4} />
     </Torus>
   )
 }
