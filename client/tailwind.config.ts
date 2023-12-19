@@ -17,6 +17,18 @@ const config: Config = {
         'gradient-aquamarine': 'radial-gradient(181.84% 156.49% at 3.28% 0%, #FFF 0%, #EAFEFC 100%)',
         'gradient-teal-indigo': 'radial-gradient(204.27% 141.42% at 0% 0%, #CAFEF7 0%, #2BFAE1 44.13%, #634AFE 100%)',
       },
+      animation: {
+        'fade-in': 'fade 300ms ease-in-out forwards',
+      },
+      keyframes: {
+        'fade': {
+          "0%": { opacity: "0" },
+          "100%": {opacity: "1" }
+        },
+      },
+      minHeight: {
+        heroHeight: "calc(100vh - 82px)"
+      },
       colors: {
         indigo: {
           100: '#F1EFFF',

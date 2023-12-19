@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ConnectWallet from '@/components/reusable/ConnectWallet'
 import { usePathname } from 'next/navigation'
 import { useAccount } from 'wagmi'
+import BlobBackground from './BlobBackground'
 
 const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
   const [isMounted, setIsMounted] = useState(false)
@@ -15,14 +16,15 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
   }, [])
 
   return (
-    <div className='heading-bg flex items-center justify-center'>
-      <div className='mt-[82px] flex flex-col items-center text-center'>
+    <div className='bg min-h-heroHeight relative flex items-center justify-center'>
+      <BlobBackground />
+      <div className='flex flex-col items-center text-center'>
         {/* Page Not Found */}
         {PageNotFound && (
           <>
-            <h1 className='text-white'>404</h1>
-            <h2 className='text-white'>PAGE NOT FOUND</h2>
-            <Link href='/' className='button-transparent mt-8 text-xl'>
+            <h1 className='relative text-white'>404</h1>
+            <h2 className='relative text-white'>PAGE NOT FOUND</h2>
+            <Link href='/' className='button-transparent relative mt-8 text-xl'>
               GO TO HOME
             </Link>
           </>
@@ -31,7 +33,7 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
         {/* Home Page Heading */}
         {path === '/' ? (
           <>
-            <h1 className='mb-14 text-white'>
+            <h1 className='pointer-events-none relative mb-14 text-white'>
               FUNDING
               <br />
               REIMAGINED
@@ -39,14 +41,16 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
 
             {!isConnected && isMounted && (
               <>
-                <div className='subtitle1 mb-14 text-white'>
+                <div className='subtitle1 pointer-events-none relative mb-14 text-white'>
                   Connect your wallet to begin <br /> your pairwise adventure.
                 </div>
-                <ConnectWallet buttonText='Connect' />
+                <div className='relative'>
+                  <ConnectWallet buttonText='Connect' />
+                </div>
               </>
             )}
 
-            <Link href='/about' className='button-transparent mt-6'>
+            <Link href='/about' className='button-transparent relative mt-6'>
               LEARN MORE
             </Link>
           </>

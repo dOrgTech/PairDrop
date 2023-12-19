@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/reusable/BlobBackground/Blob.jsx", "src/components/reusable/BlobBackground/Ripples.jsx"],
   "exclude": ["node_modules"]
 }
