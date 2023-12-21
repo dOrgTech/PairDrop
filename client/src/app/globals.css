@@ -124,11 +124,15 @@
 
   /* Backgrounds */
   .heading-bg {
-    @apply -mt-[82px] h-screen bg-[url("/assets/backgrounds/home.png")] bg-cover bg-center bg-no-repeat;
+    @apply -mt-[82px] h-screen bg-[url("/assets/backgrounds/bg-blob.webp")] bg-cover bg-center bg-no-repeat;
+  }
+
+  .bg-ripples {
+    @apply bg-[url("/assets/backgrounds/bg-ripples.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
   }
 
   .bg {
-    @apply bg-[url("/assets/backgrounds/explore.png")] bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply bg-[url("/assets/backgrounds/bg-empty.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
   }
 
   /* Header Links */

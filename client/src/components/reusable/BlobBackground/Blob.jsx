@@ -43,8 +43,8 @@ export default function Blob({ ...props }) {
 
   const handlePointerEnter = () => {
     isHovering.current = true
-    strength.current = 0.7
-    speed.current = 1.6
+    strength.current = 0.8
+    speed.current = 1.9
   }
 
   const handlePointerLeave = () => {

@@ -16,7 +16,7 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
   }, [])
 
   return (
-    <div className='bg min-h-heroHeight relative flex items-center justify-center'>
+    <div className='bg relative flex min-h-heroHeight items-center justify-center'>
       <BlobBackground />
       <div className='flex flex-col items-center text-center'>
         {/* Page Not Found */}
@@ -33,7 +33,7 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
         {/* Home Page Heading */}
         {path === '/' ? (
           <>
-            <h1 className='pointer-events-none relative mb-14 text-white'>
+            <h1 className='pointer-events-none relative mb-6 text-6xl leading-[0.8] text-white md:text-[120px]'>
               FUNDING
               <br />
               REIMAGINED
@@ -41,7 +41,7 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
 
             {!isConnected && isMounted && (
               <>
-                <div className='subtitle1 pointer-events-none relative mb-14 text-white'>
+                <div className='subtitle1 pointer-events-none relative mb-6 text-white'>
                   Connect your wallet to begin <br /> your pairwise adventure.
                 </div>
                 <div className='relative'>
