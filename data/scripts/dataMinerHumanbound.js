@@ -69,10 +69,10 @@ export default class DataMinerHumanbound extends DataMiner {
         Enumerable.from(responseData.result).forEach((x) => {
           let eventTopics = x.topics
 
-          let ownerAddress = AbiCoder.defaultAbiCoder().decode(
+          let ownerAddress = (AbiCoder.defaultAbiCoder().decode(
             ["address"],
             eventTopics[1]
-          )[0]
+          )[0]).toLowerCase()
 
           this.addScoreToLocalScoreData(ownerAddress, 1)
         })

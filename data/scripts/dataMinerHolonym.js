@@ -22,10 +22,10 @@ export default class DataMinerHolonym extends DataMiner {
     }
 
     Enumerable.from(responseData.result).forEach((x) => {
-      let ownerAddress = AbiCoder.defaultAbiCoder().decode(
+      let ownerAddress = (AbiCoder.defaultAbiCoder().decode(
         ["address", "uint256"],
         x.data
-      )[0]
+      )[0]).toLowerCase()
 
       this.addScoreToLocalScoreData(ownerAddress, 1)
     })
