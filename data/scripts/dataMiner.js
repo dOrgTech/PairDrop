@@ -2,24 +2,10 @@ import fs from "fs"
 import Enumerable from "linq"
 import path from "path"
 import { fileURLToPath } from "url"
+import { normalizeValueLogarithmic } from "./tools.js"
 
 export default class DataMiner {
   localScoreData = []
-
-  #normalizeValue(
-    valueToProcess,
-    minEntry,
-    maxEntry,
-    normalizedMin,
-    normalizedMax
-  ) {
-    let preshift =
-      (Math.log(valueToProcess - minEntry) / Math.log(maxEntry - minEntry)) *
-      (normalizedMax - normalizedMin)
-    let shifted = preshift + normalizedMin
-
-    return shifted
-  }
 
   normalizeLocalScoreData(multiplier) {
     console.log("Log normalizing local score data...")
@@ -38,7 +24,7 @@ export default class DataMiner {
 
     for (let i = 0; i < this.localScoreData.length; i++)
       this.localScoreData[i].score =
-        this.#normalizeValue(
+        normalizeValueLogarithmic(
           this.localScoreData[i].score * 10,
           minEntry,
           maxEntry,
