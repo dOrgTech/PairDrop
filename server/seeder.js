@@ -4,8 +4,9 @@ import fs from "fs"
 import path from "path"
 import { fileURLToPath } from "url"
 import mongoose from "mongoose"
-import { Projects } from "./models/db_Projects.js"
+import Projects from "./models/db_Projects.js"
 import Scores from "./models/db_Scores.js"
+import Votes from "./models/db_Votes.js"
 
 dotenv.config()
 
@@ -53,7 +54,7 @@ class Seeder {
   }
 
   async importProjects() {
-    if ((await Projects.count()) > 0) {
+    if ((await Projects.countDocuments()) > 0) {
       this.#logError("PROJECTS COLLECTION IS NOT EMPTY")
 
       return
@@ -69,7 +70,7 @@ class Seeder {
   }
 
   async exportProjects(jsonFormat) {
-    if ((await Projects.count()) == 0) {
+    if ((await Projects.countDocuments()) == 0) {
       this.#logError("PROJECTS COLLECTION IS EMPTY")
 
       return
@@ -103,7 +104,7 @@ class Seeder {
   }
 
   async deleteProjects() {
-    if ((await Projects.count()) == 0) {
+    if ((await Projects.countDocuments()) == 0) {
       this.#logError("PROJECTS COLLECTION IS EMPTY")
 
       return
@@ -117,7 +118,7 @@ class Seeder {
   }
 
   async importScores() {
-    if ((await Scores.count()) > 0) {
+    if ((await Scores.countDocuments()) > 0) {
       this.#logError("SCORES COLLECTION IS NOT EMPTY")
 
       return
@@ -151,7 +152,7 @@ class Seeder {
   }
 
   async exportScores() {
-    if ((await Scores.count()) == 0) {
+    if ((await Scores.countDocuments()) == 0) {
       this.#logError("SCORES COLLECTION IS EMPTY")
 
       return
@@ -176,7 +177,7 @@ class Seeder {
   }
 
   async deleteScores() {
-    if ((await Scores.count()) == 0) {
+    if ((await Scores.countDocuments()) == 0) {
       this.#logError("SCORES COLLECTION IS EMPTY")
 
       return
@@ -187,6 +188,20 @@ class Seeder {
     await Scores.deleteMany()
 
     console.log("SCORES DELETED")
+  }
+
+  async deleteVotes() {
+    if ((await Votes.countDocuments()) == 0) {
+      this.#logError("VOTES COLLECTION IS EMPTY")
+
+      return
+    }
+
+    console.log("DELETING VOTES...")
+
+    await Votes.deleteMany()
+
+    console.log("VOTES DELETED")
   }
 }
 
@@ -234,6 +249,11 @@ async function ProcessSeeding() {
     case "-ds": {
       await seeder.deleteScores()
 
+      break
+    }
+    case "-dv": {
+      await seeder.deleteVotes()
+      
       break
     }
   }

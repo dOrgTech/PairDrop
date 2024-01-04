@@ -1,10 +1,9 @@
 import mongoose from "mongoose"
-import { ProjectSchema } from "./db_Projects.js"
 
-const scoreSchema = mongoose.Schema({
+const scoreSchema = new mongoose.Schema({
   address: String,
   score: Number,
-  projects: [ProjectSchema],
+  normalizedScore: Number
 })
 
 const Scores = mongoose.model("Scores", scoreSchema)

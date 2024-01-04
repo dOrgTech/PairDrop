@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
-export const ProjectSchema = mongoose.Schema({
+const projectSchema = new mongoose.Schema({
+  projectId: Number,
   projectName: String,
   projectIcon: String,
   categories: [String],
@@ -28,6 +29,9 @@ export const ProjectSchema = mongoose.Schema({
       fundingAmount: Number,
     },
   ],
+  score: Number
 })
 
-export const Projects = mongoose.model("Projects", ProjectSchema)
+const Projects = mongoose.model("Projects", projectSchema)
+
+export default Projects
