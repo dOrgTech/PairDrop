@@ -23,7 +23,7 @@ router.get("/score", async function (req, res, next) {
   }
 })
 
-router.get("/getrandomprojectpair", async function (req, res, next) {
+router.get("/get-random-project-pair", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
 
   if (!userAddress) return
