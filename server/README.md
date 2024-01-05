@@ -73,10 +73,10 @@ The API documentation is implemented through Swagger and it's accessible at `/ap
 Provides the following endpoints:
 
 - **GET** `/projects`: Gets the projects list.
-- **GET** `/score`: Gets the logged-in user's score data.
-- **GET** `/get-random-project-pair`: Generates and gets a random projects pair for voting (for logged-in users).
-- **POST** `/vote`: Adds the user vote (for logged-in users).
-- **PATCH** `/vote`: Edits the user vote (for logged-in users).
+- **GET** `/user/score`: Gets the logged-in user's score data.
+- **GET** `/user/get-random-project-pair`: Generates and gets a random projects pair for voting (for logged-in users).
+- **POST** `/user/vote`: Adds the user vote (for logged-in users).
+- **PATCH** `/user/vote`: Edits the user vote (for logged-in users).
 
 ## Environment variables
 
