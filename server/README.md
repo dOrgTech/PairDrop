@@ -78,6 +78,9 @@ Provides the following endpoints:
 - **POST** `/user/vote`: Adds the user vote (for logged-in users).
 - **PATCH** `/user/vote`: Edits the user vote (for logged-in users).
 
+## Data normalization
+Please check `/data` folder.
+
 ## Environment variables
 
 ```

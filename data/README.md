@@ -93,6 +93,9 @@ Processes all donations of at least 100$.
 - Score before log norm: `+1 for each contribution above 100$`
 - Multiplier: `1`
 
+## Data normalization
+Each data source result data is logarithmically normalized between 1 and 100; then the overall data is normalized between 0 and 0.5 in order to be compatible with the PowerRanker `/server/powerRanker.js`
+
 ## Environment variables
 
 ```
