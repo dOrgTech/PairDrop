@@ -9,6 +9,44 @@ import UserTempData from "../models/db_UserTempData.js"
 
 const router = express.Router()
 
+/**
+ * @swagger
+ * /user/score:
+ *   get:
+ *     summary: Retrieve user score data.
+ *     parameters:
+ *       - in: header
+ *         name: auth
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The user score data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 address:
+ *                   type: string
+ *                   example: 0x0000000000000000000000000000000000000000
+ *                 score:
+ *                   type: number
+ *                   example: 100.75
+ *                 normalizedScore:
+ *                   type: number
+ *                   example: 0.22
+ *       500:
+ *         description: Error getting user score data.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ */
 router.get("/score", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
 
