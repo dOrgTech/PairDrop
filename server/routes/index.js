@@ -7,11 +7,11 @@ const router = express.Router()
  * @swagger
  * /projects:
  *   get:
- *     summary: Retrieve the list of projects.
- *     description: Retrieve the list of projects.
+ *     summary: Retrieves the list of projects.
+ *     description: Retrieves the list of projects
  *     responses:
  *       200:
- *         description: A list of projects.
+ *         description: A list of projects
  *         content:
  *           application/json:
  *             schema:
@@ -25,11 +25,11 @@ const router = express.Router()
  *                     example: 1
  *                   projectName:
  *                     type: string
- *                     description: Name of the project.
+ *                     description: Name of the project
  *                     example: Lorem Ipsum Project
  *                   projectIcon:
  *                     type: string
- *                     description: Base 64 encoded image.
+ *                     description: Base 64 encoded image
  *                     example: base64EncodedString.128x128
  *                   categories:
  *                     type: array
@@ -91,7 +91,7 @@ const router = express.Router()
  *                           type: number
  *                           example: 300000       
  *       500:
- *         description: Error getting projects data.
+ *         description: Error getting projects data
  *         content:
  *           application/json:
  *             schema:
@@ -99,7 +99,7 @@ const router = express.Router()
  *               properties:
  *                 message:
  *                   type: string
- *                   description: Error message.
+ *                   description: Error message
  */
 router.get("/projects", async function (req, res, next) {
   try {

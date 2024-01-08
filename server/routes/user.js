@@ -13,7 +13,7 @@ const router = express.Router()
  * @swagger
  * /user/score:
  *   get:
- *     summary: Retrieve user score data.
+ *     summary: Retrieves user score data
  *     parameters:
  *       - in: header
  *         name: auth
@@ -21,7 +21,7 @@ const router = express.Router()
  *         required: true
  *     responses:
  *       200:
- *         description: The user score data.
+ *         description: The user score data
  *         content:
  *           application/json:
  *             schema:
@@ -37,7 +37,7 @@ const router = express.Router()
  *                   type: number
  *                   example: 0.22
  *       500:
- *         description: Error getting user score data.
+ *         description: Error getting user score data
  *         content:
  *           application/json:
  *             schema:
@@ -45,7 +45,7 @@ const router = express.Router()
  *               properties:
  *                 message:
  *                   type: string
- *                   description: Error message.
+ *                   description: Error message
  */
 router.get("/score", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
@@ -61,6 +61,39 @@ router.get("/score", async function (req, res, next) {
   }
 })
 
+/**
+ * @swagger
+ * /user/get-random-project-pair:
+ *   get:
+ *     summary: Generates and retrieves a random projects pair
+ *     parameters:
+ *       - in: header
+ *         name: auth
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The random projects pair
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 project1:
+ *                   type: object
+ *                 project2:
+ *                   type: object
+ *       500:
+ *         description: Error getting a random projects pair
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
 router.get("/get-random-project-pair", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
 
@@ -118,6 +151,45 @@ router.get("/get-random-project-pair", async function (req, res, next) {
   }
 })
 
+/**
+ * @swagger
+ * /user/vote:
+ *   post:
+ *     summary: Votes for a project in a random pair
+ *     parameters:
+ *       - in: header
+ *         name: auth
+ *         type: string
+ *         required: true
+ *       - in: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - votedProjectId
+ *           properties:
+ *             votedProjectId:
+ *               type: integer
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message
+ *       500:
+ *         description: Error voting for a project
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
 router.post("/vote", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
 
@@ -173,6 +245,45 @@ router.post("/vote", async function (req, res, next) {
   }
 })
 
+/**
+ * @swagger
+ * /user/vote:
+ *   patch:
+ *     summary: Edits the vote for a project in a random pair
+ *     parameters:
+ *       - in: header
+ *         name: auth
+ *         type: string
+ *         required: true
+ *       - in: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - votedProjectId
+ *           properties:
+ *             votedProjectId:
+ *               type: integer
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message
+ *       500:
+ *         description: Error voting for a project
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
 router.patch("/vote", async function (req, res, next) {
   const userAddress = await getAuthenticatedAddress(req, res)
 
