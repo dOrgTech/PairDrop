@@ -4,7 +4,9 @@
   "main": "scripts/dataGenerator.js",
   "type": "module",
   "scripts": {
-    "start": "node scripts/dataGenerator.js"
+    "generate": "node scripts/dataGenerator.js -gen",
+    "onlynormalize": "node scripts/dataGenerator.js -onlynorm",
+    "stats": "node scripts/statsGenerator.js"
   },
   "dependencies": {
     "@apollo/client": "^3.8.4",

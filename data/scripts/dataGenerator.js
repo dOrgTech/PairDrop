@@ -20,10 +20,8 @@ import { normalizeValueStandard } from "./tools.js"
 
 dotenv.config()
 
-async function GenerateAll() {
-  console.log("Generating data...")
-
-  const onlyNormalize = false
+async function GenerateAll(onlyNormalize) {
+  console.log(`Generating data... ${(onlyNormalize ? " (only normalizing)": "")}`)
 
   let scoreData = []
 
@@ -73,4 +71,15 @@ async function GenerateAll() {
   )
 }
 
-GenerateAll()
+switch (process.argv[2]) {
+  case "-gen": {
+    GenerateAll(false)
+
+    break
+  }
+  case "-onlynorm": {
+    GenerateAll(true)
+
+    break
+  }
+}
