@@ -1,0 +1,21 @@
+{
+  "name": "pair2pair-data",
+  "version": "0.1.0",
+  "main": "scripts/dataGenerator.js",
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/dataGenerator.js -gen",
+    "onlynormalize": "node scripts/dataGenerator.js -onlynorm",
+    "stats": "node scripts/statsGenerator.js"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.4",
+    "axios": "^1.5.0",
+    "axios-retry": "^4.0.0",
+    "delay": "^6.0.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.7.1",
+    "graphql": "^16.8.1",
+    "linq": "^4.0.1"
+  }
+}
