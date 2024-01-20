@@ -89,7 +89,10 @@ const router = express.Router()
  *                           example: Source A
  *                         fundingAmount:
  *                           type: number
- *                           example: 300000       
+ *                           example: 300000
+ *                   score:
+ *                     type: number
+ *                     example: 23.09  
  *       500:
  *         description: Error getting projects data
  *         content:
