@@ -68,8 +68,8 @@ expressAPI.use("/user", UserRouter)
 mongoose
   .connect(process.env.ATLAS_URL)
   .then(() =>
-    expressAPI.listen(process.env.API_PORT, () =>
-      console.log(`API Server running on port: ${process.env.API_PORT}`)
+    expressAPI.listen(process.env.PORT || 5000, () =>
+      console.log(`API Server running on port: ${process.env.PORT || 5000}`)
     )
   )
   .catch((error) => console.log(error.message))
