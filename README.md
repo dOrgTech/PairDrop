@@ -96,7 +96,6 @@ Provides the following endpoints:
 
 ```
 ATLAS_URL=MONGO_DB_CONNECTION_URL
-API_PORT=API_SERVER_PORT
 ```
 
 
