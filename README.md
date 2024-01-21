@@ -300,6 +300,16 @@ Below average wallets count: 427
 Above average wallets count: 39
 ```
 
+### Overall data
+- Raw data statistics (before normalization):
+```
+Min score: 23.488451689160573
+Max score: 456.47755958286297
+Average score: 46.28210643577585
+Below average wallets count: 478662
+Above average wallets count: 174117
+```
+
 ## Data generation and statistics
 Generates and normalizes data of all data sources with the following command:
 ```
