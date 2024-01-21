@@ -301,7 +301,7 @@ Above average wallets count: 39
 ```
 
 ### Overall data
-- Raw data statistics (before normalization):
+- Data statistics (normalized):
 ```
 Min score: 23.488451689160573
 Max score: 456.47755958286297
