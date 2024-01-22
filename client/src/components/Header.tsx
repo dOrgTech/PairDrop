@@ -7,10 +7,10 @@ import ConnectWallet from '@/components/reusable/ConnectWallet'
 const Header = () => {
   const path = usePathname()
   return (
-    <header className='side-padding relative z-10 flex h-[82px] items-center justify-between border-b-[3px] border-indigo-600 bg-white py-4 font-extrabold'>
+    <header className='side-padding relative z-50 flex h-[82px] items-center justify-between border-b-[3px] border-indigo-600 bg-white py-4 font-extrabold'>
       {/* Logo */}
       <Link href='/' className='flex items-center gap-4'>
-        <Image src='assets/logos/logo.svg' alt='Logo' width={46} height={34} />
+        <Image src='/assets/logos/logo.svg' alt='Logo' width={46} height={34} />
         <div className='text-[44px] leading-10'>
           PAIR<span className='text-magenta-500'>2</span>PAIR
         </div>

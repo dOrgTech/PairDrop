@@ -6,6 +6,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: ['show-scrollbar', 'hide-scrollbar'],
   theme: {
     extend: {
       fontFamily: {
@@ -14,6 +15,7 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-teal': 'radial-gradient(181.84% 156.49% at 3.28% 0%, #fff 0%, #cbfef7 100%)',
+        'gradient-teal-2': 'radial-gradient(409.88% 100.68% at 0% 33.25%, #FFF 0%, #CBFEF7 100%)',
         'gradient-aquamarine': 'radial-gradient(181.84% 156.49% at 3.28% 0%, #FFF 0%, #EAFEFC 100%)',
         'gradient-teal-indigo': 'radial-gradient(204.27% 141.42% at 0% 0%, #CAFEF7 0%, #2BFAE1 44.13%, #634AFE 100%)',
       },
@@ -21,13 +23,13 @@ const config: Config = {
         'fade-in': 'fade 300ms ease-in-out forwards',
       },
       keyframes: {
-        'fade': {
-          "0%": { opacity: "0" },
-          "100%": {opacity: "1" }
+        fade: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
       },
       minHeight: {
-        heroHeight: "calc(100vh - 82px)"
+        heroHeight: 'calc(100vh - 82px)',
       },
       colors: {
         indigo: {
@@ -80,7 +82,7 @@ const config: Config = {
         },
       },
       boxShadow: {
-        'hover-card': '0px 0px 44px #2BFAE1',
+        aqua: '0px 0px 44px #2BFAE1',
       },
     },
   },

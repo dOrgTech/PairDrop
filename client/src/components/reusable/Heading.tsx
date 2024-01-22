@@ -3,24 +3,54 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ConnectWallet from '@/components/reusable/ConnectWallet'
 import { usePathname } from 'next/navigation'
-import { useAccount } from 'wagmi'
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import BlobBackground from './BlobBackground'
+import { useRouter } from 'next/navigation'
 
-const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
+interface HeadingProps {
+  PageNotFound?: boolean
+  countPage?: boolean
+}
+
+const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = false }) => {
   const [isMounted, setIsMounted] = useState(false)
-  const { isConnected } = useAccount()
+  const [countdown, setCountdown] = useState<string | number>(3)
+  const { isConnected } = useWeb3ModalAccount()
   const path = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     setIsMounted(true)
-  }, [])
+
+    if (countPage) {
+      const interval = setInterval(() => {
+        setCountdown((prevCount) => {
+          if (prevCount === 1) {
+            clearInterval(interval)
+            return 'GO!'
+          }
+          return (prevCount as number) - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(interval)
+    }
+  }, [countPage])
+
+  useEffect(() => {
+    if (countdown === 'GO!') {
+      setTimeout(() => {
+        router.push('/vote')
+      }, 1000)
+    }
+  }, [countdown, router])
 
   return (
     <div className='bg relative flex min-h-heroHeight items-center justify-center'>
       <BlobBackground />
-      <div className='flex flex-col items-center text-center'>
+      <div className='z-30 flex flex-col items-center text-center'>
         {/* Page Not Found */}
-        {PageNotFound && (
+        {PageNotFound && !countPage && (
           <>
             <h1 className='relative text-white'>404</h1>
             <h2 className='relative text-white'>PAGE NOT FOUND</h2>
@@ -30,8 +60,11 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
           </>
         )}
 
+        {/* Count Page */}
+        {countPage && <div className='text-[400px] font-bold tracking-tighter text-white'>{countdown}</div>}
+
         {/* Home Page Heading */}
-        {path === '/' ? (
+        {path === '/' && !countPage ? (
           <>
             <h1 className='pointer-events-none relative mb-6 text-6xl leading-[0.8] text-white md:text-[120px]'>
               FUNDING
@@ -59,7 +92,8 @@ const Heading = ({ PageNotFound = false }: { PageNotFound?: boolean }) => {
           </>
         ) : (
           // About Page Heading
-          path === '/about' && (
+          path === '/about' &&
+          !countPage && (
             <>
               <h1 className='text-white'>PAIR2PAIR</h1>
               <h2 className='text-white'>BY DAO DROPS</h2>
