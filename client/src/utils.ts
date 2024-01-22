@@ -4,4 +4,4 @@ export const formatAddress = (address: `0x${string}` | undefined) => {
 
 export const withHttp = (url: string) => (!/^https?:\/\//i.test(url) ? `http://${url}` : url)
 
-export const numberWithCommas = (x: number) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+export const numberWithCommas = (x: number | string) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')

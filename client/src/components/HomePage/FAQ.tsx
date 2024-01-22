@@ -73,7 +73,7 @@ const FaqCard: React.FC<{ faq: IFaq; isOpen: boolean; onToggle: () => void }> = 
     <div className='card flex cursor-pointer flex-col gap-4 border-[3px]' onClick={onToggle}>
       <div className='flex w-full items-center justify-between'>
         <h5>{faq.question}</h5>
-        <div className={`arrow-right-icon ${isOpen && '-rotate-90 transform'}`}></div>
+        <div className={`arrow-right-icon ml-4 ${isOpen && '-rotate-90 transform'}`}></div>
       </div>
       {isOpen && <div>{faq.answer}</div>}
     </div>

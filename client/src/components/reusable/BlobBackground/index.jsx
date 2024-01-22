@@ -27,7 +27,7 @@ export default function BlobBackground() {
 
   return (
     <>
-      <div className='bg min-h-heroHeight absolute bottom-0 left-0 right-0 top-0'>
+      <div className='bg absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight'>
         <Canvas className='transition-opacity duration-[2000ms] ease-in-out' style={{ opacity: canvasOpacity }}>
           <ambientLight />
           <Environment background resolution={64}>

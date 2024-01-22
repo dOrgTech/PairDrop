@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Web3Modal } from '@/context/Web3Modal'
 import Header from '@/components/Header'
+import { SWRProvider } from '@/providers/swr'
 
 export const metadata: Metadata = {
   title: 'Pair2Pair',
-  description: '',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,10 +22,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='manifest' href='/manifest.json' />
       </head>
       <body>
-        <Web3Modal>
-          <Header />
-          {children}
-        </Web3Modal>
+        <SWRProvider>
+          <Web3Modal>
+            <Header />
+            {children}
+          </Web3Modal>
+        </SWRProvider>
       </body>
     </html>
   )

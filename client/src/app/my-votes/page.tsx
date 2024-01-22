@@ -1,22 +1,25 @@
-import { Metadata } from 'next'
+'use client'
 import PairCard from './PairCard'
-import projectsData from '@/data/projects.json'
+import { useProjectsData } from '@/hooks/useDataAPI'
+import { ProjectType } from '@/types/Project'
 import myVotesData from '@/data/my-votes.json'
 
-export const metadata: Metadata = {
-  title: 'Pair2Pair - My Votes',
-}
-
 const MyVotes = () => {
+  const { projectsData, isProjectsLoading, isProjectsError } = useProjectsData()
+
+  if (isProjectsLoading) return <div className='subtitle1 mt-32 text-center'>Loading votes data...</div>
+  if (isProjectsError) return <div className='subtitle1 mt-32 text-center'>Error loading votes</div>
+  if (!projectsData) return <div className='subtitle1 mt-32 text-center'>No votes data available</div>
+
   const pairCardProps = myVotesData.map((vote) => ({
     status: vote.status as 'voted' | 'vote' | 'hidden',
     projectIcons: [
-      projectsData.find((p) => p.id === vote.firstProjectID)?.projectIcon || '',
-      projectsData.find((p) => p.id === vote.secondProjectID)?.projectIcon || '',
+      projectsData.find((p: ProjectType) => p.projectId === vote.firstProjectId)?.projectIcon || '',
+      projectsData.find((p: ProjectType) => p.projectId === vote.secondProjectId)?.projectIcon || '',
     ],
-    firstProjectID: vote.firstProjectID,
-    secondProjectID: vote.secondProjectID,
-    votedProjectID: vote.votedProjectID,
+    firstProjectID: vote.firstProjectId,
+    secondProjectID: vote.secondProjectId,
+    votedProjectID: vote.votedProjectId,
   }))
 
   while (pairCardProps.length < 5) {
@@ -30,20 +33,11 @@ const MyVotes = () => {
   }
 
   return (
-    <main className='bg min-h-header side-padding pb-32 pt-[100px]'>
-      <div className='mx-auto flex max-w-[1025px] flex-col'>
-        <h2 className='mb-4 text-[44px] tracking-wide'>MY VOTES</h2>
-        <p className='font-ibm mb-12 text-lg leading-relaxed'>
-          We’ve made your job simpler, anon. Review the next pair and simply vote for the project you perceive as having
-          the most impact on public good!
-        </p>
-        <div className='flex flex-wrap justify-center gap-10'>
-          {pairCardProps.map((props, index) => (
-            <PairCard key={index} {...props} />
-          ))}
-        </div>
-      </div>
-    </main>
+    <div className='flex flex-wrap justify-center gap-10'>
+      {pairCardProps.map((props, index) => (
+        <PairCard key={index} {...props} />
+      ))}
+    </div>
   )
 }
 
