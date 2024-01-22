@@ -6,30 +6,38 @@ const projectSchema = new mongoose.Schema({
   projectIcon: String,
   categories: [String],
   projectDetails: String,
-  projectMetrics: {
-    teamSize: Number,
-    totalFunding: Number,
-  },
-  projectLinks: {
-    twitter: String,
-    discord: String,
-    github: String,
-    youtubeVideoOverview: String,
-    website: String,
-    roadmap: String,
-  },
-  impactDetails: String,
-  impactMetrics: {
-    metric1: String,
-    metric2: String,
-  },
-  funding: [
+  projectMetrics: [
     {
-      fundingSource: String,
-      fundingAmount: Number,
+      type: Map,
+      of: Number,
     },
   ],
-  score: Number
+  projectSocials: [
+    {
+      type: Map,
+      of: String,
+    },
+  ],
+  projectLinks: [
+    {
+      type: Map,
+      of: String,
+    },
+  ],
+  impactDetails: String,
+  impactMetrics: [
+    {
+      type: Map,
+      of: Number,
+    },
+  ],
+  funding: [
+    {
+      type: Map,
+      of: Number,
+    },
+  ],
+  score: Number,
 })
 
 const Projects = mongoose.model("Projects", projectSchema)

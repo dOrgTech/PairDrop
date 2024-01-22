@@ -34,7 +34,10 @@ class Seeder {
   }
 
   #exportDataToJSONFile(filePath, data) {
-    fs.writeFileSync(this.#getCurrentPath() + filePath, JSON.stringify(data))
+    fs.writeFileSync(
+      this.#getCurrentPath() + filePath,
+      JSON.stringify(data, null, 2)
+    )
   }
 
   #exportDataToCSVFile(filePath, data, dataStructure) {
@@ -45,6 +48,11 @@ class Seeder {
   }
 
   #exportDataToFileSync(filePath, data, jsonFormat, dataStructure = undefined) {
+    const exportedDataFolderPath = this.#getCurrentPath() + "/exportedData"
+
+    if (!fs.existsSync(exportedDataFolderPath))
+      fs.mkdirSync(exportedDataFolderPath)
+
     if (jsonFormat) this.#exportDataToJSONFile(filePath, data)
     else this.#exportDataToCSVFile(filePath, data, dataStructure)
   }
@@ -253,7 +261,7 @@ async function ProcessSeeding() {
     }
     case "-dv": {
       await seeder.deleteVotes()
-      
+
       break
     }
   }
