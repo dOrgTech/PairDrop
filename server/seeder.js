@@ -6,7 +6,7 @@ import { fileURLToPath } from "url"
 import mongoose from "mongoose"
 import Projects from "./models/db_Projects.js"
 import Scores from "./models/db_Scores.js"
-import Votes from "./models/db_Votes.js"
+import UsersData from "./models/db_UsersData.js"
 
 dotenv.config()
 
@@ -199,15 +199,15 @@ class Seeder {
   }
 
   async deleteVotes() {
-    if ((await Votes.countDocuments()) == 0) {
-      this.#logError("VOTES COLLECTION IS EMPTY")
+    if ((await UsersData.countDocuments()) == 0) {
+      this.#logError("USERSDATA COLLECTION IS EMPTY")
 
       return
     }
 
     console.log("DELETING VOTES...")
 
-    await Votes.deleteMany()
+    await UsersData.deleteMany()
 
     console.log("VOTES DELETED")
   }

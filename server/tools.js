@@ -1,7 +1,7 @@
 import Web3Token from "web3-token"
-import PowerRanker from "./powerRanker.js"
-import Votes from "./models/db_Votes.js"
 import Enumerable from "linq"
+import PowerRanker from "./powerRanker.js"
+import UsersData from "./models/db_UsersData.js"
 import Projects from "./models/db_Projects.js"
 
 export function randomNumberExcludedMax(min, max) {
@@ -31,7 +31,9 @@ export async function getAuthenticatedAddress(req, res) {
 export async function updateProjectsRanking() {
   const projects = await Projects.find()
 
-  const votes = await Votes.find()
+  const usersData = await UsersData.find()
+
+  const votes = Enumerable.from(usersData).selectMany((x) => x.votes)
 
   const items = []
 
@@ -39,18 +41,19 @@ export async function updateProjectsRanking() {
 
   const powerRankerVotes = []
 
-  for (const vote of votes)
+  for (const vote of votes) {
     powerRankerVotes.push({
-      alpha: vote.project1Id,
-      beta: vote.project2Id,
+      alpha: vote.firstProjectId,
+      beta: vote.secondProjectId,
       vote: vote.vote,
     })
+  }
 
   const powerRankerItems = new Set(items)
 
   const powerRanker = new PowerRanker(powerRankerItems, powerRankerVotes, false)
 
-  let generatedRanking = powerRanker.run(1.0)
+  let generatedRanking = powerRanker.run(1)
 
   for (const project of projects)
     await Projects.findByIdAndUpdate(project._id, {
