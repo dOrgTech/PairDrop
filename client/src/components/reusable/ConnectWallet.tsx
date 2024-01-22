@@ -23,7 +23,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
   const { disconnect } = useDisconnect()
   const { walletProvider } = useWeb3ModalProvider()
   const { setThemeMode } = useWeb3ModalTheme()
-  let signer: Signer | null = null
+  let signer: Signer
   setThemeMode('light')
 
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
@@ -68,7 +68,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
     }
 
     obtainAndStoreToken()
-  }, [isConnected, signer])
+  }, [isConnected])
 
   useOutsideClick(dropdownRef, () => {
     if (walletDropdown) setWalletDropdown(false)
