@@ -2,10 +2,10 @@ import React, { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Torus } from '@react-three/drei'
 
-const AnimatedCircle = ({ radius, amplitude, frequency, phaseOffset }) => {
+const AnimatedCircle = ({ radius, amplitude, frequency, phaseOffset, isHighPerformance }) => {
   const ref = useRef(null)
   useFrame(({ clock }) => {
-    if (ref.current) {
+    if (ref.current && isHighPerformance) {
       ref.current.position.y = amplitude * Math.sin(frequency * clock.getElapsedTime() + phaseOffset)
     }
   })
@@ -17,7 +17,7 @@ const AnimatedCircle = ({ radius, amplitude, frequency, phaseOffset }) => {
   )
 }
 
-const Ripples = () => {
+const Ripples = ({ isHighPerformance }) => {
   const numCircles = 40
   const spacing = 0.25
   const maxAmplitude = 0.1
@@ -37,7 +37,7 @@ const Ripples = () => {
   return (
     <group position-y={-2} opacity={0.5}>
       {circles.map((props, index) => (
-        <AnimatedCircle key={index} {...props} />
+        <AnimatedCircle key={index} isHighPerformance={isHighPerformance} {...props} />
       ))}
     </group>
   )

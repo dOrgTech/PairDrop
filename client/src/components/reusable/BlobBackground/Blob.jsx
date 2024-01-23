@@ -7,7 +7,7 @@ import { useControls } from 'leva'
 import { MathUtils } from 'three'
 import { indigo, aquamarine, yellow, magenta } from './index'
 
-export default function Blob({ ...props }) {
+export default function Blob({ isHighPerformance, ...props }) {
   const strength = useRef(0.5)
   const speed = useRef(1.2)
   const isHovering = useRef(false)
@@ -54,22 +54,32 @@ export default function Blob({ ...props }) {
   }
 
   useFrame((state, dt) => {
-    displaceRef.current.strength = MathUtils.lerp(displaceRef.current.strength, strength.current, 0.05)
-    displaceRef.current.offset.x += speed.current * dt
-    displaceRef.current.offset.y += (speed.current / 4) * dt
-    displaceRef.current.offset.z += (speed.current / 4) * dt
-    if (cubeRef.current) {
-      cubeRef.current.rotation.y += (speed.current / 8) * -dt
+    if (isHighPerformance) {
+      displaceRef.current.strength = MathUtils.lerp(displaceRef.current.strength, strength.current, 0.05)
+      displaceRef.current.offset.x += speed.current * dt
+      displaceRef.current.offset.y += (speed.current / 4) * dt
+      displaceRef.current.offset.z += (speed.current / 4) * dt
+      if (cubeRef.current) {
+        cubeRef.current.rotation.y += (speed.current / 8) * -dt
+      }
     }
   })
 
+  const segments = isHighPerformance ? 96 : 32
+
   return (
     <group ref={cubeRef}>
-      <CubeCamera resolution={128} frames={1} envMap={texture}>
+      <CubeCamera resolution={32} frames={1} envMap={texture}>
         {(texture) => (
-          <Float position-y={0.75} floatingRange={[-0.08, 0.08]} speed={12.41830199164322423} rotationIntensity={0}>
+          <Float
+            enabled={isHighPerformance}
+            position-y={0.75}
+            floatingRange={[-0.08, 0.08]}
+            speed={12.41830199164322423}
+            rotationIntensity={0}
+          >
             <mesh {...props} ref={blobRef} onPointerEnter={handlePointerEnter} onPointerOut={handlePointerLeave}>
-              <sphereGeometry args={[2, 256, 256]} />
+              <sphereGeometry args={[isHighPerformance ? 2 : 2.25, segments, segments]} />
               <LayerMaterial
                 lighting='physical'
                 transmission={transmission}
