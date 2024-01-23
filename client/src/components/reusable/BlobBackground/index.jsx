@@ -3,35 +3,45 @@ import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
 import { useEffect, useState } from 'react'
 import Scene from './Scene'
+import { useProgress } from '@react-three/drei'
 
 export const { indigo, aquamarine, yellow, magenta } = Config.theme.extend.colors
 
 export default function BlobBackground() {
-  const [loaded, setLoaded] = useState(false)
+  const [isPerformanceOk, setIsPerformanceOk] = useState(true)
+  const { active, loaded, total } = useProgress()
   const [canvasOpacity, setCanvasOpacity] = useState(0)
-  const [showAnimation, setShowAnimation] = useState(true)
+  const startTime = Date.now()
 
   useEffect(() => {
-    setTimeout(() => {
-      setCanvasOpacity(1)
-    }, 2500)
-    if (!loaded) {
-      setLoaded(true)
+    if (!active && loaded === total) {
+      const loadDuration = Date.now() - startTime
+      console.log(loadDuration)
+      if (loadDuration > 50) {
+        setIsPerformanceOk(false)
+      } else {
+        setTimeout(() => {
+          setCanvasOpacity(1)
+        }, 2000)
+      }
     }
-  }, [loaded])
+  }, [active, loaded, total, startTime])
 
-  const handleAnimationToggle = () => {
-    setShowAnimation(!showAnimation)
+  if (!isPerformanceOk) {
+    return null
   }
 
   return (
     <>
-      <div className='bg absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight'>
-        <Canvas className='transition-opacity duration-[2000ms] ease-in-out' style={{ opacity: canvasOpacity }}>
-          <Scene showAnimation={showAnimation} setShowAnimation={setShowAnimation} />
+      <div
+        className='absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight transition-opacity duration-1000 ease-in-out'
+        style={{ opacity: canvasOpacity }}
+      >
+        <Canvas>
+          <Scene />
         </Canvas>
         <Leva hidden />
-        <div className='absolute bottom-2 right-2 rounded-3xl text-xs font-medium'>
+        {/* <div className='absolute bottom-2 right-2 rounded-3xl text-xs font-medium'>
           <label className='inline-flex cursor-pointer items-center space-x-2' onClick={handleAnimationToggle}>
             <span className='ms-3 translate-y-px transform text-sm font-medium leading-none text-white'>Animation</span>
             <div
@@ -44,7 +54,7 @@ export default function BlobBackground() {
               `}
             ></div>
           </label>
-        </div>
+        </div> */}
       </div>
     </>
   )

@@ -12,30 +12,7 @@ import { useEffect, useState } from 'react'
 
 export const { indigo, aquamarine, yellow, magenta } = Config.theme.extend.colors
 
-export default function Scene({ showAnimation, setShowAnimation }) {
-  const { gl } = useThree()
-  const [performanceLevel, setPerformanceLevel] = useState('high')
-
-  useEffect(() => {
-    const assessPerformance = () => {
-      const fps = (gl.info.render.frame * 1000) / gl.info.render.time
-      if (fps < 50) {
-        setPerformanceLevel('low')
-      } else {
-        setPerformanceLevel('high')
-      }
-    }
-
-    const interval = setInterval(assessPerformance, 5000)
-    return () => clearInterval(interval)
-  }, [gl.info.render.frame, gl.info.render.time])
-
-  if (performanceLevel === 'low') {
-    setShowAnimation(false)
-  }
-
-  const isHighPerformance = performanceLevel === 'high' && showAnimation
-
+export default function Scene() {
   return (
     <>
       <ambientLight />
@@ -56,10 +33,10 @@ export default function Scene({ showAnimation, setShowAnimation }) {
           </LayerMaterial>
         </mesh>
       </Environment>
-      <Ripples isHighPerformance={isHighPerformance} />
-      <Blob isHighPerformance={isHighPerformance} />
+      <Ripples />
+      <Blob />
       <OrbitControls target={[0, 0.4, 0]} enableRotate={false} enablePan={false} enableZoom={false} />
-      <EffectComposer multisampling={isHighPerformance}>
+      <EffectComposer>
         <PostNoise opacity={0.2} blendFunction={BlendFunction.OVERLAY} />
       </EffectComposer>
       {/* <Perf /> */}
