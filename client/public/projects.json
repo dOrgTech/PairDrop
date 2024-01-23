@@ -5,7 +5,7 @@
     "projectIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAfCAYAAACYn/8/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEfSURBVHgB7ZbBTcNAEEX/rKxwhArAXAkRJeAOoINACVSQEqADUgJUACkBRZwhThORk8xklZy9O4fVSJbmnSz90fe3PDO7dLNZvVHAA3oIQi/Ls8sPGDLZtY/M8tqnC/BZEeEiPte9LifdFt7Hd4a6TybQecBAGWzwCgUZdytJ6b+jK0IhvFWs8eDWZIeTgem4a++hIjmbcXjbd2hcKJ4rkvZSbBVpUAx5UlVJvsZ73BoPbo0Ht0axDmkesF9AASMk93QAP0PjI2hAYZqqyQaPv2SxHF3PoSDeDpPBtT6T7u948CGda5h4cGuyPS4i9e123UCBCCd1rQ+D7zL3NUVwwgzCMxQgftgXCuE9bo0Ht8aDW1PFdfkfQN8YEMLycwDSaVFjAm7zkgAAAABJRU5ErkJggg==",
     "categories": ["Education", "Technology", "Environment", "Infrastructure"],
     "projectDetails": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.\n\nNulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.",
-    "projectMetrics": [{ "Team Size": 500000 }, { "Total Funding": 1000000 }],
+    "projectMetrics": [{ "Team Size": 500000 }, { "Total Funding": 1000000 }, { "Total Projects": 14 }],
     "projectSocials": [
       { "twitter": "https://twitter.com/project1" },
       { "discord": "https://discord.com/invite/project1" },

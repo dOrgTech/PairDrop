@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ProjectCard from './ProjectCard'
 import ProjectModal from '@/components/Modals/ProjectModal'
-import { useProjectsData, usePairData, useVote } from '@/hooks/useDataAPI'
+import { useProjectsData, usePairData, useVote, useMyVotesData } from '@/hooks/useDataAPI'
 import { ProjectType } from '@/types/Project'
 import { useModal } from '@/hooks/useModal'
 
@@ -17,16 +17,21 @@ const MyVotes = () => {
   const [refetchPair, setRefetchPair] = useState(false)
   const { pairData, isPairLoading, isPairError } = usePairData(refetchPair)
   const { vote } = useVote(selectedProjectId)
+  const { myVotesData, isMyVotesLoading, isMyVotesError } = useMyVotesData(refetchPair)
 
-  if (isProjectsLoading || isPairLoading)
+  if (isProjectsLoading || isMyVotesLoading)
     return <div className='subtitle1 mt-24 text-center'>Loading projects pairs...</div>
-  if (isProjectsError || isPairError)
+  if (isProjectsError || isMyVotesError)
     return <div className='subtitle1 mt-24 text-center'>Error loading projects pairs</div>
-  if (!projectsData || !pairData)
+  if (!projectsData || !myVotesData)
     return <div className='subtitle1 mt-24 text-center'>No projects pairs data available</div>
 
-  const project1 = pairData.project1
-  const project2 = pairData.project2
+  const firstProject = projectsData.find(
+    (project: ProjectType) => project.projectId === myVotesData[currentPair - 1].firstProjectId,
+  )
+  const secondProject = projectsData.find(
+    (project: ProjectType) => project.projectId === myVotesData[currentPair - 1].secondProjectId,
+  )
 
   const renderSteps = () => {
     const totalPairs = 5
@@ -44,9 +49,9 @@ const MyVotes = () => {
   }
 
   const handleNext = async () => {
-    // if (selectedProjectId !== null) {
-    //   await vote()
-    // }
+    if (selectedProjectId !== null) {
+      await vote()
+    }
 
     if (currentPair === 5) {
       router.push('/my-votes')
@@ -87,16 +92,16 @@ const MyVotes = () => {
 
       <div className='flex w-full justify-between'>
         <ProjectCard
-          {...project1}
+          {...firstProject}
           setSelectedProjectId={setSelectedProjectId}
-          selected={selectedProjectId === project1.projectId}
-          onProjectView={() => handleProjectClick(project1.projectId)}
+          selected={selectedProjectId === firstProject.projectId}
+          onProjectView={() => handleProjectClick(firstProject.projectId)}
         />
         <ProjectCard
-          {...project2}
+          {...secondProject}
           setSelectedProjectId={setSelectedProjectId}
-          selected={selectedProjectId === project2.projectId}
-          onProjectView={() => handleProjectClick(project2.projectId)}
+          selected={selectedProjectId === secondProject.projectId}
+          onProjectView={() => handleProjectClick(secondProject.projectId)}
         />
       </div>
 
