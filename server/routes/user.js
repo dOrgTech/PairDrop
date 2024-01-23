@@ -52,7 +52,17 @@ router.get("/score", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const score = await Scores.findOne({ address: userAddress })
+    const score = await getUserScore(userAddress)
+
+    if (score == null) {
+      res
+        .status(200)
+        .json(
+          new Scores({ address: userAddress, score: 0, normalizedScore: 0 })
+        )
+
+      return
+    }
 
     res.status(200).json(score)
   } catch (error) {
@@ -112,7 +122,36 @@ router.get("/votes", async function (req, res, next) {
   try {
     const userData = await UsersData.findOne({ address: userAddress })
 
-    res.status(200).json((userData != null ? userData.votes : []))
+    if (userData != null) {
+      const projects = await Projects.find()
+
+      const votesData = []
+
+      for (const vote of userData.votes) {
+        const firstProject = Enumerable.from(projects)
+          .where((x) => x.projectId == vote.firstProjectId)
+          .first()
+
+        const secondProject = Enumerable.from(projects)
+          .where((x) => x.projectId == vote.secondProjectId)
+          .first()
+
+        votesData.push({
+          firstProject: firstProject,
+          secondProject: secondProject,
+          status: vote.status,
+          votedProject:
+            vote.votedProjectId == vote.firstProjectId
+              ? firstProject
+              : secondProject,
+          vote: vote.vote,
+        })
+      }
+
+      res.status(200).json(votesData)
+    } else {
+      res.status(200).json([])
+    }
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -157,83 +196,23 @@ router.get("/get-random-project-pair", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const projects = await Projects.find()
+    const score = await getUserScore(userAddress)
 
-    const userData = await UsersData.findOne({ address: userAddress })
+    if (score == null) {
+      res.status(200).json({
+        firstProject: null,
+        secondProject: null,
+      })
 
-    let alreadyShownProjectsIds = []
-
-    let userVotesData = []
-
-    if (userData != null) {
-      if (
-        Enumerable.from(userData.votes).count((x) => x.status == "displayed") >
-        0
-      ) {
-        res.status(500).json({
-          message:
-            "You need to vote the current project pair before generating a new project pair",
-        })
-
-        return
-      }
-
-      alreadyShownProjectsIds = Enumerable.from(userData.votes)
-        .select((x) => x.firstProjectId)
-        .merge(Enumerable.from(userData.votes).select((x) => x.secondProjectId))
-        .toArray()
-
-      userVotesData = userData.votes
+      return
     }
 
-    let canBeShownProjects = Enumerable.from(projects)
-      .where((x) => !alreadyShownProjectsIds.includes(x.projectId))
-      .toArray()
+    const projectPairData = await generateNewRandomProjectPair(userAddress)
 
-    const firstProjectRandomIndex = integerRandomNumberExcludedMax(
-      0,
-      canBeShownProjects.length
-    )
-
-    const firstProject = canBeShownProjects[firstProjectRandomIndex]
-
-    canBeShownProjects = Enumerable.from(canBeShownProjects)
-      .where((x) => x.projectId != firstProject.projectId)
-      .toArray()
-
-    const secondProjectRandomIndex = integerRandomNumberExcludedMax(
-      0,
-      canBeShownProjects.length
-    )
-
-    const secondProject = canBeShownProjects[secondProjectRandomIndex]
-
-    userVotesData.push({
-      firstProjectId: firstProject.projectId,
-      secondProjectId: secondProject.projectId,
-      status: "displayed",
-      votedProjectId: 0,
-      vote: 0,
+    res.status(200).json({
+      firstProject: projectPairData.firstProject,
+      secondProject: projectPairData.secondProject,
     })
-
-    if ((await UsersData.countDocuments({ address: userAddress })) == 0)
-      await UsersData.insertMany([
-        {
-          address: userAddress,
-          votes: userVotesData,
-        },
-      ])
-    else
-      await UsersData.findOneAndUpdate(
-        { address: userAddress },
-        {
-          votes: userVotesData,
-        }
-      )
-
-    res
-      .status(200)
-      .json({ firstProject: firstProject, secondProject: secondProject })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -264,9 +243,10 @@ router.get("/get-random-project-pair", async function (req, res, next) {
  *             schema:
  *               type: object
  *               properties:
- *                 message:
- *                   type: string
- *                   description: Confirmation message
+ *                 firstProject:
+ *                   type: object
+ *                 secondProject:
+ *                   type: object
  *       500:
  *         description: Error voting for a project
  *         content:
@@ -284,18 +264,17 @@ router.post("/vote", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const usersData = await UsersData.findOne({ address: userAddress })
+    const userData = await UsersData.findOne({ address: userAddress })
 
     if (
-      Enumerable.from(usersData.votes).count((x) => x.status == "displayed") ==
-      0
+      Enumerable.from(userData.votes).count((x) => x.status == "displayed") == 0
     ) {
       res.status(500).json({ message: "Nothing to vote" })
 
       return
     }
 
-    const toVoteData = Enumerable.from(usersData.votes)
+    const toVoteData = Enumerable.from(userData.votes)
       .where((x) => x.status == "displayed")
       .first()
 
@@ -310,7 +289,7 @@ router.post("/vote", async function (req, res, next) {
       return
     }
 
-    const score = await Scores.findOne({ address: userAddress })
+    const score = await getUserScore(userAddress)
 
     toVoteData.status = "voted"
 
@@ -324,13 +303,18 @@ router.post("/vote", async function (req, res, next) {
     await UsersData.findOneAndUpdate(
       { address: userAddress },
       {
-        votes: usersData.votes,
+        votes: userData.votes,
       }
     )
 
     await updateProjectsRanking()
 
-    res.status(200).json({ message: "Vote executed" })
+    const projectPairData = await generateNewRandomProjectPair(userAddress)
+
+    res.status(200).json({
+      firstProject: projectPairData.firstProject,
+      secondProject: projectPairData.secondProject,
+    })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -402,10 +386,10 @@ router.patch("/vote", async function (req, res, next) {
       return
     }
 
-    const usersData = await UsersData.findOne({ address: userAddress })
+    const userData = await UsersData.findOne({ address: userAddress })
 
     if (
-      !Enumerable.from(usersData.votes).any(
+      !Enumerable.from(userData.votes).any(
         (x) =>
           x.firstProjectId == firstProjectId &&
           x.secondProjectId == secondProjectId &&
@@ -417,9 +401,9 @@ router.patch("/vote", async function (req, res, next) {
       return
     }
 
-    const score = await Scores.findOne({ address: userAddress })
+    const score = await getUserScore(userAddress)
 
-    const toUpdateVoteData = Enumerable.from(usersData.votes)
+    const toUpdateVoteData = Enumerable.from(userData.votes)
       .where(
         (x) =>
           x.firstProjectId == firstProjectId &&
@@ -437,16 +421,107 @@ router.patch("/vote", async function (req, res, next) {
     await UsersData.findOneAndUpdate(
       { address: userAddress },
       {
-        votes: usersData.votes,
+        votes: userData.votes,
       }
     )
 
     await updateProjectsRanking()
 
-    res.status(200).json({ message: "Vote executed" })
+    res.status(200).json({ message: "Vote updated" })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
 })
+
+async function generateNewRandomProjectPair(userAddress) {
+  const projects = await Projects.find()
+
+  const userData = await UsersData.findOne({ address: userAddress })
+
+  let alreadyShownProjectsIds = []
+
+  let userVotesData = []
+
+  if (userData != null) {
+    if (
+      Enumerable.from(userData.votes).count((x) => x.status == "displayed") > 0
+    ) {
+      const toVoteProjectPairData = Enumerable.from(userData.votes)
+        .where((x) => x.status == "displayed")
+        .first()
+
+      return {
+        firstProject: Enumerable.from(projects)
+          .where((x) => x.projectId == toVoteProjectPairData.firstProjectId)
+          .first(),
+        secondProject: Enumerable.from(projects)
+          .where((x) => x.projectId == toVoteProjectPairData.secondProjectId)
+          .first(),
+      }
+    }
+    alreadyShownProjectsIds = Enumerable.from(userData.votes)
+      .select((x) => x.firstProjectId)
+      .merge(Enumerable.from(userData.votes).select((x) => x.secondProjectId))
+      .toArray()
+
+    userVotesData = userData.votes
+  }
+
+  let canBeShownProjects = Enumerable.from(projects)
+    .where((x) => !alreadyShownProjectsIds.includes(x.projectId))
+    .toArray()
+
+  const firstProjectRandomIndex = integerRandomNumberExcludedMax(
+    0,
+    canBeShownProjects.length
+  )
+
+  const firstProject = canBeShownProjects[firstProjectRandomIndex]
+
+  canBeShownProjects = Enumerable.from(canBeShownProjects)
+    .where((x) => x.projectId != firstProject.projectId)
+    .toArray()
+
+  const secondProjectRandomIndex = integerRandomNumberExcludedMax(
+    0,
+    canBeShownProjects.length
+  )
+
+  const secondProject = canBeShownProjects[secondProjectRandomIndex]
+
+  userVotesData.push({
+    firstProjectId: firstProject.projectId,
+    secondProjectId: secondProject.projectId,
+    status: "displayed",
+    votedProjectId: 0,
+    vote: 0,
+  })
+
+  if ((await UsersData.countDocuments({ address: userAddress })) == 0)
+    await UsersData.insertMany([
+      {
+        address: userAddress,
+        votes: userVotesData,
+      },
+    ])
+  else
+    await UsersData.findOneAndUpdate(
+      { address: userAddress },
+      {
+        votes: userVotesData,
+      }
+    )
+
+  return { firstProject: firstProject, secondProject: secondProject }
+}
+
+async function getUserScore(userAddress) {
+  let score = await Scores.findOne({ address: userAddress })
+
+  if (score == null && process.env.MODE == "test")
+    score = { address: userAddress, score: 100, normalizedScore: 0.1 }
+
+  return score
+}
 
 export default router
