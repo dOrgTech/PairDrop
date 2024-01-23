@@ -5,13 +5,27 @@ import { fetcher } from '@/providers/swr'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export function useProjectsData() {
-  // const { data, error } = useSWR(`${API_URL}/projects`, (url) => fetcher(url, 'GET'))
-  const { data, error } = useSWR(`/projects.json`, (url) => fetcher(url, 'GET'))
+  const { data, error } = useSWR(`${API_URL}/projects`, (url) => fetcher(url, 'GET'))
 
   return {
     projectsData: data,
     isProjectsLoading: !error && !data,
     isProjectsError: error,
+  }
+}
+
+export function useMyVotesData(refetch?: boolean) {
+  const auth = typeof window !== 'undefined' ? localStorage.getItem('auth') || '' : ''
+  const { data, error, mutate } = useSWR(`${API_URL}/user/votes`, (url) => fetcher(url, 'GET', null, auth))
+
+  useEffect(() => {
+    mutate()
+  }, [refetch, mutate])
+
+  return {
+    myVotesData: data,
+    isMyVotesLoading: !error && !data,
+    isMyVotesError: error,
   }
 }
 

@@ -77,14 +77,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
         {/* Project Metrics */}
         <div className='mb-8 flex flex-col gap-4'>
           <div className='font-black'>PROJECT METRICS</div>
-          <div className='flex w-full gap-6'>
+          <div className='flex w-full flex-wrap gap-6'>
             {data.projectMetrics.map((metric: Metric, index: number) => {
               const metricName = Object.keys(metric)[0]
               const metricValue = metric[metricName]
-              const widthPercentage = `${100 / data.projectMetrics.length}%`
 
               return (
-                <div className='card-metric' style={{ width: widthPercentage }} key={index}>
+                <div className='card-metric' key={index}>
                   <div className='font-ibm text-sm'>{metricName}</div>
                   <div className='font-black'>
                     {metricName.includes('Funding') ? '$' : ''}
@@ -133,14 +132,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
         {/* Project Impact Metrics */}
         <div className='mb-16 flex flex-col gap-5'>
           <div className='font-black'>IMPACT METRICS</div>
-          <div className='flex w-full gap-6'>
+          <div className='flex w-full flex-wrap gap-6'>
             {data.impactMetrics.map((metric: Metric, index: number) => {
               const metricName = Object.keys(metric)[0]
               const metricValue = metric[metricName]
-              const widthPercentage = `${100 / data.impactMetrics.length}%`
 
               return (
-                <div className='card-metric' style={{ width: widthPercentage }} key={index}>
+                <div className='card-metric' key={index}>
                   <div className='font-ibm text-sm'>{metricName}</div>
                   <div className='font-black'>{metricValue.toLocaleString()}</div>
                 </div>

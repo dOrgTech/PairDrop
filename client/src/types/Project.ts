@@ -14,7 +14,7 @@ export interface ProjectType {
 }
 
 export interface Metric {
-  [key: string]: string | number
+  [key: string]: number
 }
 
 export interface SocialLink {

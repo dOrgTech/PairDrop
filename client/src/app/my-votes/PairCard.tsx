@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 interface CardProps {
-  status: 'voted' | 'vote' | 'hidden'
+  status: 'voted' | 'displayed' | 'hidden'
   projectIcons: (string | undefined)[]
   firstProjectID: number
   secondProjectID: number
@@ -13,7 +13,7 @@ const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, second
   return (
     <div
       className={`flex h-[185px] w-[315px] flex-col items-center border-[6px] bg-aquamarine-400 
-            ${status === 'vote' ? 'border-indigo-600' : 'border-indigo-300'} ${
+            ${status === 'displayed' ? 'border-indigo-600' : 'border-indigo-300'} ${
               status !== 'hidden' && 'cursor-pointer'
             }`}
       onClick={() => {
@@ -34,7 +34,7 @@ const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, second
         <>
           <div
             className={`relative flex min-h-[130px] w-full justify-center border-b-[6px] bg-gradient-teal ${
-              status === 'vote' ? 'border-indigo-600' : 'border-indigo-300'
+              status === 'displayed' ? 'border-indigo-600' : 'border-indigo-300'
             }`}
           >
             <Image
