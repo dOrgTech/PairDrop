@@ -6,7 +6,7 @@ import { fileURLToPath } from "url"
 import mongoose from "mongoose"
 import Projects from "./models/db_Projects.js"
 import Scores from "./models/db_Scores.js"
-import Votes from "./models/db_Votes.js"
+import UsersData from "./models/db_UsersData.js"
 
 dotenv.config()
 
@@ -34,7 +34,10 @@ class Seeder {
   }
 
   #exportDataToJSONFile(filePath, data) {
-    fs.writeFileSync(this.#getCurrentPath() + filePath, JSON.stringify(data))
+    fs.writeFileSync(
+      this.#getCurrentPath() + filePath,
+      JSON.stringify(data, null, 2)
+    )
   }
 
   #exportDataToCSVFile(filePath, data, dataStructure) {
@@ -45,6 +48,11 @@ class Seeder {
   }
 
   #exportDataToFileSync(filePath, data, jsonFormat, dataStructure = undefined) {
+    const exportedDataFolderPath = this.#getCurrentPath() + "/exportedData"
+
+    if (!fs.existsSync(exportedDataFolderPath))
+      fs.mkdirSync(exportedDataFolderPath)
+
     if (jsonFormat) this.#exportDataToJSONFile(filePath, data)
     else this.#exportDataToCSVFile(filePath, data, dataStructure)
   }
@@ -191,15 +199,15 @@ class Seeder {
   }
 
   async deleteVotes() {
-    if ((await Votes.countDocuments()) == 0) {
-      this.#logError("VOTES COLLECTION IS EMPTY")
+    if ((await UsersData.countDocuments()) == 0) {
+      this.#logError("USERSDATA COLLECTION IS EMPTY")
 
       return
     }
 
     console.log("DELETING VOTES...")
 
-    await Votes.deleteMany()
+    await UsersData.deleteMany()
 
     console.log("VOTES DELETED")
   }
@@ -253,7 +261,7 @@ async function ProcessSeeding() {
     }
     case "-dv": {
       await seeder.deleteVotes()
-      
+
       break
     }
   }

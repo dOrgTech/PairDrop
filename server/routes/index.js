@@ -41,55 +41,42 @@ const router = express.Router()
  *                     description: Project description
  *                     example: Lorem ipsum dolor sit amet, consectetur adipiscing elit...
  *                   projectMetrics:
- *                     type: object
- *                     properties:
- *                       teamSize:
- *                         type: integer
- *                         example: 10
- *                       totalFunding:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       additionalProperties:
  *                         type: number
- *                         example: 500000
+ *                     example: [{ "Team Size": 500000 }, { "Total Funding": 1000000 }]
+ *                   projectSocials:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       additionalProperties:
+ *                         type: string
+ *                     example: [{"twitter":"https://twitter.com/project1"},{"discord":"https://discord.com/invite/project1"},{"github":"https://github.com/project1"}]
  *                   projectLinks:
- *                     type: object
- *                     properties:
- *                       twitter:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       additionalProperties:
  *                         type: string
- *                         example: https://twitter.com/example
- *                       discord:
- *                         type: string
- *                         example: https://discord1.com/invite/example
- *                       github:
- *                         type: string
- *                         example: https://github.com/example
- *                       youtubeVideoOverview:
- *                         type: string
- *                         example: https://youtube.com/watch?v=example
- *                       website:
- *                         type: string
- *                         example: https://www.example.com
- *                       roadmap:
- *                         type: string
- *                         example: https://www.example.com/roadmap
+ *                     example: [{"Project Overview Video (Youtube)":"https://youtube.com/watch?v=project1"},{"Project website (website)":"https://www.project1.com"},{"Roadmap (document)":"https://www.project1.com/roadmap"}]
  *                   impactDetails:
  *                     type: string
  *                   impactMetrics:
- *                     type: object
- *                     properties:
- *                       metric1:
- *                         type: string
- *                       metric2:
- *                         type: string
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       additionalProperties:
+ *                         type: number
+ *                     example: [{ "Trees Planted": 189320 }, { "Trees Saved": 8930 }]
  *                   funding:
  *                     type: array
  *                     items:
  *                       type: object
- *                       properties:
- *                         fundingSource:
- *                           type: string
- *                           example: Source A
- *                         fundingAmount:
- *                           type: number
- *                           example: 300000
+ *                       additionalProperties:
+ *                         type: number
+ *                     example: [{ "Sequoia": 500000 }, { "Paradigm": 1000000 }]
  *                   score:
  *                     type: number
  *                     example: 23.09  

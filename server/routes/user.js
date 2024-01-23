@@ -2,10 +2,9 @@ import express from "express"
 import { getAuthenticatedAddress, updateProjectsRanking } from "../tools.js"
 import { integerRandomNumberExcludedMax } from "../tools.js"
 import Scores from "../models/db_Scores.js"
-import Votes from "../models/db_Votes.js"
 import Projects from "../models/db_Projects.js"
 import Enumerable from "linq"
-import UserTempData from "../models/db_UserTempData.js"
+import UsersData from "../models/db_UsersData.js"
 
 const router = express.Router()
 
@@ -35,7 +34,7 @@ const router = express.Router()
  *                   example: 100.75
  *                 normalizedScore:
  *                   type: number
- *                   example: 0.22
+ *                   example: 0.12
  *       500:
  *         description: Error getting user score data
  *         content:
@@ -63,6 +62,64 @@ router.get("/score", async function (req, res, next) {
 
 /**
  * @swagger
+ * /user/votes:
+ *   get:
+ *     summary: Retrieves user votes data
+ *     parameters:
+ *       - in: header
+ *         name: auth
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The user votes data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 firstProjectId:
+ *                   type: integer
+ *                   example: 1
+ *                 secondProjectId:
+ *                   type: integer
+ *                   example: 3
+ *                 status:
+ *                   type: string
+ *                   example: "voted"
+ *                 votedProjectId:
+ *                   type: integer
+ *                   example: 3
+ *                 vote:
+ *                   type: number
+ *                   example: 0.12
+ *       500:
+ *         description: Error getting user votes data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
+router.get("/votes", async function (req, res, next) {
+  const userAddress = await getAuthenticatedAddress(req, res)
+
+  if (!userAddress) return
+
+  try {
+    const userData = await UsersData.findOne({ address: userAddress })
+
+    res.status(200).json((userData != null ? userData.votes : []))
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+/**
+ * @swagger
  * /user/get-random-project-pair:
  *   get:
  *     summary: Generates and retrieves a random projects pair
@@ -79,9 +136,9 @@ router.get("/score", async function (req, res, next) {
  *             schema:
  *               type: object
  *               properties:
- *                 project1:
+ *                 firstProject:
  *                   type: object
- *                 project2:
+ *                 secondProject:
  *                   type: object
  *       500:
  *         description: Error getting a random projects pair
@@ -102,50 +159,81 @@ router.get("/get-random-project-pair", async function (req, res, next) {
   try {
     const projects = await Projects.find()
 
-    const votes = await Votes.find({ address: userAddress })
+    const userData = await UsersData.findOne({ address: userAddress })
 
-    const alreadyShownProjectsIds = Enumerable.from(votes)
-      .select((x) => x.project1Id)
-      .merge(Enumerable.from(votes).select((x) => x.project2Id))
-      .toArray()
+    let alreadyShownProjectsIds = []
+
+    let userVotesData = []
+
+    if (userData != null) {
+      if (
+        Enumerable.from(userData.votes).count((x) => x.status == "displayed") >
+        0
+      ) {
+        res.status(500).json({
+          message:
+            "You need to vote the current project pair before generating a new project pair",
+        })
+
+        return
+      }
+
+      alreadyShownProjectsIds = Enumerable.from(userData.votes)
+        .select((x) => x.firstProjectId)
+        .merge(Enumerable.from(userData.votes).select((x) => x.secondProjectId))
+        .toArray()
+
+      userVotesData = userData.votes
+    }
 
     let canBeShownProjects = Enumerable.from(projects)
       .where((x) => !alreadyShownProjectsIds.includes(x.projectId))
       .toArray()
 
-    const project1RandomIndex = integerRandomNumberExcludedMax(
+    const firstProjectRandomIndex = integerRandomNumberExcludedMax(
       0,
       canBeShownProjects.length
     )
 
-    const project1 = canBeShownProjects[project1RandomIndex]
+    const firstProject = canBeShownProjects[firstProjectRandomIndex]
 
     canBeShownProjects = Enumerable.from(canBeShownProjects)
-      .where((x) => x.projectId != project1.projectId)
+      .where((x) => x.projectId != firstProject.projectId)
       .toArray()
 
-    const project2RandomIndex = integerRandomNumberExcludedMax(
+    const secondProjectRandomIndex = integerRandomNumberExcludedMax(
       0,
       canBeShownProjects.length
     )
 
-    const project2 = canBeShownProjects[project2RandomIndex]
+    const secondProject = canBeShownProjects[secondProjectRandomIndex]
 
-    if (UserTempData.countDocuments({ address: userAddress }) == 0)
-      UserTempData.findOneAndUpdate(
-        { address: userAddress },
-        { displayedProject1Id: project1.projectId, displayedProject2Id: project2.projectId }
-      )
-    else
-      UserTempData.insertMany([
+    userVotesData.push({
+      firstProjectId: firstProject.projectId,
+      secondProjectId: secondProject.projectId,
+      status: "displayed",
+      votedProjectId: 0,
+      vote: 0,
+    })
+
+    if ((await UsersData.countDocuments({ address: userAddress })) == 0)
+      await UsersData.insertMany([
         {
           address: userAddress,
-          displayedProject1Id: project1.projectId,
-          displayedProject2Id: project2.projectId,
+          votes: userVotesData,
         },
       ])
+    else
+      await UsersData.findOneAndUpdate(
+        { address: userAddress },
+        {
+          votes: userVotesData,
+        }
+      )
 
-    res.status(200).json({ project1: project1, project2: project2 })
+    res
+      .status(200)
+      .json({ firstProject: firstProject, secondProject: secondProject })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -196,46 +284,49 @@ router.post("/vote", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const userTempData = await UserTempData.findOne({ address: userAddress })
+    const usersData = await UsersData.findOne({ address: userAddress })
 
-    if (!userTempData) {
-      res
-        .status(500)
-        .json({ message: "You need to generate a random project pair first" })
+    if (
+      Enumerable.from(usersData.votes).count((x) => x.status == "displayed") ==
+      0
+    ) {
+      res.status(500).json({ message: "Nothing to vote" })
 
       return
     }
 
+    const toVoteData = Enumerable.from(usersData.votes)
+      .where((x) => x.status == "displayed")
+      .first()
+
     const votedProjectId = req.body.votedProjectId
 
     if (
-      votedProjectId != userTempData.displayedProject1Id &&
-      votedProjectId != userTempData.displayedProject2Id
+      votedProjectId != toVoteData.firstProjectId &&
+      votedProjectId != toVoteData.secondProjectId
     ) {
       res.status(500).json({ message: "Wrong project id" })
 
       return
     }
 
-    if (await Votes.countDocuments({ address: userAddress, project1Id: userTempData.displayedProject1Id, project2Id: userTempData.displayedProject2Id }) > 0) {
-      res.status(500).json({ message: "You already voted for this pair, if you need to modify the vote call with patch" })
+    const score = await Scores.findOne({ address: userAddress })
 
-      return
-    }
+    toVoteData.status = "voted"
 
-    const score = await Scores.findOne({ address: userAddress }) 
+    toVoteData.votedProjectId = votedProjectId
 
-    await Votes.insertMany([
+    toVoteData.vote =
+      votedProjectId == toVoteData.firstProjectId
+        ? 0.8 + score.normalizedScore
+        : 0.2 - score.normalizedScore
+
+    await UsersData.findOneAndUpdate(
+      { address: userAddress },
       {
-        address: userAddress,
-        project1Id: userTempData.displayedProject1Id,
-        project2Id: userTempData.displayedProject2Id,
-        vote:
-          votedProjectId == userTempData.displayedProject1Id
-            ? 1 - score.normalizedScore
-            : score.normalizedScore,
-      },
-    ])
+        votes: usersData.votes,
+      }
+    )
 
     await updateProjectsRanking()
 
@@ -259,10 +350,19 @@ router.post("/vote", async function (req, res, next) {
  *         schema:
  *           type: object
  *           required:
+ *             - firstProjectId
+ *             - secondProjectId
  *             - votedProjectId
  *           properties:
+ *             firstProjectId:
+ *               type: integer
+ *               example: 1
+ *             secondProjectId:
+ *               type: integer
+ *               example: 3
  *             votedProjectId:
  *               type: integer
+ *               example: 3
  *     responses:
  *       200:
  *         content:
@@ -290,37 +390,54 @@ router.patch("/vote", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const displayedProject1Id = req.body.displayedProject1Id
+    const firstProjectId = req.body.firstProjectId
 
-    const displayedProject2Id = req.body.displayedProject2Id
+    const secondProjectId = req.body.secondProjectId
 
     const votedProjectId = req.body.votedProjectId
 
-    const userVote = await Votes.findOne({
-      address: userAddress,
-      project1Id: displayedProject1Id,
-      project2Id: displayedProject2Id,
-    })
+    if (votedProjectId != firstProjectId && votedProjectId != secondProjectId) {
+      res.status(500).json({ message: "Wrong voted project id" })
 
-    if (!userVote) {
-      res.status(500).json({ message: "Wrong data" })
+      return
+    }
+
+    const usersData = await UsersData.findOne({ address: userAddress })
+
+    if (
+      !Enumerable.from(usersData.votes).any(
+        (x) =>
+          x.firstProjectId == firstProjectId &&
+          x.secondProjectId == secondProjectId &&
+          x.status == "voted"
+      )
+    ) {
+      res.status(500).json({ message: "Wrong project pair" })
 
       return
     }
 
     const score = await Scores.findOne({ address: userAddress })
 
-    await Votes.findOneAndUpdate(
+    const toUpdateVoteData = Enumerable.from(usersData.votes)
+      .where(
+        (x) =>
+          x.firstProjectId == firstProjectId &&
+          x.secondProjectId == secondProjectId
+      )
+      .first()
+
+    toUpdateVoteData.votedProjectId = votedProjectId
+
+    toUpdateVoteData.vote =
+      votedProjectId == firstProjectId
+        ? 0.8 + score.normalizedScore
+        : 0.2 - score.normalizedScore
+
+    await UsersData.findOneAndUpdate(
+      { address: userAddress },
       {
-        address: userAddress,
-        project1Id: displayedProject1Id,
-        project2Id: displayedProject2Id,
-      },
-      {
-        vote:
-          votedProjectId == displayedProject1Id
-            ? 1 - score.normalizedScore
-            : score.normalizedScore,
+        votes: usersData.votes,
       }
     )
 
