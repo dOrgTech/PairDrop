@@ -19,9 +19,9 @@ export default function BlobBackground() {
   const startTime = Date.now()
 
   useEffect(() => {
-    if (!active && loaded === total) {
+    if (!active && loaded === total && showAnimation) {
       const loadDuration = Date.now() - startTime
-      console.log(loadDuration)
+      // console.log(loadDuration)
       if (loadDuration > 50) {
         setIsPerformanceOk(false)
       } else {
@@ -51,19 +51,17 @@ export default function BlobBackground() {
 
   return (
     <>
-      <div
-        className='absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight transition-opacity duration-1000 ease-in-out'
-        style={{ opacity: canvasOpacity }}
-      >
-        {showAnimation && (
-          <>
-            <Canvas>
-              <Scene />
-            </Canvas>
-            <Leva hidden />
-          </>
-        )}
-      </div>
+      {showAnimation && (
+        <div
+          className='absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight transition-opacity duration-1000 ease-in-out'
+          style={{ opacity: canvasOpacity }}
+        >
+          <Canvas>
+            <Scene />
+          </Canvas>
+          <Leva hidden />
+        </div>
+      )}
       <div className='absolute bottom-2 right-2 rounded-3xl text-xs font-medium'>
         <label className='inline-flex cursor-pointer items-center space-x-2' onClick={handleAnimationToggle}>
           <span className='ms-3 translate-y-px transform text-sm font-medium leading-none text-white'>Animation</span>
