@@ -1,6 +1,6 @@
 import Config from '../../../../tailwind.config.ts'
 import { useThree } from '@react-three/fiber'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { Environment, OrbitControls, Preload } from '@react-three/drei'
 import { LayerMaterial, Color, Noise, Gradient } from 'lamina'
 import { EffectComposer, DepthOfField, Noise as PostNoise } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
@@ -15,6 +15,7 @@ export const { indigo, aquamarine, yellow, magenta } = Config.theme.extend.color
 export default function Scene() {
   return (
     <>
+      <Preload all />
       <ambientLight />
       <Environment background resolution={32} frames={1}>
         <mesh scale={100}>

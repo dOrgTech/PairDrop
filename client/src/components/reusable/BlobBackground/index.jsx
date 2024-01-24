@@ -11,6 +11,11 @@ export default function BlobBackground() {
   const [isPerformanceOk, setIsPerformanceOk] = useState(true)
   const { active, loaded, total } = useProgress()
   const [canvasOpacity, setCanvasOpacity] = useState(0)
+  const [showAnimation, setShowAnimation] = useState(() => {
+    const saved = localStorage.getItem('showAnimation')
+    return saved !== null ? JSON.parse(saved) : true
+  })
+  const CanvasOpacityDelay = 2000
   const startTime = Date.now()
 
   useEffect(() => {
@@ -22,10 +27,23 @@ export default function BlobBackground() {
       } else {
         setTimeout(() => {
           setCanvasOpacity(1)
-        }, 2000)
+        }, CanvasOpacityDelay)
       }
     }
   }, [active, loaded, total, startTime])
+
+  useEffect(() => {
+    localStorage.setItem('showAnimation', JSON.stringify(showAnimation))
+
+    if (showAnimation) {
+      setCanvasOpacity(0)
+      setTimeout(() => setCanvasOpacity(1), CanvasOpacityDelay)
+    }
+  }, [showAnimation])
+
+  const handleAnimationToggle = () => {
+    setShowAnimation(!showAnimation)
+  }
 
   if (!isPerformanceOk) {
     return null
@@ -37,24 +55,20 @@ export default function BlobBackground() {
         className='absolute bottom-0 left-0 right-0 top-0 min-h-heroHeight transition-opacity duration-1000 ease-in-out'
         style={{ opacity: canvasOpacity }}
       >
-        <Canvas>
-          <Scene />
-        </Canvas>
-        <Leva hidden />
-        {/* <div className='absolute bottom-2 right-2 rounded-3xl text-xs font-medium'>
-          <label className='inline-flex cursor-pointer items-center space-x-2' onClick={handleAnimationToggle}>
-            <span className='ms-3 translate-y-px transform text-sm font-medium leading-none text-white'>Animation</span>
-            <div
-              className={`
-              relative h-5 w-9 rounded-full bg-gray-200
-              after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4
-              after:rounded-full after:border after:border-gray-300 after:bg-white
-              after:transition-all after:duration-200 after:ease-in-out after:content-['']
-              ${showAnimation && 'bg-indigo-600 after:translate-x-full after:border-white'}
-              `}
-            ></div>
-          </label>
-        </div> */}
+        {showAnimation && (
+          <>
+            <Canvas>
+              <Scene />
+            </Canvas>
+            <Leva hidden />
+          </>
+        )}
+      </div>
+      <div className='absolute bottom-2 right-2 rounded-3xl text-xs font-medium'>
+        <label className='inline-flex cursor-pointer items-center space-x-2' onClick={handleAnimationToggle}>
+          <span className='ms-3 translate-y-px transform text-sm font-medium leading-none text-white'>Animation</span>
+          <div className={`toggle ${showAnimation && 'toggle-active'}`} />
+        </label>
       </div>
     </>
   )
