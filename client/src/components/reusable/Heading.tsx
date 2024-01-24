@@ -46,7 +46,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
   }, [countdown, router])
 
   return (
-    <div className='bg relative flex min-h-heroHeight items-center justify-center'>
+    <div className='heading-bg relative flex min-h-heroHeight items-center justify-center'>
       <BlobBackground />
       <div className='z-30 flex flex-col items-center text-center'>
         {/* Page Not Found */}

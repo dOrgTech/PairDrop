@@ -1,5 +1,5 @@
 {
-  "name": "pair2pair-data",
+  "name": "pairdrop-data",
   "version": "0.1.0",
   "main": "scripts/dataGenerator.js",
   "type": "module",

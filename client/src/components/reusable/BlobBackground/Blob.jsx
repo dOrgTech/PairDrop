@@ -65,11 +65,11 @@ export default function Blob({ ...props }) {
 
   return (
     <group ref={cubeRef}>
-      <CubeCamera resolution={128} frames={1} envMap={texture}>
+      <CubeCamera resolution={32} frames={1} envMap={texture}>
         {(texture) => (
           <Float position-y={0.75} floatingRange={[-0.08, 0.08]} speed={12.41830199164322423} rotationIntensity={0}>
             <mesh {...props} ref={blobRef} onPointerEnter={handlePointerEnter} onPointerOut={handlePointerLeave}>
-              <sphereGeometry args={[2, 256, 256]} />
+              <sphereGeometry args={[2, 64, 64]} />
               <LayerMaterial
                 lighting='physical'
                 transmission={transmission}
