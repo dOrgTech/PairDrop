@@ -1,5 +1,5 @@
-# Pair2Pair
-Pair2Pair is an experiment in retroactive public goods funding that directly empowers Ethereum users to allocate ecosystem funds.
+# PairDrop
+PairDrop is an experiment in retroactive public goods funding that directly empowers Ethereum users to allocate ecosystem funds.
 
 Retroactive public goods funding is the concept of rewarding efforts that have already yielded a public benefit. This could address the problems associated with public goods funding, such as uncertainty of future outcomes and reporting/monitoring costs.
 
@@ -7,12 +7,12 @@ Putting this power into the hands of a diverse range of ecosystem participants c
 
 
 
-# Pair2Pair Client
+# PairDrop Client
 TODO
 
 
 
-# Pair2Pair Server
+# PairDrop Server
 
 ## Seeder
 Handles the import/export/deletion of data, the following commands are to be run inside the server folder.
@@ -80,7 +80,7 @@ node seeder.js -dv
 ```
 
 ## API
-Pair2Pair backend, can be started using `npm start` (for production) or `npm test` (for testing/development).
+PairDrop backend, can be started using `npm start` (for production) or `npm test` (for testing/development).
 
 The API documentation is implemented through Swagger and it's accessible at `/api-docs`.
 
@@ -96,11 +96,12 @@ Provides the following endpoints:
 
 ```
 ATLAS_URL=MONGO_DB_CONNECTION_URL
+MODE="test" or "prod"
 ```
 
 
 
-# Pair2Pair Data
+# PairDrop Data
 
 ## Data sources
 
@@ -326,7 +327,7 @@ npm run stats FILENAME_IN_DATAMINERSOUTPUT
 ```
 
 ## Data normalization
-Each data source result data is logarithmically normalized between 1 and 100; then the overall data is normalized between 0 and 0.5 in order to be compatible with the PowerRanker `/server/powerRanker.js`
+Each data source result data is logarithmically normalized between 1 and 100; then the overall data is normalized between 0 and 0.2 in order to be compatible with the PowerRanker `/server/powerRanker.js`
 
 ## Environment variables
 

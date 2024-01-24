@@ -41,7 +41,7 @@ const swaggerOptions = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "Pair2Pair Server",
+      title: "PairDrop Server",
       version: "0.1.0",
       description: "",
       license: {
