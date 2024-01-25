@@ -136,14 +136,20 @@ router.get("/votes", async function (req, res, next) {
           .where((x) => x.projectId == vote.secondProjectId)
           .first()
 
+        let votedProject = null
+
+        if (vote.status == "voted") {
+          votedProject =
+            vote.votedProjectId == vote.firstProjectId
+              ? firstProject
+              : secondProject
+        }
+
         votesData.push({
           firstProject: firstProject,
           secondProject: secondProject,
           status: vote.status,
-          votedProject:
-            vote.votedProjectId == vote.firstProjectId
-              ? firstProject
-              : secondProject,
+          votedProject: votedProject,
           vote: vote.vote,
         })
       }
