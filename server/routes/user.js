@@ -120,44 +120,46 @@ router.get("/votes", async function (req, res, next) {
   if (!userAddress) return
 
   try {
-    const userData = await UsersData.findOne({ address: userAddress })
+    let userData = await UsersData.findOne({ address: userAddress })
 
-    if (userData != null) {
-      const projects = await Projects.find()
+    if (userData == null) {
+      await generateNewRandomProjectPair(userAddress)
 
-      const votesData = []
+      userData = await UsersData.findOne({ address: userAddress })
+    }
 
-      for (const vote of userData.votes) {
-        const firstProject = Enumerable.from(projects)
-          .where((x) => x.projectId == vote.firstProjectId)
-          .first()
+    const projects = await Projects.find()
 
-        const secondProject = Enumerable.from(projects)
-          .where((x) => x.projectId == vote.secondProjectId)
-          .first()
+    const votesData = []
 
-        let votedProject = null
+    for (const vote of userData.votes) {
+      const firstProject = Enumerable.from(projects)
+        .where((x) => x.projectId == vote.firstProjectId)
+        .first()
 
-        if (vote.status == "voted") {
-          votedProject =
-            vote.votedProjectId == vote.firstProjectId
-              ? firstProject
-              : secondProject
-        }
+      const secondProject = Enumerable.from(projects)
+        .where((x) => x.projectId == vote.secondProjectId)
+        .first()
 
-        votesData.push({
-          firstProject: firstProject,
-          secondProject: secondProject,
-          status: vote.status,
-          votedProject: votedProject,
-          vote: vote.vote,
-        })
+      let votedProject = null
+
+      if (vote.status == "voted") {
+        votedProject =
+          vote.votedProjectId == vote.firstProjectId
+            ? firstProject
+            : secondProject
       }
 
-      res.status(200).json(votesData)
-    } else {
-      res.status(200).json([])
+      votesData.push({
+        firstProject: firstProject,
+        secondProject: secondProject,
+        status: vote.status,
+        votedProject: votedProject,
+        vote: vote.vote,
+      })
     }
+
+    res.status(200).json(votesData)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
