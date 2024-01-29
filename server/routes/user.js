@@ -151,6 +151,7 @@ router.get("/votes", async function (req, res, next) {
       }
 
       votesData.push({
+        pairIndex: vote.pairIndex,
         firstProject: firstProject,
         secondProject: secondProject,
         status: vote.status,
@@ -215,9 +216,13 @@ router.get("/get-random-project-pair", async function (req, res, next) {
       return
     }
 
-    const projectPairData = await generateNewRandomProjectPair(userAddress)
+    const projectPairData = await generateNewRandomProjectPair(
+      userAddress,
+      req.query.pairIndex
+    )
 
     res.status(200).json({
+      pairIndex: projectPairData.pairIndex,
       firstProject: projectPairData.firstProject,
       secondProject: projectPairData.secondProject,
     })
@@ -320,6 +325,7 @@ router.post("/vote", async function (req, res, next) {
     const projectPairData = await generateNewRandomProjectPair(userAddress)
 
     res.status(200).json({
+      pairIndex: projectPairData.pairIndex,
       firstProject: projectPairData.firstProject,
       secondProject: projectPairData.secondProject,
     })
@@ -441,7 +447,7 @@ router.patch("/vote", async function (req, res, next) {
   }
 })
 
-async function generateNewRandomProjectPair(userAddress) {
+async function generateNewRandomProjectPair(userAddress, pairIndex = null) {
   const projects = await Projects.find()
 
   const userData = await UsersData.findOne({ address: userAddress })
@@ -451,6 +457,28 @@ async function generateNewRandomProjectPair(userAddress) {
   let userVotesData = []
 
   if (userData != null) {
+    if (pairIndex != null)
+      if (
+        Enumerable.from(userData.votes).count((x) => x.pairIndex == pairIndex) >
+        0
+      ) {
+        const toReturnProjectPairData = Enumerable.from(userData.votes)
+          .where((x) => x.pairIndex == pairIndex)
+          .first()
+
+        return {
+          pairIndex: toReturnProjectPairData.pairIndex,
+          firstProject: Enumerable.from(projects)
+            .where((x) => x.projectId == toReturnProjectPairData.firstProjectId)
+            .first(),
+          secondProject: Enumerable.from(projects)
+            .where(
+              (x) => x.projectId == toReturnProjectPairData.secondProjectId
+            )
+            .first(),
+        }
+      }
+
     if (
       Enumerable.from(userData.votes).count((x) => x.status == "displayed") > 0
     ) {
@@ -459,6 +487,7 @@ async function generateNewRandomProjectPair(userAddress) {
         .first()
 
       return {
+        pairIndex: toVoteProjectPairData.pairIndex,
         firstProject: Enumerable.from(projects)
           .where((x) => x.projectId == toVoteProjectPairData.firstProjectId)
           .first(),
@@ -497,7 +526,10 @@ async function generateNewRandomProjectPair(userAddress) {
 
   const secondProject = canBeShownProjects[secondProjectRandomIndex]
 
+  const currentPairIndex = userVotesData.length + 1
+
   userVotesData.push({
+    pairIndex: currentPairIndex,
     firstProjectId: firstProject.projectId,
     secondProjectId: secondProject.projectId,
     status: "displayed",
@@ -520,7 +552,11 @@ async function generateNewRandomProjectPair(userAddress) {
       }
     )
 
-  return { firstProject: firstProject, secondProject: secondProject }
+  return {
+    pairIndex: currentPairIndex,
+    firstProject: firstProject,
+    secondProject: secondProject,
+  }
 }
 
 async function getUserScore(userAddress) {
