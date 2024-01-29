@@ -4,6 +4,7 @@ const userDataSchema = new mongoose.Schema({
   address: String,
   votes: [
     {
+      pairIndex: Number,
       firstProjectId: Number,
       secondProjectId: Number,
       status: String,
