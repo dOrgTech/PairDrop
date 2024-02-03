@@ -25,19 +25,19 @@ async function GenerateAll(onlyNormalize) {
 
   let scoreData = []
 
-  await DataMinerGardens.processData(scoreData, 1, onlyNormalize)
-  await DataMinerGitcoinDonation.processData(scoreData, 1, onlyNormalize)
-  await DataMinerEAS.processData(scoreData, 1, onlyNormalize)
-  await DataMinerGitcoinProjectsOwners.processData(scoreData, 1, onlyNormalize)
-  await DataMinerGiveth.processData(scoreData, 1, onlyNormalize)
-  await DataMinerHolonym.processData(scoreData, 1, onlyNormalize)
-  await DataMinerHumanbound.processData(scoreData, 1, onlyNormalize)
-  await DataMinerMirror.processData(scoreData, 1, onlyNormalize)
-  await DataMinerPOAP.processData(scoreData, 1.5, onlyNormalize)
-  await DataMinerPoolyNFT.processData(scoreData, 1, onlyNormalize)
-  await DataMinerProofOfHumanity.processData(scoreData, 1, onlyNormalize)
-  await DataMinerRossDAO.processData(scoreData, 1, onlyNormalize)
-  await DataMinerUkraineDAO.processData(scoreData, 1, onlyNormalize)
+  await DataMinerGardens.processData(scoreData, process.env.DATAMINER_GARDENS_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerGitcoinDonation.processData(scoreData, process.env.DATAMINER_GITCOINDONATION_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerEAS.processData(scoreData, process.env.DATAMINER_EAS_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerGitcoinProjectsOwners.processData(scoreData, process.env.DATAMINER_GITCOINPROJECTSOWNERS_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerGiveth.processData(scoreData, process.env.DATAMINER_GIVETH_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerHolonym.processData(scoreData, process.env.DATAMINER_HOLONYM_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerHumanbound.processData(scoreData, process.env.DATAMINER_HUMANBOUND_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerMirror.processData(scoreData, process.env.DATAMINER_MIRROR_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerPOAP.processData(scoreData, process.env.DATAMINER_POAP_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerPoolyNFT.processData(scoreData, process.env.DATAMINER_POOLYNFT_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerProofOfHumanity.processData(scoreData, process.env.DATAMINER_PROOFOFHUMANITY_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerRossDAO.processData(scoreData, process.env.DATAMINER_ROSSDAO_SCOREMULTIPLIER, onlyNormalize)
+  await DataMinerUkraineDAO.processData(scoreData, process.env.DATAMINER_UKRAINEDAO_SCOREMULTIPLIER, onlyNormalize)
 
   const overallMinScore = Enumerable.from(scoreData).min((x) => x.score)
 
@@ -53,8 +53,8 @@ async function GenerateAll(onlyNormalize) {
       currentScore.score,
       overallMinScore,
       overallMaxScore,
-      0,
-      0.2
+      process.env.FINALNORMALIZATION_MIN,
+      process.env.FINALNORMALIZATION_MAX
     )
   }
 

@@ -41,8 +41,8 @@ const swaggerOptions = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "PairDrop Server",
-      version: "0.1.0",
+      title: process.env.SERVER_NAME,
+      version: process.env.SERVER_VERSION,
       description: "",
       license: {
         name: "MIT",

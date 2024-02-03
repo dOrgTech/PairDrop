@@ -34,7 +34,7 @@ export default class DataMinerRossDAO extends DataMiner {
 
           if (y.type != "ETHER_TRANSFER") return
 
-          if (BigInt(y.value) < BigInt("45000000000000000")) return
+          if (BigInt(y.value) < BigInt(process.env.DATAMINER_ROSSDAO_ETHTHRESHOLD)) return
 
           let fromAddress = y.from.toLowerCase()
 

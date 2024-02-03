@@ -7,7 +7,7 @@ import DataMiner from "./dataMiner.js"
 export default class DataMinerPOAP extends DataMiner {
   async getData() {
     axiosRetry(axios, {
-      retries: 5,
+      retries: process.env.AXIOS_RETRIES,
     })
 
     const { status: responseStatus, data: responseData } = await axios.post(
