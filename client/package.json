@@ -27,6 +27,7 @@
     "web3-token": "^1.0.6"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.41.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
