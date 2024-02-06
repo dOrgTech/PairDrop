@@ -310,8 +310,8 @@ router.post("/vote", async function (req, res, next) {
 
     toVoteData.vote =
       votedProjectId == toVoteData.firstProjectId
-        ? 0.8 + score.normalizedScore
-        : 0.2 - score.normalizedScore
+        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE + score.normalizedScore
+        : process.env.PROJECTPAIR_SECONDPROJECT_ENDSCORE - score.normalizedScore
 
     await UsersData.findOneAndUpdate(
       { address: userAddress },
@@ -429,8 +429,8 @@ router.patch("/vote", async function (req, res, next) {
 
     toUpdateVoteData.vote =
       votedProjectId == firstProjectId
-        ? 0.8 + score.normalizedScore
-        : 0.2 - score.normalizedScore
+        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE + score.normalizedScore
+        : process.env.PROJECTPAIR_SECONDPROJECT_ENDSCORE - score.normalizedScore
 
     await UsersData.findOneAndUpdate(
       { address: userAddress },

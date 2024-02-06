@@ -19,8 +19,8 @@ export default class DataMiner {
     let minEntry = 1
     let maxEntry = Enumerable.from(this.localScoreData).max((x) => x.score) * 10
 
-    let normalizedMin = 1
-    let normalizedMax = 100
+    let normalizedMin = process.env.LOGNORMALIZATION_MIN
+    let normalizedMax = process.env.LOGNORMALIZATION_MAX
 
     for (let i = 0; i < this.localScoreData.length; i++)
       this.localScoreData[i].score =

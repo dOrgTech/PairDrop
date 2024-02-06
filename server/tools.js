@@ -53,7 +53,7 @@ export async function updateProjectsRanking() {
 
   const powerRanker = new PowerRanker(powerRankerItems, powerRankerVotes, false)
 
-  let generatedRanking = powerRanker.run(1)
+  let generatedRanking = powerRanker.run(process.env.POWERRANKER_DAMPINGFACTOR)
 
   for (const project of projects)
     await Projects.findByIdAndUpdate(project._id, {

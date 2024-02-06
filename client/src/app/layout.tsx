@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import { SWRProvider } from '@/providers/swr'
 
 export const metadata: Metadata = {
-  title: 'Pair2Pair',
+  title: 'PairDrop',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

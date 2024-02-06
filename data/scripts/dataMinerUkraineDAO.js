@@ -33,7 +33,7 @@ export default class DataMinerUkraineDAO extends DataMiner {
           if (y.to != contractAddress) return
 
           if (y.type == "ETHER_TRANSFER") {
-            if (BigInt(y.value) < BigInt("45000000000000000")) return
+            if (BigInt(y.value) < BigInt(process.env.DATAMINER_UKRAINEDAO_ETHTHRESHOLD)) return
           }
 
           if (y.type == "ERC20_TRANSFER") {
@@ -52,12 +52,12 @@ export default class DataMinerUkraineDAO extends DataMiner {
               case "USDT":
               case "DAI":
                 {
-                  if (BigInt(y.value) < BigInt("100000000")) return
+                  if (BigInt(y.value) < BigInt(process.env.DATAMINER_UKRAINEDAO_STABLECOINTHRESHOLD)) return
                 }
                 break
               case "WETH":
                 {
-                  if (BigInt(y.value) < BigInt("45000000000000000")) return
+                  if (BigInt(y.value) < BigInt(process.env.DATAMINER_UKRAINEDAO_ETHTHRESHOLD)) return
                 }
                 break
             }

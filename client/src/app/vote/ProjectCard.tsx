@@ -21,11 +21,16 @@ const ProjectCard = ({
   selected,
   onProjectView,
 }: ProjectCardProps) => {
+  const handleViewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    onProjectView()
+  }
+
   return (
     <div className='group flex cursor-pointer flex-col items-center' onClick={() => setSelectedProjectId(projectId)}>
       <div
-        className={`card group-hover:shadow-aqua transition-element relative z-10 h-full w-[410px] cursor-pointer p-6 !duration-150 group-hover:border-aquamarine-400 ${
-          selected ? 'shadow-aqua border-aquamarine-400' : ''
+        className={`card transition-element relative z-10 h-full w-[410px] cursor-pointer p-6 !duration-150 group-hover:border-aquamarine-400 group-hover:shadow-aqua ${
+          selected ? 'border-aquamarine-400 shadow-aqua' : ''
         }`}
       >
         <div className='flex items-center gap-3'>
@@ -49,7 +54,7 @@ const ProjectCard = ({
             </div>
           ))}
         </div>
-        <button className='button mt-auto' onClick={onProjectView}>
+        <button className='button mt-auto' onClick={handleViewButtonClick}>
           View Project
         </button>
       </div>

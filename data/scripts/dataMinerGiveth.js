@@ -179,7 +179,7 @@ export default class DataMinerGiveth extends DataMiner {
         Enumerable.from(
           donationsResponseData.data.donationsByProjectId.donations
         ).forEach((x) => {
-          if (x.valueUsd < 100) return
+          if (x.valueUsd < process.env.DATAMINER_GIVETH_USDTHRESHOLD) return
 
           if (x.user != null)
             this.addScoreToLocalScoreData(x.user.walletAddress.toLowerCase(), 1)

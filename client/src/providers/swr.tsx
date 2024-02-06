@@ -12,6 +12,9 @@ export const fetcher = async (url: string, method: string, data: any = null, aut
   } else if (method === 'POST') {
     const response = await axios.post(url, data, { headers })
     return response.data
+  } else if (method === 'PATCH') {
+    const response = await axios.patch(url, data, { headers })
+    return response.data
   }
 }
 
