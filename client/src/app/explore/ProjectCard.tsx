@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ProjectCardType } from '@/types/ProjectCard'
+import { ProjectCardType } from '@/types'
 
 const ProjectCard = ({ projectName, projectDetails, categories, projectIcon }: ProjectCardType) => {
   return (

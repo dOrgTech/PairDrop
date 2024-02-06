@@ -1,8 +1,10 @@
 import Heading from '@/components/reusable/Heading'
+import FAQ from './FAQ'
+
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Pair2Pair - About',
+  title: 'PairDrop - About',
 }
 
 export default function About() {
@@ -11,50 +13,78 @@ export default function About() {
       <Heading />
 
       <div className='side-padding mt-32 flex flex-col items-center'>
-        <h2 className='mb-10 text-center'>
-          WHAT IS PAIR<span className='text-magenta-600'>2</span>PAIR?
-        </h2>
-        <p className='card card-blue-dots p-[46px]'>
-          Pair2Pair is a decentralized capital allocation mechanism. It allows a community to do cobudgeting of a set of
-          funds, to distribute money to projects that best meet the community’s goals. It can also be used to set policy
-          - instead of voting yes or no on intimidating governance proposals, voters can compare proposals to surface
-          which ones rise to the top as most important. Pair2Pair feels more like a game than a chore. DAO Drops’
-          interface is designed to look like a cute video game to enhance the fun and increase participation, while
-          meaningfully gathering financial priorities.
+        <h2 className='mb-10 text-center uppercase'>PairDrop by DAO Drops</h2>
+        <p className='card card-blue-dots p-8 md:p-[46px]'>
+          PairDrop is a reusable primitive that allows communities to intelligently allocate funds. It is designed to
+          avoid common pitfalls of funding mechanisms like cognitive overload and favoritism, while making the process
+          fun and painless. PairDrop assigns each voter a random sample of the funding targets as sets of pairs (e.g.
+          six sets of two). All the voter has to do is select the more deserving option from each of the pairs and the
+          algorithm handles the rest!
           <br />
           <br />
-          How it works: Under the hood, DAO Drops’ Pair2Pair uses the{' '}
-          <span className='break-words underline'>BudgetBox algorithm</span> by Colony. Pair2Pair votes are combined to
-          a “preference graph”. Using machine learning techniques common in sports rankings and web search, Pair2Pair
-          turns the collection of Pair2Pair votes into a probability distribution. Lastly, these are expressed as
-          percentages of budget, to display the top voted projects or proposals. Each community will need to communicate
-          their own goals or “decision rubric” to voters. Pair2Pair is a tool for communities to be involved in decision
-          making, in a way that sources their collective intelligence.
+          Under the hood, PairDrop uses the{' '}
+          <a
+            href='/assets/misc/BudgetingBoxes.pdf'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='break-words underline'
+          >
+            BudgetBox algorithm
+          </a>{' '}
+          originally developed by Colony. As votes are submitted, the algorithm computes a “preference graph” over the
+          full set of funding targets, which it transforms to a normalized distribution across the set. At the end of
+          the voting period, funds are distributed according to the final snapshot of the distribution. This approach is
+          highly scalable, both in terms of the number of funding targets and the number of voters. It can also produce
+          intelligent allocations even with relatively low voter turnout. We believe that this mechanism is an
+          underutilized way for communities to harness their collective intelligence in an efficient and unbiased
+          manner.
           <br />
           <br />
-          The additional feature DAO Drops is releasing with this drop is our Voter Scoring Algorithm. This pulls
-          on-chain data of which addresses participated in diverse areas of the Ethereum ecosystem, and weights their
-          voting power accordingly. It’s intended to give decision-making power to people who are likely to have the
-          most context and exposure in a variety of aspects of the Ethereum ecosystem. You can use the data set we
-          provide, or create your own using DAO Drops’ formula.
+          PairDrop also comes with a Voter Scoring Script that we developed to help communities configure voting weights
+          across their participants. The script can pull from different on and off-chain data sources to assign weights
+          to individual addresses. The example datasets we provided are one example that focuses on addresses that have
+          performed different on-chain actions in the Ethereum ecosystem such as donating to public goods, voting in
+          DAOs, holding identity credentials, deploying smart contracts, claiming relevant POAPs and more! Check it out
+          for inspiration and get in touch if you need help developing your own tailored dataset.
         </p>
       </div>
 
       <div className='side-padding mt-32 flex flex-col items-center'>
         <h2 className='mb-10 text-center'>ABOUT DAO DROPS</h2>
-        <p className='card card-blue-dots p-[46px]'>
-          DAO Drops is a project of dOrg, a Web3 developer agency that is a DAO. The goal of DAO Drops is to drop open
-          source tools for decentralized communities. The first iteration of DAO Drops in 2023 was a public goods
-          funding round organized by members of dOrg. We were most often approached by teams with existing budgets to
-          run their own rounds, and we concluded that DAO Drops would benefit the most people when used as part of an
-          existing community or protocol’s treasury. The most impactful and efficient way we can get decentralized power
-          to people, is to release different mechanisms as open source tools. So stay tuned for future Drops!
+        <p className='card card-blue-dots p-8 md:p-[46px]'>
+          DAO Drops is the public goods arm of dOrg, an OG services DAO that builds dapps and other web3 infrastructure.
+          The aim of DAO Drops is to Drop open source tools for decentralized communities. In 2023 we launched DAO Drops
+          with a pilot supported by the Ethereum Foundation to empower Ethereum users to allocate ecosystem funds to
+          underfunded projects. We received a tremendous amount of positive feedback from the community, especially from
+          groups that were interested in running their own rounds. As a result, we are releasing PairDrop and all future
+          Drops as forkable primitives that can be used by anyone.
           <br />
           <br />
-          To hire the DAO Drops team to implement this in your protocol or community,{' '}
-          <span className='underline'>get in touch.</span>
+          So enjoy PairDrop and stay tuned for future Drops!
+          <br />
+          <br />
+          If you need support adapting PairDrop or the{' '}
+          <a
+            href='https://github.com/dorgTech/dao-drops'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline'
+          >
+            DAO Drops V1
+          </a>{' '}
+          to your needs, fill out{' '}
+          <a href='https://www.dorg.tech/#/hire' target='_blank' rel='noopener noreferrer' className='underline'>
+            dOrg’s contact form
+          </a>{' '}
+          or reach out at{' '}
+          <a href='mailto:daodrops@dorg.tech' className='underline'>
+            daodrops@dorg.tech
+          </a>
+          .
         </p>
       </div>
+
+      <FAQ />
     </main>
   )
 }

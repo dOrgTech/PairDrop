@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Pair2Pair - Explore',
+  title: 'PairDrop - Explore',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

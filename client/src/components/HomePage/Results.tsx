@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useProjectsData } from '@/hooks/useDataAPI'
-import { ProjectType } from '@/types/Project'
+import { ProjectType } from '@/types'
 import ProjectModal from '@/components/Modals/ProjectModal'
 import { useModal } from '@/hooks/useModal'
 import { numberWithCommas } from '@/utils'
@@ -28,15 +28,15 @@ const Results = () => {
   const totalScore = sortedProjectsData.reduce((acc: number, project: ProjectType) => acc + project.score, 0)
 
   return (
-    <div className='side-padding mt-32 flex w-full flex-col items-center'>
-      <h2 className='mb-10 text-center'>RESULTS</h2>
+    <div className='side-padding mt-32 flex w-full flex-col items-center whitespace-nowrap'>
+      <h2 className='mb-10 text-center'>LIVE RESULTS</h2>
 
-      <div className='mb-2 flex w-full max-w-[1280px] justify-between gap-4 px-[27px] text-sm font-medium uppercase'>
+      <div className='mb-2 flex w-full max-w-[1280px] justify-between gap-2 px-[27px] text-sm font-medium uppercase lg:gap-4'>
         <span className='w-[4%]' />
-        <span className='w-[35%]'>Project Name</span>
-        <span className='w-[35%]'>Categories</span>
-        <span className='w-[8%] text-right'>Score</span>
-        <span className='w-[18%] text-right'>Fuding Received</span>
+        <span className='w-[46%] lg:w-[35%]'>Project Name</span>
+        <span className='hidden w-[35%] lg:flex'>Categories</span>
+        <span className='w-[15%] text-right lg:w-[8%]'>Score</span>
+        <span className='w-[35%] text-right lg:w-[18%]'>Fuding Received</span>
       </div>
 
       <div className='mb-10 flex w-full max-w-[1280px] flex-col gap-2'>
@@ -45,17 +45,21 @@ const Results = () => {
             const projectFunding = (project.score / totalScore) * TOTAL_FUNDS_AMOUNT
             return (
               <div key={index} className='card-table-row' onClick={() => handleProjectClick(project.projectId)}>
-                <span className='w-[4%] text-right text-lg font-black'>{index + 1}.</span>
-                <span className='w-[35%] truncate text-lg font-black'>{project.projectName}</span>
-                <div className='flex w-[35%] flex-nowrap gap-2'>
-                  {project.categories.slice(0, 4).map((category, index) => (
+                <span className='w-[4%] text-right text-base font-bold md:text-lg md:font-black lg:text-base'>
+                  {index + 1}.
+                </span>
+                <span className='w-[46%] truncate text-base font-bold md:text-lg md:font-black lg:w-[35%] lg:text-base'>
+                  {project.projectName}
+                </span>
+                <div className='hidden w-[35%] flex-nowrap gap-2 lg:flex'>
+                  {project.categories.slice(0, 3).map((category, index) => (
                     <div key={index} className='category-tag'>
                       {category}
                     </div>
                   ))}
                 </div>
-                <span className='w-[8%] text-right font-ibm'>{project.score.toFixed(2)}</span>
-                <span className='w-[18%] text-right text-lg font-black'>
+                <span className='w-[15%] text-right font-ibm lg:w-[8%]'>{project.score.toFixed(2)}</span>
+                <span className='w-[35%] text-right text-base font-bold md:text-lg md:font-black lg:w-[18%] lg:text-base'>
                   {numberWithCommas(projectFunding.toFixed(0))} USDC
                 </span>
               </div>

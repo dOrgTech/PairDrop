@@ -2,10 +2,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ConnectWallet from '@/components/reusable/ConnectWallet'
-import { usePathname } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import BlobBackground from './BlobBackground'
-import { useRouter } from 'next/navigation'
 
 interface HeadingProps {
   PageNotFound?: boolean
@@ -16,8 +15,8 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
   const [isMounted, setIsMounted] = useState(false)
   const [countdown, setCountdown] = useState<string | number>(3)
   const { isConnected } = useWeb3ModalAccount()
-  const path = usePathname()
   const router = useRouter()
+  const path = usePathname()
 
   useEffect(() => {
     setIsMounted(true)
@@ -46,7 +45,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
   }, [countdown, router])
 
   return (
-    <div className='heading-bg relative flex min-h-heroHeight items-center justify-center'>
+    <div className='heading-bg relative flex min-h-[800px] items-center justify-center lg:min-h-heroHeight'>
       <BlobBackground />
       <div className='z-30 flex flex-col items-center text-center'>
         {/* Page Not Found */}
@@ -66,7 +65,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
         {/* Home Page Heading */}
         {path === '/' && !countPage ? (
           <>
-            <h1 className='pointer-events-none relative mb-6 text-6xl leading-[0.8] text-white md:text-[120px]'>
+            <h1 className='pointer-events-none relative mb-6 text-6xl leading-[0.9] text-white md:text-7xl lg:text-[120px] lg:leading-[0.8]'>
               FUNDING
               <br />
               REIMAGINED
@@ -95,7 +94,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
           path === '/about' &&
           !countPage && (
             <>
-              <h1 className='text-white'>PAIR2PAIR</h1>
+              <h1 className='text-white'>PairDrop</h1>
               <h2 className='text-white'>BY DAO DROPS</h2>
             </>
           )

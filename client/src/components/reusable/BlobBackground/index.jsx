@@ -4,6 +4,7 @@ import { Leva } from 'leva'
 import { useEffect, useState } from 'react'
 import Scene from './Scene'
 import { useProgress } from '@react-three/drei'
+import usePersistentState from '@/hooks/usePersistentState'
 
 export const { indigo, aquamarine, yellow, magenta } = Config.theme.extend.colors
 
@@ -11,12 +12,14 @@ export default function BlobBackground() {
   const [isPerformanceOk, setIsPerformanceOk] = useState(true)
   const { active, loaded, total } = useProgress()
   const [canvasOpacity, setCanvasOpacity] = useState(0)
-  const [showAnimation, setShowAnimation] = useState(() => {
-    const saved = localStorage.getItem('showAnimation')
-    return saved !== null ? JSON.parse(saved) : true
-  })
+  const [showAnimation, setShowAnimation] = usePersistentState('showAnimation', true)
+  const [isMounted, setIsMounted] = useState(false)
   const CanvasOpacityDelay = 2000
   const startTime = Date.now()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!active && loaded === total && showAnimation) {
@@ -33,8 +36,6 @@ export default function BlobBackground() {
   }, [active, loaded, total, startTime])
 
   useEffect(() => {
-    localStorage.setItem('showAnimation', JSON.stringify(showAnimation))
-
     if (showAnimation) {
       setCanvasOpacity(0)
       setTimeout(() => setCanvasOpacity(1), CanvasOpacityDelay)
@@ -45,7 +46,7 @@ export default function BlobBackground() {
     setShowAnimation(!showAnimation)
   }
 
-  if (!isPerformanceOk) {
+  if (!isPerformanceOk || !isMounted) {
     return null
   }
 
