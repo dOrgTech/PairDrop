@@ -7,6 +7,7 @@ interface ProjectCardProps {
   categories: string[]
   projectIcon: string
   setSelectedProjectId: React.Dispatch<React.SetStateAction<number | null>>
+  setViewProjectId: React.Dispatch<React.SetStateAction<number | null>>
   selected: boolean
   onProjectView: () => void
 }
@@ -18,11 +19,13 @@ const ProjectCard = ({
   categories,
   projectIcon,
   setSelectedProjectId,
+  setViewProjectId,
   selected,
   onProjectView,
 }: ProjectCardProps) => {
   const handleViewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
+    setViewProjectId(projectId)
     onProjectView()
   }
 

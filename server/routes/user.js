@@ -310,7 +310,8 @@ router.post("/vote", async function (req, res, next) {
 
     toVoteData.vote =
       votedProjectId == toVoteData.firstProjectId
-        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE + score.normalizedScore
+        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE +
+          score.normalizedScore
         : process.env.PROJECTPAIR_SECONDPROJECT_ENDSCORE - score.normalizedScore
 
     await UsersData.findOneAndUpdate(
@@ -429,7 +430,8 @@ router.patch("/vote", async function (req, res, next) {
 
     toUpdateVoteData.vote =
       votedProjectId == firstProjectId
-        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE + score.normalizedScore
+        ? process.env.PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE +
+          score.normalizedScore
         : process.env.PROJECTPAIR_SECONDPROJECT_ENDSCORE - score.normalizedScore
 
     await UsersData.findOneAndUpdate(
@@ -457,7 +459,7 @@ async function generateNewRandomProjectPair(userAddress, pairIndex = null) {
   let userVotesData = []
 
   if (userData != null) {
-    if (pairIndex != null)
+    if (pairIndex != null) {
       if (
         Enumerable.from(userData.votes).count((x) => x.pairIndex == pairIndex) >
         0
@@ -478,6 +480,23 @@ async function generateNewRandomProjectPair(userAddress, pairIndex = null) {
             .first(),
         }
       }
+    } else {
+      if (userData.votes.length == process.env.PROJECTPAIRS_CAP) {
+        const lastProjectPairData = Enumerable.from(
+          userData.votes
+        ).orderByDescending((x) => x.pairIndex).first()
+
+        return {
+          pairIndex: lastProjectPairData.pairIndex,
+          firstProject: Enumerable.from(projects)
+            .where((x) => x.projectId == lastProjectPairData.firstProjectId)
+            .first(),
+          secondProject: Enumerable.from(projects)
+            .where((x) => x.projectId == lastProjectPairData.secondProjectId)
+            .first(),
+        }
+      }
+    }
 
     if (
       Enumerable.from(userData.votes).count((x) => x.status == "displayed") > 0
