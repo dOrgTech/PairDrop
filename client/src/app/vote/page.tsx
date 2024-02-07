@@ -17,6 +17,7 @@ const Vote = () => {
   const { isConnected, address } = useWeb3ModalAccount()
   const [currentPair, setCurrentPair] = useState(1)
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
+  const [viewProjectId, setViewProjectId] = useState<number | null>(null)
   const [firstProjectId, setFirstProjectId] = useState<number | null>(null)
   const [secondProjectId, setSecondProjectId] = useState<number | null>(null)
   const [showProjectModal, setShowProjectModal] = useModal()
@@ -64,7 +65,7 @@ const Vote = () => {
 
   const firstProject = pairData.firstProject
   const secondProject = pairData.secondProject
-  const selectedProject = firstProject.projectId === selectedProjectId ? secondProject : secondProject
+  const viewedProject = firstProject.projectId === viewProjectId ? firstProject : secondProject
 
   const handleNext = async () => {
     setLoading(true)
@@ -124,12 +125,14 @@ const Vote = () => {
         <ProjectCard
           {...firstProject}
           setSelectedProjectId={setSelectedProjectId}
+          setViewProjectId={setViewProjectId}
           selected={selectedProjectId === firstProject.projectId}
           onProjectView={() => setShowProjectModal(true)}
         />
         <ProjectCard
           {...secondProject}
           setSelectedProjectId={setSelectedProjectId}
+          setViewProjectId={setViewProjectId}
           selected={selectedProjectId === secondProject.projectId}
           onProjectView={() => setShowProjectModal(true)}
         />
@@ -139,7 +142,7 @@ const Vote = () => {
         {loading ? 'LOADING...' : edit ? 'UPDATE' : currentPair === 5 ? 'FINISH' : 'NEXT'}
       </button>
 
-      <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={selectedProject} />
+      <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={viewedProject} />
     </>
   )
 }

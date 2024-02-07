@@ -13,7 +13,7 @@ const faqs: IFaq[] = [
       'No, this is a demo site so you can see what a round looks like. PairDrop is a forkable primitive for public goods funding - copy the codebase to run your own community grants round! PairDrop uses pair-to-pair comparisons to help voters evaluate the most deserving projects. This helps minimize the “popularity voting” dynamic common in retroactive funding rounds.',
   },
   {
-    question: 'Question #2 goes here and it could be pretty long?',
+    question: 'How can I run a round?',
     answer: (
       <>
         Go to{' '}

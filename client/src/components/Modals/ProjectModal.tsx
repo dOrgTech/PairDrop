@@ -114,12 +114,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
               const linkUrl = link[linkText]
 
               return (
-                <div className='card-link justify-between gap-4' key={index}>
-                  <a href={linkUrl} target='_blank' rel='nofollow noopener noreferrer'>
-                    {linkText}
-                  </a>
+                <a
+                  href={linkUrl}
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
+                  className='card-link justify-between gap-4'
+                  key={index}
+                >
+                  <div>{linkText}</div>
                   <div className='link-icon' />
-                </div>
+                </a>
               )
             })}
           </div>
