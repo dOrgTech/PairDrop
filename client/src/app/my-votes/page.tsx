@@ -1,58 +1,45 @@
 'use client'
 import PairCard from './PairCard'
-import { useProjectsData, useMyVotesData } from '@/hooks/useDataAPI'
-import { ProjectType } from '@/types/Project'
-
-type VoteType = {
-  firstProjectId: number
-  secondProjectId: number
-  status: 'displayed' | 'voted' | 'hidden'
-  votedProjectId: number
-  vote: number
-}
-
-interface PairCardType {
-  firstProjectID: number
-  secondProjectID: number
-  status: 'voted' | 'displayed' | 'hidden'
-  votedProjectId?: number
-  projectIcons: (string | undefined)[]
-}
+import { useMyVotesData, useMyScoreData } from '@/hooks/useDataAPI'
+import { MyVoteCardType } from '@/types'
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
+import { useRouter } from 'next/navigation'
 
 const MyVotes = () => {
-  const { projectsData, isProjectsLoading, isProjectsError } = useProjectsData()
-  const { myVotesData, isMyVotesLoading, isMyVotesError } = useMyVotesData()
+  const router = useRouter()
+  const { isConnected, address } = useWeb3ModalAccount()
+  const { myVotesData, isMyVotesLoading, isMyVotesError } = useMyVotesData(address)
+  const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
 
-  if (isProjectsLoading || isMyVotesLoading)
+  // Show not connected, loading, error, no projects messages & redirect if user has no score
+  if (!isConnected || !address) return <div className='subtitle1 mt-32 text-center'>Please connect your wallet</div>
+  if (isMyVotesLoading || isMyScoreLoading)
     return <div className='subtitle1 mt-32 text-center'>Loading votes data...</div>
-  if (isProjectsError || isProjectsError) return <div className='subtitle1 mt-32 text-center'>Error loading votes</div>
-  if (!projectsData || !myVotesData) return <div className='subtitle1 mt-32 text-center'>No votes data available</div>
 
-  const pairCardProps = myVotesData.map((vote: VoteType) => ({
-    status: vote.status as 'voted' | 'displayed' | 'hidden',
-    projectIcons: [
-      projectsData.find((p: ProjectType) => p.projectId === vote.firstProjectId)?.projectIcon || '',
-      projectsData.find((p: ProjectType) => p.projectId === vote.secondProjectId)?.projectIcon || '',
-    ],
-    firstProjectID: vote.firstProjectId,
-    secondProjectID: vote.secondProjectId,
-    votedProjectID: vote.votedProjectId,
-  }))
+  if (isMyVotesError || isMyScoreError) return <div className='subtitle1 mt-32 text-center'>Error loading votes</div>
 
-  while (pairCardProps.length < 5) {
-    pairCardProps.push({
+  if (address && myScoreData && myScoreData.score === 0) {
+    router.push('/')
+  }
+
+  if (!myVotesData || myScoreData.score === 0)
+    return <div className='subtitle1 mt-32 text-center'>No votes data available</div>
+
+  const pairCards: MyVoteCardType[] = myVotesData
+  while (pairCards.length < 5) {
+    pairCards.push({
+      firstProject: null,
+      secondProject: null,
       status: 'hidden',
-      projectIcons: [],
-      votedProjectID: undefined,
-      firstProjectID: 0,
-      secondProjectID: 0,
+      votedProject: null,
+      pairIndex: null,
     })
   }
 
   return (
     <div className='flex flex-wrap justify-center gap-10'>
-      {pairCardProps.map((props: PairCardType, index: number) => (
-        <PairCard key={index} {...props} />
+      {pairCards.slice(0, 5).map((card: MyVoteCardType, index: number) => (
+        <PairCard key={index} {...card} />
       ))}
     </div>
   )

@@ -3,8 +3,7 @@ import { useState } from 'react'
 import ProjectCard from './ProjectCard'
 import ProjectModal from '@/components/Modals/ProjectModal'
 import { useProjectsData } from '@/hooks/useDataAPI'
-import { ProjectType } from '@/types/Project'
-import { ProjectCardType } from '@/types/ProjectCard'
+import { ProjectType, ProjectCardType } from '@/types'
 import { useModal } from '@/hooks/useModal'
 
 const Explore = () => {
@@ -40,7 +39,7 @@ const Explore = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
         className='search-input'
       />
-      <div className='flex flex-wrap gap-x-10 gap-y-16'>
+      <div className='flex flex-wrap justify-center gap-x-10 gap-y-16'>
         {filteredProjects.length > 0 ? (
           filteredProjects.map((card: ProjectCardType, index: number) => (
             <div key={index} onClick={() => handleProjectClick(card.projectId)}>

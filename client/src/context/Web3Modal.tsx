@@ -12,7 +12,7 @@ const mainnet = {
 }
 
 const metadata = {
-  name: 'Pair2Pair',
+  name: 'PairDrop',
   description: '',
   url: '',
   icons: [''],

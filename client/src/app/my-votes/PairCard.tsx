@@ -1,15 +1,15 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-interface CardProps {
-  status: 'voted' | 'displayed' | 'hidden'
-  projectIcons: (string | undefined)[]
-  firstProjectID: number
-  secondProjectID: number
-  votedProjectID?: number
-}
+import { MyVoteCardType } from '@/types'
 
-const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, secondProjectID }: CardProps) => {
+const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex }: MyVoteCardType) => {
   const router = useRouter()
+
+  const firstProjectId = firstProject?.projectId
+  const secondProjectId = secondProject?.projectId
+  const votedProjectId = votedProject?.projectId
+  const projectIcons = [firstProject?.projectIcon, secondProject?.projectIcon]
+
   return (
     <div
       className={`flex h-[185px] w-[315px] flex-col items-center border-[6px] bg-aquamarine-400 
@@ -17,7 +17,11 @@ const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, second
               status !== 'hidden' && 'cursor-pointer'
             }`}
       onClick={() => {
-        status !== 'hidden' && router.push('/vote')
+        status === 'displayed'
+          ? router.push(`/vote`)
+          : status === 'voted'
+            ? router.push(`/vote?edit=${pairIndex}`)
+            : null
       }}
     >
       {status === 'hidden' ? (
@@ -51,7 +55,7 @@ const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, second
             )}
             <div className='absolute mt-7 flex h-fit gap-[21px]'>
               {projectIcons.map((icon, index) => {
-                const projectID = index === 0 ? firstProjectID : secondProjectID
+                const projectID = index === 0 ? firstProjectId : secondProjectId
                 return (
                   icon && (
                     <>
@@ -62,15 +66,15 @@ const PairCard = ({ status, projectIcons, votedProjectID, firstProjectID, second
                         width={60}
                         height={60}
                         className={`h-[60px] w-[60px] rounded-full border-[3px] object-contain ${
-                          votedProjectID === projectID
+                          votedProjectId === projectID
                             ? 'border-indigo-600 outline outline-[6px] outline-offset-[3px] outline-aquamarine-500'
                             : 'border-aquamarine-500'
                         }`}
                       />
-                      {votedProjectID === projectID && (
+                      {votedProjectId === projectID && (
                         <div
                           className={`voted-check-icon absolute -bottom-1.5 ${
-                            projectID === secondProjectID ? 'right-[21px]' : 'left-[21px]'
+                            projectID === secondProjectId ? 'right-[21px]' : 'left-[21px]'
                           }`}
                         />
                       )}

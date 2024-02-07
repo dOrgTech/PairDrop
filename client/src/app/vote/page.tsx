@@ -4,34 +4,86 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ProjectCard from './ProjectCard'
 import ProjectModal from '@/components/Modals/ProjectModal'
-import { useProjectsData, usePairData, useVote, useMyVotesData } from '@/hooks/useDataAPI'
-import { ProjectType } from '@/types/Project'
+import { usePairData, useVote, useUpdateVote, useMyScoreData } from '@/hooks/useDataAPI'
 import { useModal } from '@/hooks/useModal'
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
+import { useSearchParams } from 'next/navigation'
 
-const MyVotes = () => {
+const Vote = () => {
   const router = useRouter()
-  const { projectsData, isProjectsLoading, isProjectsError } = useProjectsData()
+  const searchParams = useSearchParams()
+  const edit = searchParams.get('edit') || undefined
+
+  const { isConnected, address } = useWeb3ModalAccount()
   const [currentPair, setCurrentPair] = useState(1)
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
+  const [viewProjectId, setViewProjectId] = useState<number | null>(null)
+  const [firstProjectId, setFirstProjectId] = useState<number | null>(null)
+  const [secondProjectId, setSecondProjectId] = useState<number | null>(null)
   const [showProjectModal, setShowProjectModal] = useModal()
   const [refetchPair, setRefetchPair] = useState(false)
-  const { pairData, isPairLoading, isPairError } = usePairData(refetchPair)
-  const { vote } = useVote(selectedProjectId)
-  const { myVotesData, isMyVotesLoading, isMyVotesError } = useMyVotesData(refetchPair)
+  const [shouldFetchPair, setShouldFetchPair] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(false)
 
-  if (isProjectsLoading || isMyVotesLoading)
+  const { pairData, isPairLoading, isPairError } = usePairData(address, shouldFetchPair, refetchPair, Number(edit))
+  const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
+  const { vote } = useVote(address, selectedProjectId)
+  const { updateVote } = useUpdateVote(address, firstProjectId, secondProjectId, selectedProjectId)
+
+  useEffect(() => {
+    if (pairData) {
+      pairData.pairIndex && setCurrentPair(pairData.pairIndex)
+      pairData.firstProject && setFirstProjectId(pairData.firstProject.projectId)
+      pairData.secondProject && setSecondProjectId(pairData.secondProject.projectId)
+    }
+  }, [pairData])
+
+  useEffect(() => {
+    if (myScoreData && myScoreData.score > 0) {
+      if ((pairData && pairData.pairIndex > 5) || (edit && Number(edit) > 5)) {
+        setPageLoading(true)
+        router.push('/my-votes')
+      }
+    }
+  }, [edit, pairData, myScoreData])
+
+  // Show not connected, loading, error, no projects messages & redirect if user has no score
+  if (!isConnected || !address) return <div className='subtitle1 mt-24 text-center'>Please connect your wallet</div>
+  if (isPairLoading || isMyScoreLoading || pageLoading)
     return <div className='subtitle1 mt-24 text-center'>Loading projects pairs...</div>
-  if (isProjectsError || isMyVotesError)
+
+  if (isPairError || isMyScoreError)
     return <div className='subtitle1 mt-24 text-center'>Error loading projects pairs</div>
-  if (!projectsData || !myVotesData)
+
+  if (!address && address && myScoreData && myScoreData.score === 0) {
+    router.push('/')
+  }
+
+  if (!pairData || myScoreData.score === 0)
     return <div className='subtitle1 mt-24 text-center'>No projects pairs data available</div>
 
-  const firstProject = projectsData.find(
-    (project: ProjectType) => project.projectId === myVotesData[currentPair - 1].firstProjectId,
-  )
-  const secondProject = projectsData.find(
-    (project: ProjectType) => project.projectId === myVotesData[currentPair - 1].secondProjectId,
-  )
+  const firstProject = pairData.firstProject
+  const secondProject = pairData.secondProject
+  const viewedProject = firstProject.projectId === viewProjectId ? firstProject : secondProject
+
+  const handleNext = async () => {
+    setLoading(true)
+    if (edit) {
+      setShouldFetchPair(false)
+      await updateVote()
+      router.push('/my-votes')
+    } else if (currentPair === 5) {
+      setShouldFetchPair(false)
+      await vote()
+      router.push('/my-votes')
+    } else if (selectedProjectId) {
+      await vote()
+      setRefetchPair(!refetchPair)
+      setSelectedProjectId(null)
+    }
+    setLoading(false)
+  }
 
   const renderSteps = () => {
     const totalPairs = 5
@@ -47,27 +99,6 @@ const MyVotes = () => {
 
     return elements
   }
-
-  const handleNext = async () => {
-    if (selectedProjectId !== null) {
-      await vote()
-    }
-
-    if (currentPair === 5) {
-      router.push('/my-votes')
-    } else {
-      setRefetchPair(!refetchPair)
-      setCurrentPair(currentPair + 1)
-      setSelectedProjectId(null)
-    }
-  }
-
-  const handleProjectClick = (projectId: number) => {
-    setSelectedProjectId(projectId)
-    setShowProjectModal(true)
-  }
-
-  const selectedProjectData = projectsData.find((project: ProjectType) => project.projectId === selectedProjectId)
 
   return (
     <>
@@ -85,33 +116,35 @@ const MyVotes = () => {
         View All Pairs
       </Link>
 
-      <div className='card card-blue-dots mb-24 flex w-full flex-col gap-0.5 p-12'>
+      <div className='card card-blue-dots mb-24 flex w-full flex-col gap-0.5 p-8 md:p-12'>
         <h4>WHICH ONE DO YOU CHOOSE?</h4>
         <p>Review our guide on how to vote to ensure you’re reviewing each in consideration of public impact.</p>
       </div>
 
-      <div className='flex w-full justify-between'>
+      <div className='flex w-full flex-col justify-between gap-8 lg:flex-row'>
         <ProjectCard
           {...firstProject}
           setSelectedProjectId={setSelectedProjectId}
+          setViewProjectId={setViewProjectId}
           selected={selectedProjectId === firstProject.projectId}
-          onProjectView={() => handleProjectClick(firstProject.projectId)}
+          onProjectView={() => setShowProjectModal(true)}
         />
         <ProjectCard
           {...secondProject}
           setSelectedProjectId={setSelectedProjectId}
+          setViewProjectId={setViewProjectId}
           selected={selectedProjectId === secondProject.projectId}
-          onProjectView={() => handleProjectClick(secondProject.projectId)}
+          onProjectView={() => setShowProjectModal(true)}
         />
       </div>
 
-      <button className='button -mt-3' disabled={selectedProjectId === null} onClick={handleNext}>
-        {currentPair === 5 ? 'FINISH' : 'NEXT'}
+      <button className='button my-16 lg:-mt-3' disabled={selectedProjectId === null || loading} onClick={handleNext}>
+        {loading ? 'LOADING...' : edit ? 'UPDATE' : currentPair === 5 ? 'FINISH' : 'NEXT'}
       </button>
 
-      <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={selectedProjectData} />
+      <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={viewedProject} />
     </>
   )
 }
 
-export default MyVotes
+export default Vote

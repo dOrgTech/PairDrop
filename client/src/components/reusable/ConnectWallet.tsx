@@ -13,6 +13,7 @@ import { ethers, Signer } from 'ethers'
 import Web3Token from 'web3-token'
 import { formatAddress } from '@/utils'
 import useOutsideClick from '@/hooks/useOutsideClick'
+import { useMyScoreData } from '@/hooks/useDataAPI'
 
 export default function ConnectWallet({ buttonText }: { buttonText: string }) {
   const [isMounted, setIsMounted] = useState(false)
@@ -23,13 +24,33 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
   const { disconnect } = useDisconnect()
   const { walletProvider } = useWeb3ModalProvider()
   const { setThemeMode } = useWeb3ModalTheme()
+  const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
+  const [userScore, setUserScore] = useState<number | null>(null)
   let signer: Signer
   setThemeMode('light')
 
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (myScoreData && !isMyScoreLoading && !isMyScoreError) {
+      setUserScore(myScoreData.score)
+    }
+  }, [myScoreData, isMyScoreLoading, isMyScoreError])
+
+  useEffect(() => {
     setIsMounted(true)
+    if (window.ethereum) {
+      const handleAccountsChanged = () => {
+        window.location.reload()
+      }
+      ;(window.ethereum as any).on('accountsChanged', handleAccountsChanged)
+
+      return () => {
+        if (window.ethereum) {
+          ;(window.ethereum as any).removeListener('accountsChanged', handleAccountsChanged)
+        }
+      }
+    }
   }, [])
 
   // Sign message to obtain auth token
@@ -49,8 +70,8 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
 
   useEffect(() => {
     const obtainAndStoreToken = async () => {
-      if (isConnected && signer) {
-        const existingToken = localStorage.getItem('auth')
+      if (isConnected && signer && address) {
+        const existingToken = localStorage.getItem(`auth_${address.toLowerCase()}`)
         if (existingToken) {
           return
         }
@@ -60,7 +81,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
             statement: 'This is a signed message',
             expires_in: '1y',
           })
-          localStorage.setItem('auth', token)
+          localStorage.setItem(`auth_${address.toLowerCase()}`, token)
         } catch (error) {
           console.error('Error obtaining token:', error)
         }
@@ -68,7 +89,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
     }
 
     obtainAndStoreToken()
-  }, [isConnected])
+  }, [isConnected, address])
 
   useOutsideClick(dropdownRef, () => {
     if (walletDropdown) setWalletDropdown(false)
@@ -96,11 +117,22 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
             </div>
             {walletDropdown && (
               <div className='card absolute right-0 top-10 flex h-auto w-[226px] flex-col justify-center p-0 shadow'>
-                <Link href='/my-votes' className='group flex gap-2 p-4'>
-                  <div className='my-votes-icon' />
-                  <div className='transition-element group-hover:text-magenta-500'>MY VOTES</div>
-                </Link>
-                <hr className='h-[3px] w-full bg-indigo-500' />
+                <div className='flex flex-col lg:hidden'>
+                  <Link href='/explore' className='group flex gap-2 p-4'>
+                    <div className='explore-icon' />
+                    <div className='transition-element ml-1 group-hover:text-magenta-500'>EXPLORE</div>
+                  </Link>
+                  <hr className='h-[3px] w-full bg-indigo-500' />
+                </div>
+                {userScore !== null && userScore > 0 && (
+                  <>
+                    <Link href='/my-votes' className='group flex gap-2 p-4'>
+                      <div className='my-votes-icon' />
+                      <div className='transition-element group-hover:text-magenta-500'>MY VOTES</div>
+                    </Link>
+                    <hr className='h-[3px] w-full bg-indigo-500' />
+                  </>
+                )}
                 <div className='group flex gap-2 p-4' onClick={() => disconnect()}>
                   <div className='disconnect-icon' />
                   <div className='transition-element group-hover:text-magenta-500'>DISCONNECT</div>

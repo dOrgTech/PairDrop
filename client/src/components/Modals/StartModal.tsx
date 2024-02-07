@@ -1,15 +1,20 @@
-import { useState } from 'react'
+'use client'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import Heading from '../reusable/Heading'
 
 type StartModalProps = {
   show: boolean
   onClose: () => void
   setShowCountPage: (show: boolean) => void
+  userScore: number | null
 }
 
-const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage }) => {
-  const [step, setStep] = useState(1)
+const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage, userScore }) => {
+  const [step, setStep] = useState(-1)
+
+  useEffect(() => {
+    userScore === 0 ? setStep(0) : setStep(1)
+  }, [userScore])
 
   const handlePrev = () => {
     if (step > 1) setStep(step - 1)
@@ -25,6 +30,11 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
     }
   }
 
+  const handleGoHome = () => {
+    onClose()
+    localStorage.setItem('startModalFinished', 'true')
+  }
+
   const stepDots = []
   for (let i = 1; i <= 5; i++) {
     const isClickable = i <= step + 1
@@ -38,20 +48,44 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
   }
 
   return show ? (
-    <div className='modal-overlay'>
+    <div className='modal-overlay side-padding'>
       <div className='card card-white-dots mx-5 mb-8 h-fit max-w-[1024px] flex-col justify-center p-0'>
-        <div className='relative p-12 pb-16'>
+        <div className='relative p-8 pb-10 md:px-12 md:pb-16 md:pt-12'>
+          {/* User has no score, show sorry message */}
+          {step === 0 && (
+            <>
+              <h3>SORRY, ANON</h3>
+              <p className='mt-4'>
+                It appears you didn’t qualify for this round. But don’t distress, keep sowing your seeds in the
+                cybernetic gardens, and soon you’ll be a chosen one.
+              </p>
+              <button className='button-next absolute -bottom-[24px] left-0 right-0 mx-auto' onClick={handleGoHome}>
+                GO HOME
+              </button>
+            </>
+          )}
+
+          {/* User has score, show steps walkthrough */}
           {step === 1 && (
             <>
               <h4>THE CHALLENGE:</h4>
-              <p className='mb-10'>Intelligently distribute the funding to projects who demonstrate the most impact.</p>
+              <p className='mb-6 md:mb-10'>
+                Intelligently distribute the funding to projects who demonstrate the most impact.
+              </p>
               <h4>WTHAT&#39;S AT STAKE:</h4>
               <p>
                 Uncover the lesser known impactooors making Ethereum great.
                 <br />
                 <br />
                 You will earn prestige, a POAP, and newfound knowledge of what’s happening in{' '}
-                <span className='underline'>The Infinite Garden!</span>
+                <a
+                  className='underline'
+                  href='https://ethereum.foundation/infinitegarden'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  The Infinite Garden!
+                </a>
               </p>
             </>
           )}
@@ -59,15 +93,14 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
           {step === 2 && (
             <>
               <h4>HOW TO VOTE:</h4>
-              <p className='mb-8'>A quick demonstration on how to use pair2pair.</p>
+              <p className='mb-4 md:mb-8'>A quick demonstration on how to use PairDrop.</p>
               <Image
-                className='mb-8 cursor-pointer'
+                className='mb-2 cursor-pointer'
                 src='/assets/misc/how-video-placeholder.png'
                 alt='How to Vote Video Placeholder'
                 width={928}
                 height={495}
               />
-              <p className='underline'>View our demo introductory video.</p>
             </>
           )}
 
@@ -117,7 +150,7 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
 
           {step === 5 && (
             <>
-              <h3 className='mb-8 font-bold'>ANON, THE CHOSEN ONE:</h3>
+              <h3 className='mb-4 font-bold md:mb-8'>ANON, THE CHOSEN ONE:</h3>
               <p>
                 Your on-chain wisdom is legendary. Will you take on this mission to skillfully distribute the funding
                 pool?
@@ -125,19 +158,21 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
             </>
           )}
 
-          {step !== 1 && (
+          {step > 1 && (
             <button className='button-prev absolute -bottom-[24px] left-12' onClick={handlePrev}>
               {step !== 5 ? 'Previous' : 'No'}
             </button>
           )}
-          <button className='button-next absolute -bottom-[24px] right-12' onClick={handleNext}>
-            {step !== 5 ? 'Next' : 'Yes'}
-          </button>
+          {step > 0 && (
+            <button className='button-next absolute -bottom-[24px] right-12' onClick={handleNext}>
+              {step !== 5 ? 'Next' : 'Yes'}
+            </button>
+          )}
         </div>
         <div className='modal-footer' />
       </div>
 
-      <div className='flex gap-5'>{stepDots}</div>
+      {step > 0 && <div className='flex gap-5'>{stepDots}</div>}
     </div>
   ) : null
 }

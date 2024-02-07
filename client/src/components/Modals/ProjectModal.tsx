@@ -1,7 +1,7 @@
 import { useRef, RefObject } from 'react'
 import Image from 'next/image'
 import useOutsideClick from '@/hooks/useOutsideClick'
-import { SocialLink, Metric, ProjectLink, Funding } from '@/types/Project'
+import { SocialLink, Metric, ProjectLink, Funding } from '@/types'
 
 type ProjectModalProps = {
   show: boolean
@@ -20,11 +20,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
 
   return show ? (
     <div className='modal-overlay z-50 items-start justify-start pt-0'>
-      <div className='close-icon absolute right-4 top-6' onClick={handleCloseModal} />
+      <div className='close-icon absolute right-4 top-6 z-50 hidden xl:block' onClick={handleCloseModal} />
       <div
         ref={modalRef}
         className='relative mr-16 flex h-fit min-h-screen w-full max-w-[1024px] flex-col overflow-y-auto border-r-[6px] border-indigo-600 bg-gradient-teal p-12 pt-[72px]'
       >
+        <div className='close-blue-icon absolute right-6 top-6 z-50 block xl:hidden' onClick={handleCloseModal} />
+
         {/* Project Icon & Social Links */}
         <div className='relative mb-5 flex items-center gap-6'>
           <div className='project-icon h-[72px] w-[72px]'>
@@ -112,12 +114,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
               const linkUrl = link[linkText]
 
               return (
-                <div className='card-link justify-between gap-4' key={index}>
-                  <a href={linkUrl} target='_blank' rel='nofollow noopener noreferrer'>
-                    {linkText}
-                  </a>
+                <a
+                  href={linkUrl}
+                  target='_blank'
+                  rel='nofollow noopener noreferrer'
+                  className='card-link justify-between gap-4'
+                  key={index}
+                >
+                  <div>{linkText}</div>
                   <div className='link-icon' />
-                </div>
+                </a>
               )
             })}
           </div>
