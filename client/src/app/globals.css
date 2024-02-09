@@ -110,7 +110,7 @@
 
   /* Cards */
   .card {
-    @apply relative flex h-full w-full max-w-[1280px] flex-col border-[6px] border-indigo-600 bg-gradient-teal p-6;
+    @apply relative flex h-full w-full max-w-[1280px] flex-col border-[6px] border-aquamarine-400 bg-gradient-teal p-6;
   }
 
   .card-blue-dots {
@@ -226,8 +226,8 @@
   .select-project {
     @apply transition-element flex h-16 min-h-[64px] w-16 min-w-[64px] items-center 
     justify-center rounded-full border-[6px] border-indigo-200 bg-white/50 bg-[url('/assets/icons/select-project.svg')] 
-    bg-[length:35px_36px] bg-center bg-no-repeat p-2 group-hover:border-aquamarine-400 
-    group-hover:bg-white  group-hover:bg-[url('/assets/icons/select-project-hover.svg')] group-hover:shadow-aqua;
+    bg-[length:35px_36px] bg-center bg-no-repeat p-2 hover:border-aquamarine-400 
+    hover:bg-white  hover:bg-[url('/assets/icons/select-project-hover.svg')] hover:shadow-aqua;
   }
 
   .select-project-active {
