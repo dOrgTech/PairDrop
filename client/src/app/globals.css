@@ -110,7 +110,7 @@
 
   /* Cards */
   .card {
-    @apply relative flex h-full w-full max-w-[1280px] flex-col border-[6px] border-aquamarine-400 bg-gradient-teal p-6;
+    @apply relative flex h-full w-full max-w-[1280px] flex-col border-[6px] border-indigo-600 bg-gradient-teal p-6;
   }
 
   .card-blue-dots {
