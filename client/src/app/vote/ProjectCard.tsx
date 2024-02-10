@@ -34,7 +34,7 @@ const ProjectCard = ({
       <div
         onClick={handleViewButtonClick}
         className={`card transition-element relative z-10 h-full w-[410px] cursor-pointer p-6 !duration-150  hover:shadow-aqua ${
-          selected ? 'border-indigo-600 hover:border-indigo-500' : 'border-aquamarine-400 hover:border-aquamarine-400'
+          selected ? 'border-indigo-600 hover:border-indigo-600' : 'border-aquamarine-400 hover:border-aquamarine-400'
         }`}
       >
         <div className='flex items-center gap-3'>
