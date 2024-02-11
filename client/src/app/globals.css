@@ -61,7 +61,7 @@
   }
 
   p {
-    @apply !block font-ibm text-base font-medium md:text-lg lg:text-xl;
+    @apply !block whitespace-pre-line font-ibm text-base font-medium md:text-lg lg:text-xl;
   }
 
   .subtitle1 {
@@ -226,8 +226,8 @@
   .select-project {
     @apply transition-element flex h-16 min-h-[64px] w-16 min-w-[64px] items-center 
     justify-center rounded-full border-[6px] border-indigo-200 bg-white/50 bg-[url('/assets/icons/select-project.svg')] 
-    bg-[length:35px_36px] bg-center bg-no-repeat p-2 group-hover:border-aquamarine-400 
-    group-hover:bg-white  group-hover:bg-[url('/assets/icons/select-project-hover.svg')] group-hover:shadow-aqua;
+    bg-[length:35px_36px] bg-center bg-no-repeat p-2 hover:border-aquamarine-400 
+    hover:bg-white  hover:bg-[url('/assets/icons/select-project-hover.svg')] hover:shadow-aqua;
   }
 
   .select-project-active {
@@ -238,15 +238,11 @@
 
   /* Backgrounds */
   .heading-bg {
-    @apply -mt-[82px] h-screen bg-[url("/assets/backgrounds/bg-blob.webp")] bg-cover bg-center bg-no-repeat;
-  }
-
-  .bg-ripples {
-    @apply bg-[url("/assets/backgrounds/bg-ripples.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply bg-heading-image -mt-[82px] h-screen bg-cover bg-center bg-no-repeat;
   }
 
   .bg {
-    @apply min-h-screen bg-[url("/assets/backgrounds/bg-empty.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply bg-empty-image min-h-screen bg-cover bg-fixed bg-center bg-no-repeat;
   }
 
   /* Header */

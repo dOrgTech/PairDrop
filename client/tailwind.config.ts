@@ -14,6 +14,8 @@ const config: Config = {
         ibm: ['IBM Plex Mono', 'monospace'],
       },
       backgroundImage: {
+        'heading-image': "url('/assets/backgrounds/bg-blob.webp')",
+        'empty-image': "url('/assets/backgrounds/bg-empty.webp')",
         'gradient-teal': 'radial-gradient(181.84% 156.49% at 3.28% 0%, #fff 0%, #cbfef7 100%)',
         'gradient-teal-2': 'radial-gradient(409.88% 100.68% at 0% 33.25%, #FFF 0%, #CBFEF7 100%)',
         'gradient-aquamarine': 'radial-gradient(181.84% 156.49% at 3.28% 0%, #FFF 0%, #EAFEFC 100%)',

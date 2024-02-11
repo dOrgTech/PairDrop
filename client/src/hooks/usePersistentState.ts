@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+// usePersistentState hook to persist state in localStorage
 function usePersistentState<T>(key: string, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [state, setState] = useState<T>(() => {
     if (typeof window !== 'undefined') {

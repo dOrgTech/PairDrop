@@ -8,11 +8,16 @@ import { usePairData, useVote, useUpdateVote, useMyScoreData } from '@/hooks/use
 import { useModal } from '@/hooks/useModal'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import { useSearchParams } from 'next/navigation'
+import { votePage, pairsCap } from '@/config'
 
+// Vote Page
 const Vote = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  // Search params to check if user is editing a vote
   const edit = searchParams.get('edit') || undefined
+  const votedProjectId = searchParams.get('voted') || undefined
 
   const { isConnected, address } = useWeb3ModalAccount()
   const [currentPair, setCurrentPair] = useState(1)
@@ -26,11 +31,13 @@ const Vote = () => {
   const [loading, setLoading] = useState(false)
   const [pageLoading, setPageLoading] = useState(false)
 
+  // Get user score & Fetch, send or update vote and pair data
   const { pairData, isPairLoading, isPairError } = usePairData(address, shouldFetchPair, refetchPair, Number(edit))
   const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
   const { vote } = useVote(address, selectedProjectId)
   const { updateVote } = useUpdateVote(address, firstProjectId, secondProjectId, selectedProjectId)
 
+  // Set initial values for pair data
   useEffect(() => {
     if (pairData) {
       pairData.pairIndex && setCurrentPair(pairData.pairIndex)
@@ -39,41 +46,48 @@ const Vote = () => {
     }
   }, [pairData])
 
+  // Redirect user if they have no score or if they have voted all pairs & set votedProject if user is editing
   useEffect(() => {
     if (myScoreData && myScoreData.score > 0) {
-      if ((pairData && pairData.pairIndex > 5) || (edit && Number(edit) > 5)) {
+      if ((pairData && pairData.pairIndex > pairsCap) || (edit && Number(edit) > pairsCap)) {
         setPageLoading(true)
         router.push('/my-votes')
+      }
+      if (votedProjectId) {
+        setSelectedProjectId(Number(votedProjectId))
       }
     }
   }, [edit, pairData, myScoreData])
 
   // Show not connected, loading, error, no projects messages & redirect if user has no score
-  if (!isConnected || !address) return <div className='subtitle1 mt-24 text-center'>Please connect your wallet</div>
-  if (isPairLoading || isMyScoreLoading || pageLoading)
-    return <div className='subtitle1 mt-24 text-center'>Loading projects pairs...</div>
+  if (!isConnected || !address)
+    return <div className='subtitle1 mt-24 text-center'>{votePage.connectWalletMessage}</div>
 
-  if (isPairError || isMyScoreError)
-    return <div className='subtitle1 mt-24 text-center'>Error loading projects pairs</div>
+  if (isPairLoading || isMyScoreLoading || pageLoading)
+    return <div className='subtitle1 mt-24 text-center'>{votePage.loadingMessage}</div>
+
+  if (isPairError || isMyScoreError) return <div className='subtitle1 mt-24 text-center'>{votePage.errorMessage}</div>
 
   if (!address && address && myScoreData && myScoreData.score === 0) {
     router.push('/')
   }
 
   if (!pairData || myScoreData.score === 0)
-    return <div className='subtitle1 mt-24 text-center'>No projects pairs data available</div>
+    return <div className='subtitle1 mt-24 text-center'>{votePage.noDataMessage}</div>
 
+  // Set the first, second, and viewed projects
   const firstProject = pairData.firstProject
   const secondProject = pairData.secondProject
   const viewedProject = firstProject.projectId === viewProjectId ? firstProject : secondProject
 
+  // Handle next button click
   const handleNext = async () => {
     setLoading(true)
     if (edit) {
       setShouldFetchPair(false)
       await updateVote()
       router.push('/my-votes')
-    } else if (currentPair === 5) {
+    } else if (currentPair === pairsCap) {
       setShouldFetchPair(false)
       await vote()
       router.push('/my-votes')
@@ -85,14 +99,14 @@ const Vote = () => {
     setLoading(false)
   }
 
+  // Render steps for the current pair (dots & dashes)
   const renderSteps = () => {
-    const totalPairs = 5
     let elements = []
 
-    for (let i = 1; i <= totalPairs; i++) {
+    for (let i = 1; i <= pairsCap; i++) {
       elements.push(<div className={i <= currentPair ? 'step-active' : 'step-inactive'} key={`step-${i}`} />)
 
-      if (i < totalPairs) {
+      if (i < pairsCap) {
         elements.push(<div className={i < currentPair ? 'dashes-blue' : 'dashes-white'} key={`dash-${i}`} />)
       }
     }
@@ -103,7 +117,7 @@ const Vote = () => {
   return (
     <>
       <div className='mb-6 text-center text-[44px] font-black uppercase leading-[50px] text-white'>
-        PAIR {currentPair} <span className='text-[28px]'>OF</span> 5
+        PAIR {currentPair} <span className='text-[28px]'>OF</span> {pairsCap}
       </div>
 
       <div className='mb-5 flex items-center gap-1.5'>{renderSteps()}</div>
@@ -113,12 +127,12 @@ const Vote = () => {
         className='mb-16 flex w-fit cursor-pointer items-center justify-center gap-2 font-ibm text-sm font-medium leading-tight underline transition-transform hover:-translate-x-1'
       >
         <div className='arrow-left-blue-icon' />
-        View All Pairs
+        {votePage.backToMyVotesText}
       </Link>
 
       <div className='card card-blue-dots mb-24 flex w-full flex-col gap-0.5 p-8 md:p-12'>
-        <h4>WHICH ONE DO YOU CHOOSE?</h4>
-        <p>Review our guide on how to vote to ensure you’re reviewing each in consideration of public impact.</p>
+        <h4>{votePage.instructionsTitle}</h4>
+        <p>{votePage.instructionsDescription}</p>
       </div>
 
       <div className='flex w-full flex-col justify-between gap-8 lg:flex-row'>
@@ -139,7 +153,7 @@ const Vote = () => {
       </div>
 
       <button className='button my-16 lg:-mt-3' disabled={selectedProjectId === null || loading} onClick={handleNext}>
-        {loading ? 'LOADING...' : edit ? 'UPDATE' : currentPair === 5 ? 'FINISH' : 'NEXT'}
+        {loading ? 'LOADING...' : edit ? 'UPDATE' : currentPair === pairsCap ? 'FINISH' : 'NEXT'}
       </button>
 
       <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={viewedProject} />

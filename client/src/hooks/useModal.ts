@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+// useModal hook to show/hide scrollbar based on modal open state
 export const useModal = (): [boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false)
 

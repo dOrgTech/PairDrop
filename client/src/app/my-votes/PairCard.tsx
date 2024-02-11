@@ -2,9 +2,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { MyVoteCardType } from '@/types'
 
+// My Votes Page - Pair Card Component
 const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex }: MyVoteCardType) => {
   const router = useRouter()
 
+  // Get project IDs and icons
   const firstProjectId = firstProject?.projectId
   const secondProjectId = secondProject?.projectId
   const votedProjectId = votedProject?.projectId
@@ -20,7 +22,7 @@ const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex
         status === 'displayed'
           ? router.push(`/vote`)
           : status === 'voted'
-            ? router.push(`/vote?edit=${pairIndex}`)
+            ? router.push(`/vote?voted=${votedProjectId}&edit=${pairIndex}`)
             : null
       }}
     >

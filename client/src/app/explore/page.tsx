@@ -5,22 +5,26 @@ import ProjectModal from '@/components/Modals/ProjectModal'
 import { useProjectsData } from '@/hooks/useDataAPI'
 import { ProjectType, ProjectCardType } from '@/types'
 import { useModal } from '@/hooks/useModal'
+import { explorePage } from '@/config'
 
+// Explore Page
 const Explore = () => {
   const { projectsData, isProjectsLoading, isProjectsError } = useProjectsData()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [showProjectModal, setShowProjectModal] = useModal()
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
 
-  if (isProjectsLoading) return <div className='subtitle1'>Loading...</div>
-  if (isProjectsError) return <div className='subtitle1'>Error loading projects</div>
-  if (!projectsData) return <div className='subtitle1'>No project data available</div>
+  // Loading, Error & No Data handling
+  if (isProjectsLoading) return <div className='subtitle1'>{explorePage.loadingMessage}</div>
+  if (isProjectsError) return <div className='subtitle1'>{explorePage.errorMessage}</div>
+  if (!projectsData) return <div className='subtitle1'>{explorePage.noDataMessage}</div>
 
   const handleProjectClick = (projectId: number) => {
     setSelectedProjectId(projectId)
     setShowProjectModal(true)
   }
 
+  // Filter projects based on search query
   const selectedProjectData = projectsData.find((project: ProjectType) => project.projectId === selectedProjectId)
 
   const filteredProjects = projectsData.filter(
@@ -34,7 +38,7 @@ const Explore = () => {
     <>
       <input
         type='search'
-        placeholder='Search projects...'
+        placeholder={explorePage.searchPlaceholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className='search-input'
@@ -47,7 +51,7 @@ const Explore = () => {
             </div>
           ))
         ) : (
-          <h5>No Results Found</h5>
+          <h5>{explorePage.noResultsMessage}</h5>
         )}
       </div>
       <ProjectModal show={showProjectModal} onClose={() => setShowProjectModal(false)} data={selectedProjectData} />

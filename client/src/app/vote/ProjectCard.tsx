@@ -12,6 +12,7 @@ interface ProjectCardProps {
   onProjectView: () => void
 }
 
+// Vote Page - Project Card Component
 const ProjectCard = ({
   projectId,
   projectName,
@@ -23,17 +24,18 @@ const ProjectCard = ({
   selected,
   onProjectView,
 }: ProjectCardProps) => {
-  const handleViewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleViewButtonClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation()
     setViewProjectId(projectId)
     onProjectView()
   }
 
   return (
-    <div className='group flex cursor-pointer flex-col items-center' onClick={() => setSelectedProjectId(projectId)}>
+    <div className='flex cursor-pointer flex-col items-center'>
       <div
-        className={`card transition-element relative z-10 h-full w-[410px] cursor-pointer p-6 !duration-150 group-hover:border-aquamarine-400 group-hover:shadow-aqua ${
-          selected ? 'border-aquamarine-400 shadow-aqua' : ''
+        onClick={handleViewButtonClick}
+        className={`card transition-element relative z-10 h-full w-[410px] cursor-pointer p-6 !duration-150  hover:shadow-aqua ${
+          selected ? 'border-indigo-600 hover:border-indigo-600' : 'border-aquamarine-400 hover:border-aquamarine-400'
         }`}
       >
         <div className='flex items-center gap-3'>
@@ -57,14 +59,15 @@ const ProjectCard = ({
             </div>
           ))}
         </div>
-        <button className='button mt-auto' onClick={handleViewButtonClick}>
-          View Project
-        </button>
+        <button className='button mt-auto'>View Project</button>
       </div>
 
       <div className='dashes-blue mb-3.5 mt-1.5 rotate-90' />
 
-      <div className={`${selected ? 'select-project-active' : 'select-project'} duration-150`} />
+      <div
+        className={`${selected ? 'select-project-active' : 'select-project'} duration-150`}
+        onClick={() => setSelectedProjectId(projectId)}
+      />
     </div>
   )
 }

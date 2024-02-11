@@ -3,10 +3,14 @@ import useSWR from 'swr'
 import { fetcher } from '@/providers/swr'
 import { addressType } from '@/types'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
+// Retrieves the auth token from local storage
 const useAuth = (address: addressType): string => {
   return typeof window !== 'undefined' && address ? localStorage.getItem(`auth_${address.toLowerCase()}`) || '' : ''
 }
 
+// Custom SWR hook with address & auth token
 const useCustomSWR = (address: addressType, url: string, refetch?: boolean) => {
   const auth = useAuth(address)
   const shouldFetch = address && auth
@@ -23,7 +27,7 @@ const useCustomSWR = (address: addressType, url: string, refetch?: boolean) => {
 
 // Retrieves the list of projects (GET: /projects)
 export function useProjectsData() {
-  const { data, error } = useSWR('api/projects', (url) => fetcher(url, 'GET'))
+  const { data, error } = useSWR(`${API_URL}/projects`, (url) => fetcher(url, 'GET'))
 
   return {
     projectsData: data,
@@ -34,7 +38,7 @@ export function useProjectsData() {
 
 // Retrieves user score data (GET: /user/score)
 export function useMyScoreData(address: addressType, refetch?: boolean) {
-  const { data, isLoading, isError } = useCustomSWR(address, 'api/user/score', refetch)
+  const { data, isLoading, isError } = useCustomSWR(address, `${API_URL}/user/score`, refetch)
 
   return {
     myScoreData: data,
@@ -45,7 +49,7 @@ export function useMyScoreData(address: addressType, refetch?: boolean) {
 
 // Retrieves user votes data (GET: /user/votes)
 export function useMyVotesData(address: addressType, refetch?: boolean) {
-  const { data, isLoading, isError } = useCustomSWR(address, 'api/user/votes', refetch)
+  const { data, isLoading, isError } = useCustomSWR(address, `${API_URL}/user/votes`, refetch)
 
   return {
     myVotesData: data,
@@ -58,7 +62,7 @@ export function useMyVotesData(address: addressType, refetch?: boolean) {
 export function usePairData(address: addressType, shouldFetch: boolean, refetch?: boolean, editPairIndex?: number) {
   const { data, isLoading, isError } = useCustomSWR(
     shouldFetch ? address : undefined,
-    `api/user/get-random-project-pair${editPairIndex ? `?pairIndex=${editPairIndex}` : ''}`,
+    `${API_URL}/user/get-random-project-pair${editPairIndex ? `?pairIndex=${editPairIndex}` : ''}`,
     refetch,
   )
 
@@ -73,7 +77,7 @@ export function usePairData(address: addressType, shouldFetch: boolean, refetch?
 export function useVote(address: addressType, votedProjectId: number | null) {
   const auth = useAuth(address)
   const postData = async () => {
-    return await fetcher('api/user/vote', 'POST', { votedProjectId }, auth)
+    return await fetcher(`${API_URL}/user/vote`, 'POST', { votedProjectId }, auth)
   }
 
   return { vote: postData }
@@ -88,7 +92,7 @@ export function useUpdateVote(
 ) {
   const auth = useAuth(address)
   const postData = async () => {
-    return await fetcher('api/user/vote', 'PATCH', { firstProjectId, secondProjectId, votedProjectId }, auth)
+    return await fetcher(`${API_URL}/user/vote`, 'PATCH', { firstProjectId, secondProjectId, votedProjectId }, auth)
   }
 
   return { updateVote: postData }

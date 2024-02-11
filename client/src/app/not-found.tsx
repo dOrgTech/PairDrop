@@ -1,10 +1,12 @@
 import Heading from '@/components/reusable/Heading'
+import { notFoundPage } from '@/config'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'PairDrop - Page Not Found',
+  title: notFoundPage.pageTitle,
 }
 
+// Page Not Found
 export default function PageNotFound() {
   return (
     <main>
