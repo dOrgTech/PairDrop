@@ -36,6 +36,8 @@ The PairDrop codebase is structured into distinct directories for the client, se
 - **Server**: The backend operations, APIs, and server logic using Node.js and MongoDB are located in the `server` directory.
 - **Data**: Scripts and files for handling data processing are found within the `data` directory.
 
+For a detailed understanding of the codebase, including the roles and contents of specific files and folders, please refer to the **[Codebase & Folder Structure](./docs/00_codebase_structure.md)** documentation.
+
 This organization ensures a clear separation of concerns, simplifies navigation, and supports efficient development and maintenance.
 
 ## 1. Getting Started
