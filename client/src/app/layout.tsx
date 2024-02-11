@@ -3,11 +3,13 @@ import './globals.css'
 import { Web3Modal } from '@/context/Web3Modal'
 import Header from '@/components/Header'
 import { SWRProvider } from '@/providers/swr'
+import { rootLayout } from '@/config'
 
 export const metadata: Metadata = {
-  title: 'PairDrop',
+  title: rootLayout.siteTitle,
 }
 
+// Root Layout
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>

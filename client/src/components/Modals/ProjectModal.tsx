@@ -9,6 +9,7 @@ type ProjectModalProps = {
   data: any
 }
 
+// Project Modal Component
 const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
   const modalRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
@@ -16,6 +17,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ show, onClose, data }) => {
     onClose()
   }
 
+  // Close modal when clicking outside of it
   useOutsideClick(modalRef, handleCloseModal)
 
   return show ? (

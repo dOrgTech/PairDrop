@@ -12,416 +12,77 @@ View Demo: TODO
 
 Below you will find instructions on how to fork PairDrop so you can use it to distribute funding in your community.
 
-⚙️ Built using…. MongoDB and Typescript.
-
 Video walkthrough: TODO
 
-- Setup & Deployment
-- Customizing the UI
-- Adding Projects
-- Generating the Voters List
-- Voting
-- Results
+### Documentation:
 
-</br>
+- [Codebase & Folder Structure](./docs/00_codebase_structure.md)
 
-# PairDrop Client
+1. [Setup & Deployment](./docs/01_setup.md)
+2. [Customizing the UI](./docs/02_customizing_ui.md)
+3. [Adding Projects](./docs/03_adding_projects.md)
+4. [Generating the Voters List](./docs/04_generate_voters.md)
+5. [Voting](./docs/05_voting.md)
+6. [Results](./docs/06_results.md)
 
-TODO
+- [Server](./docs/server.md)
+- [Data](./docs/data.md)
 
-# PairDrop Server
+## Codebase & Folder Structure
 
-## Seeder
+The PairDrop codebase is structured into distinct directories for the client, server, and data management:
 
-Handles the import/export/deletion of data, the following commands are to be run inside the server folder.
+- **Client**: The frontend code, built with NextJS, TypeScript, and Tailwind CSS, is contained within the `client` directory.
+- **Server**: The backend operations, APIs, and server logic using Node.js and MongoDB are located in the `server` directory.
+- **Data**: Scripts and files for handling data processing are found within the `data` directory.
 
-### Import projects
+This organization ensures a clear separation of concerns, simplifies navigation, and supports efficient development and maintenance.
 
-Imports projects data from `/data/projects.json` to `Projects` collection (skips if the collection is not empty).
+## 1. Getting Started
 
-```
-node seeder.js -ip
-```
+Before diving into the setup and customization of your PairDrop client, ensure you have the following prerequisites installed:
 
-### Export projects
+- Node.js (LTS version)
+- Yarn (for dependency management)
 
-Exports projects data from `Projects` collection to file (skips if the collection is empty).
+Follow the step-by-step guide in the **[Setup & Deployment](./docs/01_setup.md)** documentation to get your PairDrop client up and running. This guide includes instructions on installation, configuration, and deployment.
 
-Can export to `/exportedData/exportedProjects.json` using JSON format, with the following command:
+## 2. Customizing the Client
 
-```
-node seeder.js -epj
-```
+To make the PairDrop client resonate with your community's identity, refer to the **[Customizing the UI](./docs/02_customizing_ui.md)** documentation. It provides detailed instructions on how to use the provided configuration file to adjust the UI elements, including logos, color schemes, and text.
 
-Can export to `/exportedData/exportedProjects.csv` using CSV format, with the following command:
+## 3. Adding Projects
 
-```
-node seeder.js -epc
-```
+The process of adding projects for voting is streamlined through the use of the PairDrop Server's seeder functionality. Detailed guidance on importing project data into your PairDrop client can be found in **[Adding Projects](./docs/03_adding_projects.md)**.
 
-### Delete projects
+## 4. Generating Voters List
 
-Deletes projects data from `Projects` collection (skips if the collection is empty).
+To ensure a fair and transparent voting process, the PairDrop system utilizes a voters list based on specific criteria. Learn how to generate and import this list by following the steps in **[Generating the Voters List](./docs/04_generate_voters.md)**.
 
-```
-node seeder.js -dp
-```
+## 5. Voting Process
 
-### Import scores
+Engage your community in the voting process with PairDrop's intuitive interface. The **[Voting](./docs/05_voting.md)** documentation explains everything voters need to know, from logging in to casting votes on project pairs.
 
-Imports scores data from `/data/OverallNormalized.json` to `Scores` collection (skips if the collection is not empty).
+## 6. Viewing Results
 
-```
-node seeder.js -is
-```
+After the voting period ends, results can be analyzed and shared with your community. The **[Results](./docs/06_results.md)** document describes how to access and interpret voting outcomes, ensuring transparency and accountability.
 
-### Export scores
+## Server
 
-Exports scores data from `Scores` collection to file (skips if the collection is empty).
+The PairDrop server plays a crucial role in managing data, processing votes, and calculating results. It includes functionalities for importing and exporting project and voter information, along with a comprehensive API for interactions. For detailed instructions on setting up and managing the server, refer to the **[Server](./docs/server.md)** documentation.
 
-Can export to `/exportedData/exportedScores.json` using JSON format, with the following command:
+## Data
 
-```
-node seeder.js -esj
-```
+PairDrop's innovative approach to funding relies on a sophisticated data handling and normalization process to evaluate contributions across the Ethereum ecosystem. This system ensures that funding decisions are data-driven and equitable. To learn more about how PairDrop handles data, including sourcing, normalization, and integration, see the **[Data](./docs/data.md)** documentation.
 
-Can export to `/exportedData/exportedScores.csv` using CSV format, with the following command:
+## License
 
-```
-node seeder.js -esc
-```
+PairDrop is released under the MIT License, encouraging open-source collaboration and contributions.
 
-### Delete scores
+## Support and Contributions
 
-Deletes scores data from `Scores` collection (skips if the collection is empty).
+The PairDrop project is open for contributions. If you encounter any issues or would like to contribute to the development, please visit our [GitHub repository](https://github.com/dOrgTech/PairDrop/) or contact us via our support channels.
 
-```
-node seeder.js -ds
-```
+## License
 
-### Delete votes
-
-Deletes votes data from `Votes` collection (skips if the collection is empty).
-
-```
-node seeder.js -dv
-```
-
-## API
-
-PairDrop backend, can be started using `npm start` (for production) or `npm test` (for testing/development).
-
-The API documentation is implemented through Swagger and it's accessible at `/api-docs`.
-
-Provides the following endpoints:
-
-- **GET** `/projects`: Gets the projects list.
-- **GET** `/user/score`: Gets the logged-in user's score data.
-- **GET** `/user/get-random-project-pair`: Generates and gets a random projects pair for voting (for logged-in users).
-- **POST** `/user/vote`: Adds the user vote (for logged-in users).
-- **PATCH** `/user/vote`: Edits the user vote (for logged-in users).
-
-## Environment variables
-
-```
-SERVER_NAME=PairDrop Server
-SERVER_VERSION=0.1.0
-PROJECTPAIR_FIRSTPROJECT_STARTINGSCORE=0.8
-PROJECTPAIR_SECONDPROJECT_ENDSCORE=0.2
-POWERRANKER_DAMPINGFACTOR=1
-ATLAS_URL=MONGO_DB_CONNECTION_URL
-MODE="test" or "prod"
-```
-
-# PairDrop Data
-
-## Data sources
-
-### Gardens
-
-Processes all Gardens that have at least 10 proposals, like 1HIVE, TOKEN ENGINEERING COMMONS, BrightDAO etc…
-
-- Data source type: `Subgraph`
-- Score before log norm: `+1 for each stake to proposal (no amount checked, just the action)`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 149
-Average score: 3.1815632667367684
-Below average wallets count: 2387
-Above average wallets count: 466
-```
-
-### Gitcoin Donation
-
-Processes all donations of at least 100$.
-
-- Data source type: `Dune`
-- Score before log norm: `+1 for each contribution above 100$`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 12
-Average score: 1.1938527084601338
-Below average wallets count: 2840
-Above average wallets count: 446
-```
-
-### EAS (Ethereum Attestation Service)
-
-Processes all minted EAS attestations.
-
-- Data source type: `Dune`
-- Score before log norm: `+1 for each attestation`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 257
-Average score: 1.6967090137835008
-Below average wallets count: 67206
-Above average wallets count: 25441
-```
-
-### Gitcoin Projects Owners
-
-Processes all projects creators.
-
-- Data source type: `Moralis`
-- Score before log norm: `+1 for each project creation`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 7
-Average score: 1.0813076278290026
-Below average wallets count: 1113
-Above average wallets count: 80
-```
-
-### Giveth Donation
-
-Processes all donations of at least 100$.
-
-- Data source type: `Giveth API`
-- Score before log norm: `+1 for each donation above 100$`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 92
-Average score: 2.729528535980149
-Below average wallets count: 325
-Above average wallets count: 78
-```
-
-### Holonym
-
-Processes all proofs.
-
-- Data source type: `Etherscan API`
-- Score before log norm: `+1 for each proof`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 1588
-Average score: 5.009708737864078
-Below average wallets count: 411
-Above average wallets count: 1
-```
-
-### Humanbound
-
-Processes all Humanbound tokens minters.
-
-- Data source type: `Moralis + Etherscan API`
-- Score before log norm: `+1 for each minted token`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 23
-Average score: 1.766839378238342
-Below average wallets count: 131
-Above average wallets count: 62
-```
-
-### Mirror
-
-Processes all NFTs minters.
-
-- Data source type: `Mirror API`
-- Score before log norm: `+1 for each minted token`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 701
-Average score: 1.9749258160237388
-Below average wallets count: 4942
-Above average wallets count: 1798
-```
-
-### POAP
-
-Processes POAP events that have at least 4k of supply.
-
-- Data source type: `POAP.gallery API + POAP API`
-- Score before log norm: `+1 for each owned POAP`
-- Multiplier: `1.5`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 528
-Average score: 2.2107264741856048
-Below average wallets count: 457772
-Above average wallets count: 95737
-```
-
-### Pooly NFT
-
-Processes all NFTs minters.
-
-- Data source type: `Moralis`
-- Score before log norm: `+1 for each owned POOLY`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 20
-Average score: 1.1311369509043927
-Below average wallets count: 5762
-Above average wallets count: 430
-```
-
-### Proof of Humanity
-
-Processes all submissions.
-
-- Data source type: `Subgraph API`
-- Score before log norm: `+1 for each registered submission (approved submission)`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 53
-Average score: 1.0034291119782428
-Below average wallets count: 16911
-Above average wallets count: 3
-```
-
-### RossDAO
-
-Processes all donations of at least 100$.
-
-- Data source type: `Safe API`
-- Score before log norm: `+1 for each contribution above 100$`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 6
-Average score: 1.0901451489686784
-Below average wallets count: 1214
-Above average wallets count: 95
-```
-
-### UkraineDAO
-
-Processes all donations of at least 100$.
-
-- Data source type: `Safe API`
-- Score before log norm: `+1 for each contribution above 100$`
-- Multiplier: `1`
-- Raw data statistics (before normalization):
-
-```
-Min score: 1
-Max score: 9
-Average score: 1.1545064377682404
-Below average wallets count: 427
-Above average wallets count: 39
-```
-
-### Overall data
-
-- Data statistics (normalized):
-
-```
-Min score: 23.488451689160573
-Max score: 456.47755958286297
-Average score: 46.28210643577585
-Below average wallets count: 478662
-Above average wallets count: 174117
-```
-
-## Data generation and statistics
-
-Generates and normalizes data of all data sources with the following command:
-
-```
-npm run generate
-```
-
-Only normalizes data of all data sources with the following command:
-
-```
-npm run onlynormalize
-```
-
-Generates statistics of the specified data file with the following command:
-
-```
-npm run stats FILENAME_IN_DATAMINERSOUTPUT
-```
-
-## Data normalization
-
-Each data source result data is logarithmically normalized between 1 and 100; then the overall data is normalized between 0 and 0.2 in order to be compatible with the PowerRanker `/server/powerRanker.js`
-
-## Environment variables
-
-```
-AXIOS_RETRIES=5
-DATAMINER_EAS_SCOREMULTIPLIER=1
-DATAMINER_GARDENS_SCOREMULTIPLIER=1
-DATAMINER_GITCOINDONATION_SCOREMULTIPLIER=1
-DATAMINER_GITCOINPROJECTSOWNERS_SCOREMULTIPLIER=1
-DATAMINER_GIVETH_SCOREMULTIPLIER=1
-DATAMINER_HOLONYM_SCOREMULTIPLIER=1
-DATAMINER_HUMANBOUND_SCOREMULTIPLIER=1
-DATAMINER_MIRROR_SCOREMULTIPLIER=1
-DATAMINER_POAP_SCOREMULTIPLIER=1.5
-DATAMINER_POOLYNFT_SCOREMULTIPLIER=1
-DATAMINER_PROOFOFHUMANITY_SCOREMULTIPLIER=1
-DATAMINER_ROSSDAO_SCOREMULTIPLIER=1
-DATAMINER_UKRAINEDAO_SCOREMULTIPLIER=1
-DATAMINER_GIVETH_USDTHRESHOLD=100
-DATAMINER_ROSSDAO_ETHTHRESHOLD=45000000000000000
-DATAMINER_UKRAINEDAO_ETHTHRESHOLD=45000000000000000
-DATAMINER_UKRAINEDAO_STABLECOINTHRESHOLD=100000000
-LOGNORMALIZATION_MIN=1
-LOGNORMALIZATION_MAX=100
-FINALNORMALIZATION_MIN=0
-FINALNORMALIZATION_MAX=0.2
-MORALIS_APYKEY=
-ETHERSCAN_OPTIMISM_APIKEY=
-ETHERSCAN_MAINNET_APIKEY=
-SUBGRAPH_APYKEY=
-POAP_APIKEY=
-```
+PairDrop is released under _MIT License_. Feel free to fork, modify, and use it in your projects.

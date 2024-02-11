@@ -15,6 +15,7 @@ import { formatAddress } from '@/utils'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import { useMyScoreData } from '@/hooks/useDataAPI'
 
+// Connect Wallet Component
 export default function ConnectWallet({ buttonText }: { buttonText: string }) {
   const [isMounted, setIsMounted] = useState(false)
   const [walletDropdown, setWalletDropdown] = useState(false)
@@ -31,12 +32,14 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
 
   const dropdownRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
+  // Set user score
   useEffect(() => {
     if (myScoreData && !isMyScoreLoading && !isMyScoreError) {
       setUserScore(myScoreData.score)
     }
   }, [myScoreData, isMyScoreLoading, isMyScoreError])
 
+  // Reload page on account change
   useEffect(() => {
     setIsMounted(true)
     if (window.ethereum) {
@@ -53,13 +56,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
     }
   }, [])
 
-  // Sign message to obtain auth token
-  useEffect(() => {
-    if (!walletProvider) return
-    const provider = new ethers.providers.Web3Provider(walletProvider)
-    signer = provider.getSigner()
-  }, [walletProvider])
-
+  // Show/hide scrollbar based on modal open state
   useEffect(() => {
     if (isModalOpen && document.body.clientHeight > window.innerHeight) {
       document.documentElement.classList.add('show-scrollbar')
@@ -67,6 +64,13 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
       document.documentElement.classList.remove('show-scrollbar')
     }
   }, [isModalOpen])
+
+  // Sign message to obtain auth token
+  useEffect(() => {
+    if (!walletProvider) return
+    const provider = new ethers.providers.Web3Provider(walletProvider)
+    signer = provider.getSigner()
+  }, [walletProvider])
 
   useEffect(() => {
     const obtainAndStoreToken = async () => {
@@ -91,6 +95,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
     obtainAndStoreToken()
   }, [isConnected, address])
 
+  // Close dropdown on outside click
   useOutsideClick(dropdownRef, () => {
     if (walletDropdown) setWalletDropdown(false)
   })

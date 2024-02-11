@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { ProjectCardType } from '@/types'
 
+// Explore Page - Project Card Component
 const ProjectCard = ({ projectName, projectDetails, categories, projectIcon }: ProjectCardType) => {
   return (
     <div className='card relative w-[315px] cursor-pointer p-5 pt-10'>

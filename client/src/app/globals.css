@@ -61,7 +61,7 @@
   }
 
   p {
-    @apply !block font-ibm text-base font-medium md:text-lg lg:text-xl;
+    @apply !block whitespace-pre-line font-ibm text-base font-medium md:text-lg lg:text-xl;
   }
 
   .subtitle1 {
@@ -238,15 +238,11 @@
 
   /* Backgrounds */
   .heading-bg {
-    @apply -mt-[82px] h-screen bg-[url("/assets/backgrounds/bg-blob.webp")] bg-cover bg-center bg-no-repeat;
-  }
-
-  .bg-ripples {
-    @apply bg-[url("/assets/backgrounds/bg-ripples.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply bg-heading-image -mt-[82px] h-screen bg-cover bg-center bg-no-repeat;
   }
 
   .bg {
-    @apply min-h-screen bg-[url("/assets/backgrounds/bg-empty.webp")] bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply bg-empty-image min-h-screen bg-cover bg-fixed bg-center bg-no-repeat;
   }
 
   /* Header */

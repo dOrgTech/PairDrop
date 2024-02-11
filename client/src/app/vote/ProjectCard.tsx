@@ -12,6 +12,7 @@ interface ProjectCardProps {
   onProjectView: () => void
 }
 
+// Vote Page - Project Card Component
 const ProjectCard = ({
   projectId,
   projectName,

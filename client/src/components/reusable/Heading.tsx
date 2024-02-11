@@ -5,19 +5,22 @@ import ConnectWallet from '@/components/reusable/ConnectWallet'
 import { useRouter, usePathname } from 'next/navigation'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import BlobBackground from './BlobBackground'
+import { heading } from '@/config'
 
 interface HeadingProps {
   PageNotFound?: boolean
   countPage?: boolean
 }
 
+// Heading Component
 const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = false }) => {
   const [isMounted, setIsMounted] = useState(false)
-  const [countdown, setCountdown] = useState<string | number>(3)
+  const [countdown, setCountdown] = useState<string | number>(heading.countdownInitialValue)
   const { isConnected } = useWeb3ModalAccount()
   const router = useRouter()
   const path = usePathname()
 
+  // Count Page
   useEffect(() => {
     setIsMounted(true)
 
@@ -26,7 +29,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
         setCountdown((prevCount) => {
           if (prevCount === 1) {
             clearInterval(interval)
-            return 'GO!'
+            return heading.countdownGoText
           }
           return (prevCount as number) - 1
         })
@@ -37,7 +40,7 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
   }, [countPage])
 
   useEffect(() => {
-    if (countdown === 'GO!') {
+    if (countdown === heading.countdownGoText) {
       setTimeout(() => {
         router.push('/vote')
       }, 1000)
@@ -51,10 +54,10 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
         {/* Page Not Found */}
         {PageNotFound && !countPage && (
           <>
-            <h1 className='relative text-white'>404</h1>
-            <h2 className='relative text-white'>PAGE NOT FOUND</h2>
-            <Link href='/' className='button-transparent relative mt-8 text-xl'>
-              GO TO HOME
+            <h1 className='relative text-white'>{heading.pageNotFound.title}</h1>
+            <h2 className='relative text-white'>{heading.pageNotFound.subtitle}</h2>
+            <Link href={heading.pageNotFound.goHomeLink} className='button-transparent relative mt-8 text-xl'>
+              {heading.pageNotFound.goHomeText}
             </Link>
           </>
         )}
@@ -65,16 +68,14 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
         {/* Home Page Heading */}
         {path === '/' && !countPage ? (
           <>
-            <h1 className='pointer-events-none relative mb-6 text-6xl leading-[0.9] text-white md:text-7xl lg:text-[120px] lg:leading-[0.8]'>
-              FUNDING
-              <br />
-              REIMAGINED
+            <h1 className='pointer-events-none relative mb-6 whitespace-pre-line text-6xl leading-[0.9] text-white md:text-7xl lg:text-[120px] lg:leading-[0.8]'>
+              {heading.homePage.title}
             </h1>
 
             {!isConnected && isMounted && (
               <>
-                <div className='subtitle1 pointer-events-none relative mb-6 text-white'>
-                  Connect your wallet to begin <br /> your pairwise adventure.
+                <div className='subtitle1 pointer-events-none relative mb-6 whitespace-pre-line text-white'>
+                  {heading.homePage.subtitle}
                 </div>
                 <div className='relative'>
                   <ConnectWallet buttonText='Connect' />
@@ -83,19 +84,19 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
             )}
 
             <Link
-              href='/about'
+              href={heading.homePage.learnMoreLink}
               className='button-transparent relative mt-6 [text-shadow:_0_1px_16px_rgba(60,29,254,0.25)]'
             >
-              LEARN MORE
+              {heading.homePage.learnMoreButtonText}
             </Link>
           </>
         ) : (
           // About Page Heading
-          path === '/about' &&
+          path === heading.aboutPage.learnPagePath &&
           !countPage && (
             <>
-              <h1 className='text-white'>PairDrop</h1>
-              <h2 className='text-white'>BY DAO DROPS</h2>
+              <h1 className='text-white'>{heading.aboutPage.title}</h1>
+              <h2 className='text-white'>{heading.aboutPage.subtitle}</h2>
             </>
           )
         )}
