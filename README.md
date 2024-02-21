@@ -81,10 +81,9 @@ PairDrop's innovative approach to funding relies on a sophisticated data handlin
 
 PairDrop is released under the MIT License, encouraging open-source collaboration and contributions.
 
-## Support and Contributions
+## Acknowledgements
 
-The PairDrop project is open for contributions. If you encounter any issues or would like to contribute to the development, please visit our [GitHub repository](https://github.com/dOrgTech/PairDrop/) or contact us via our support channels.
+This project has received funding from [Octant](https://docs.octant.app/), a novel platform for experiments in participatory public goods funding. We are deeply grateful for the Octant community's support.
 
-## License
-
-PairDrop is released under _MIT License_. Feel free to fork, modify, and use it in your projects.
+We are also grateful for the guidance and feedback provided to us by [Daniel Kronovet
+](https://twitter.com/kronosapiens), the lead author of the [original BudgetBox paper](https://uploads-ssl.webflow.com/61840fafb9a4c433c1470856/639b50ee30b729cb016806c1_BudgetingBoxes.pdf).
