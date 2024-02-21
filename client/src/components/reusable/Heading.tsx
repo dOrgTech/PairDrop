@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import BlobBackground from './BlobBackground'
 import { heading } from '@/config'
+import useShowCountPageStore from '@/stores/useShowCountPageStore'
 
 interface HeadingProps {
   PageNotFound?: boolean
@@ -14,6 +15,7 @@ interface HeadingProps {
 
 // Heading Component
 const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = false }) => {
+  const { setShowCountPage } = useShowCountPageStore()
   const [isMounted, setIsMounted] = useState(false)
   const [countdown, setCountdown] = useState<string | number>(heading.countdownInitialValue)
   const { isConnected } = useWeb3ModalAccount()
@@ -41,11 +43,12 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
 
   useEffect(() => {
     if (countdown === heading.countdownGoText) {
+      router.push('/vote')
       setTimeout(() => {
-        router.push('/vote')
+        setShowCountPage(false)
       }, 1000)
     }
-  }, [countdown, router])
+  }, [countdown, router, setShowCountPage])
 
   return (
     <div className='heading-bg relative flex min-h-[800px] items-center justify-center lg:min-h-heroHeight'>
@@ -63,7 +66,9 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
         )}
 
         {/* Count Page */}
-        {countPage && <div className='text-[400px] font-bold tracking-tighter text-white'>{countdown}</div>}
+        {countPage && (
+          <div className='text-[250px] font-bold tracking-tighter text-white md:text-[400px]'>{countdown}</div>
+        )}
 
         {/* Home Page Heading */}
         {path === '/' && !countPage ? (
@@ -83,12 +88,16 @@ const Heading: React.FC<HeadingProps> = ({ PageNotFound = false, countPage = fal
               </>
             )}
 
-            <Link
-              href={heading.homePage.learnMoreLink}
-              className='button-transparent relative mt-6 [text-shadow:_0_1px_16px_rgba(60,29,254,0.25)]'
-            >
-              {heading.homePage.learnMoreButtonText}
-            </Link>
+            <div className='mt-6 flex flex-col items-center gap-6'>
+              <Link href={heading.homePage.learnMoreLink} className='button-transparent'>
+                {heading.homePage.learnMoreButtonText}
+              </Link>
+              {!isConnected && isMounted && (
+                <Link href={heading.homePage.exploreProjectsLink} className='button-transparent flex lg:hidden'>
+                  {heading.homePage.exploreProjectsButtonText}
+                </Link>
+              )}
+            </div>
           </>
         ) : (
           // About Page Heading

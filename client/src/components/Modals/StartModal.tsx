@@ -2,16 +2,19 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { startModal } from '@/config'
+import { addressType } from '@/types'
+import useShowCountPageStore from '@/stores/useShowCountPageStore'
 
 type StartModalProps = {
   show: boolean
   onClose: () => void
-  setShowCountPage: (show: boolean) => void
   userScore: number | null
+  address: addressType
 }
 
 // Start Modal Component
-const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage, userScore }) => {
+const StartModal: React.FC<StartModalProps> = ({ show, onClose, userScore, address }) => {
+  const { setShowCountPage } = useShowCountPageStore()
   const [step, setStep] = useState(-1)
 
   // Set step based on user score (sorry message or walkthrough steps)
@@ -31,14 +34,14 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
     } else {
       setShowCountPage(true)
       onClose()
-      localStorage.setItem('startModalFinished', 'true')
+      localStorage.setItem(`startModalFinished_${address}`, 'true')
     }
   }
 
   // Handle go home
   const handleGoHome = () => {
     onClose()
-    localStorage.setItem('startModalFinished', 'true')
+    localStorage.setItem(`startModalFinished_${address}`, 'true')
   }
 
   // Step dots
@@ -56,73 +59,75 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, setShowCountPage
 
   return show ? (
     <div className='modal-overlay side-padding'>
-      <div className='card card-white-dots mx-5 mb-8 h-fit max-w-[1024px] flex-col justify-center p-0'>
+      <div className='card card-white-dots mx-5 mb-12 h-fit max-w-[1024px] flex-col justify-center p-0 sm:mb-8'>
         <div className='relative p-8 pb-10 md:px-12 md:pb-16 md:pt-12'>
-          {/* User has no score, show sorry message */}
-          {step === 0 && (
-            <>
-              <h3>{startModal.steps[0].title}</h3>
-              <p className='mt-4'>{startModal.steps[0].description}</p>
-              <button className='button-next absolute -bottom-[24px] left-0 right-0 mx-auto' onClick={handleGoHome}>
-                GO HOME
-              </button>
-            </>
-          )}
+          <div className='max-h-[60vh] overflow-y-auto'>
+            {/* User has no score, show sorry message */}
+            {step === 0 && (
+              <>
+                <h3>{startModal.steps[0].title}</h3>
+                <p className='mt-4'>{startModal.steps[0].description}</p>
+                <button className='button-next absolute -bottom-[24px] left-0 right-0 mx-auto' onClick={handleGoHome}>
+                  GO HOME
+                </button>
+              </>
+            )}
 
-          {/* User has score, show steps walkthrough */}
-          {step === 1 && (
-            <>
-              <h4>{startModal.steps[1].title}</h4>
-              <p className='mb-6 md:mb-10'>{startModal.steps[1].description}</p>
-              <h4>{startModal.steps[1].subtitle}</h4>
-              <p>
-                {startModal.steps[1].additionalInfo?.text}
-                <a
-                  className='underline'
-                  href={startModal.steps[1].additionalInfo?.linkUrl}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  {startModal.steps[1].additionalInfo?.linkText}
-                </a>
-              </p>
-            </>
-          )}
+            {/* User has score, show steps walkthrough */}
+            {step === 1 && (
+              <>
+                <h4>{startModal.steps[1].title}</h4>
+                <p className='mb-6 md:mb-10'>{startModal.steps[1].description}</p>
+                <h4>{startModal.steps[1].subtitle}</h4>
+                <p>
+                  {startModal.steps[1].additionalInfo?.text}
+                  <a
+                    className='underline'
+                    href={startModal.steps[1].additionalInfo?.linkUrl}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {startModal.steps[1].additionalInfo?.linkText}
+                  </a>
+                </p>
+              </>
+            )}
 
-          {step === 2 && (
-            <>
-              <h4>{startModal.steps[2].title}</h4>
-              <p className='mb-4 md:mb-8'>{startModal.steps[2].description}</p>
-              <Image
-                className='mb-2 cursor-pointer'
-                src={startModal.steps[2].imageSrc ?? ''}
-                alt={startModal.steps[2].altText ?? ''}
-                width={928}
-                height={495}
-              />
-            </>
-          )}
+            {step === 2 && (
+              <>
+                <h4>{startModal.steps[2].title}</h4>
+                <p className='mb-4 md:mb-8'>{startModal.steps[2].description}</p>
+                <iframe
+                  className='mb-2 aspect-video w-full cursor-pointer'
+                  src={startModal.steps[2].videoURL}
+                  title={startModal.steps[2].title}
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                  allowFullScreen
+                ></iframe>
+              </>
+            )}
 
-          {step === 3 && (
-            <>
-              <h4>{startModal.steps[3].title}</h4>
-              <p>{startModal.steps[3].description}</p>
-            </>
-          )}
+            {step === 3 && (
+              <>
+                <h4>{startModal.steps[3].title}</h4>
+                <p>{startModal.steps[3].description}</p>
+              </>
+            )}
 
-          {step === 4 && (
-            <>
-              <h4>{startModal.steps[4].title}</h4>
-              <p>{startModal.steps[4].description}</p>
-            </>
-          )}
+            {step === 4 && (
+              <>
+                <h4>{startModal.steps[4].title}</h4>
+                <p>{startModal.steps[4].description}</p>
+              </>
+            )}
 
-          {step === 5 && (
-            <>
-              <h3 className='mb-4 font-bold md:mb-8'>{startModal.steps[5].title}</h3>
-              <p>{startModal.steps[5].description}</p>
-            </>
-          )}
+            {step === 5 && (
+              <>
+                <h3 className='mb-4 font-bold md:mb-8'>{startModal.steps[5].title}</h3>
+                <p>{startModal.steps[5].description}</p>
+              </>
+            )}
+          </div>
 
           {step > 1 && (
             <button className='button-prev absolute -bottom-[24px] left-12' onClick={handlePrev}>

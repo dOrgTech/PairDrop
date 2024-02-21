@@ -66,6 +66,8 @@ export const heading = {
     subtitle: 'Connect your wallet to begin\nyour pairwise adventure.',
     learnMoreLink: '/about',
     learnMoreButtonText: 'LEARN MORE',
+    exploreProjectsLink: '/explore',
+    exploreProjectsButtonText: 'EXPLORE',
   },
   aboutPage: {
     learnPagePath: '/about',
@@ -101,6 +103,13 @@ export const results = {
   viewLessText: 'View Less',
 }
 
+// FinishModal component
+export const finishModal = {
+  title: 'YOU’VE DONE IT, ANON',
+  description:
+    'Thanks for being an Impact Maverick with PairDrop. Your thoughtful choices are now weaving magic into the fabric of public good. Stay tuned to see the ripples of change you’ve helped create!',
+}
+
 // StartModal component
 export const startModal = {
   steps: [
@@ -121,7 +130,7 @@ export const startModal = {
     {
       title: 'HOW TO VOTE:',
       description: `A quick demonstration on how to use PairDrop.`,
-      imageSrc: '/assets/misc/how-video-placeholder.png',
+      videoURL: 'https://www.youtube.com/embed/YIBy9JfMIlE',
       altText: 'How to Vote Video Placeholder',
     },
     {
@@ -181,8 +190,19 @@ export const votePage = {
   noDataMessage: 'No projects pairs data available',
   backToMyVotesText: 'View All Pairs',
   instructionsTitle: 'WHICH ONE DO YOU CHOOSE?',
-  instructionsDescription:
-    'Review our guide on how to vote to ensure you’re reviewing each in consideration of public impact.',
+  instructionsDescription: (
+    <>
+      <a
+        href='https://github.com/dOrgTech/PairDrop/blob/main/docs/05_voting.md'
+        target='_blank'
+        rel='noopener noreferrer'
+        className='break-words underline'
+      >
+        Review our guide
+      </a>{' '}
+      on how to vote to ensure you’re reviewing each in consideration of public impact.
+    </>
+  ),
 }
 
 // About Page
@@ -217,6 +237,18 @@ export const aboutPage = {
       have performed different on-chain actions in the Ethereum ecosystem such as donating to public goods, voting in
       DAOs, holding identity credentials, deploying smart contracts, claiming relevant POAPs and more! Check it out for
       inspiration and get in touch if you need help developing your own tailored dataset.
+      <br />
+      <br />
+      To fork the codebase, visit the open source repo{' '}
+      <a
+        href='https://github.com/dOrgTech/PairDrop'
+        target='_blank'
+        rel='noopener noreferrer'
+        className='break-words underline'
+      >
+        Here
+      </a>
+      .
     </>
   ),
   secondTitle: 'ABOUT DAO DROPS',
@@ -270,7 +302,7 @@ export const faq = {
           >
             https://github.com/dOrgTech/PairDrop
           </a>{' '}
-          You’ll find everything you need there to fork the codebase and run your own round. From there, you just need
+          - You’ll find everything you need there to fork the codebase and run your own round. From there, you just need
           to choose what the focus or scope of your round will be, and prepare how you will handle nominations and
           communications for the round. You’ll find general guidance for running rounds here - Gitcoin’s modules for
           EasyRetroPGF - the PairDrop team co-created that training.
@@ -284,8 +316,22 @@ export const faq = {
     },
     {
       question: 'How does the voting algorithm work?',
-      answer:
-        'Thousands of addresses have been assigned voting power based on on-chain activity (maximum 100 points per address per category).',
+      answer: (
+        <>
+          Thousands of addresses have been assigned voting power based on on-chain activity (maximum 100 points per
+          address per category -{' '}
+          <a
+            href='https://github.com/dOrgTech/PairDrop/blob/main/docs/data.md'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='font-medium underline'
+            onClick={(e) => e.stopPropagation()}
+          >
+            assignment script here
+          </a>
+          ).
+        </>
+      ),
     },
     {
       question: 'How does the scoring algorithm work?',

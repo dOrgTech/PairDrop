@@ -37,11 +37,11 @@
 
   /* Headings & Subtitles */
   h1 {
-    @apply text-7xl font-extrabold tracking-[3px];
+    @apply text-7xl font-extrabold tracking-[3px] lg:text-[120px];
   }
 
   h2 {
-    @apply text-4xl font-extrabold md:text-5xl;
+    @apply text-5xl font-extrabold md:text-5xl;
   }
 
   h3 {
@@ -199,7 +199,7 @@
 
   /* Modals */
   .modal-overlay {
-    @apply fixed left-0 top-0 z-40 flex h-full w-full flex-col items-center justify-center bg-indigo-600/50 pt-[82px] backdrop-blur-lg;
+    @apply fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center bg-indigo-600/50 backdrop-blur-lg sm:z-40 sm:pt-[82px];
   }
 
   .modal-footer {
@@ -238,11 +238,11 @@
 
   /* Backgrounds */
   .heading-bg {
-    @apply bg-heading-image -mt-[82px] h-screen bg-cover bg-center bg-no-repeat;
+    @apply -mt-[82px] h-screen bg-heading-image bg-cover bg-center bg-no-repeat;
   }
 
   .bg {
-    @apply bg-empty-image min-h-screen bg-cover bg-fixed bg-center bg-no-repeat;
+    @apply min-h-screen bg-empty-image bg-cover bg-fixed bg-center bg-no-repeat;
   }
 
   /* Header */

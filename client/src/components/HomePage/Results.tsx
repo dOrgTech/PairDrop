@@ -47,7 +47,9 @@ const Results = () => {
             const projectFunding = (project.score / totalScore) * TOTAL_FUNDS_AMOUNT
             return (
               <div key={index} className='card-table-row' onClick={() => handleProjectClick(project.projectId)}>
-                <span className='w-[4%] text-right text-base font-bold md:text-lg md:font-black'>{index + 1}.</span>
+                <span className='w-[4%] min-w-[24px] text-right text-base font-bold md:text-lg md:font-black'>
+                  {index + 1}.
+                </span>
                 <span className='w-[46%] truncate text-base font-bold md:text-lg md:font-black lg:w-[35%]'>
                   {project.projectName}
                 </span>
