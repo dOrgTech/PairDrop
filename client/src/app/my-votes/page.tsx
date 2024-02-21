@@ -1,17 +1,32 @@
 'use client'
+import { useEffect, useState } from 'react'
 import PairCard from './PairCard'
 import { useMyVotesData, useMyScoreData } from '@/hooks/useDataAPI'
 import { MyVoteCardType } from '@/types'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import { useRouter } from 'next/navigation'
 import { myVotesPage, pairsCap } from '@/config'
+import { useSearchParams } from 'next/navigation'
+import FinishModal from '@/components/Modals/FinishModal'
 
 // My Votes Page
 const MyVotes = () => {
   const router = useRouter()
+
+  // Check if the user has finished all pair votes & show finish modal
+  const searchParams = useSearchParams()
+  const [showFinishModal, setShowFinishModal] = useState(false)
+  const finished = searchParams.get('finished') || undefined
+
   const { isConnected, address } = useWeb3ModalAccount()
   const { myVotesData, isMyVotesLoading, isMyVotesError } = useMyVotesData(address)
   const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
+
+  useEffect(() => {
+    if (finished === 'true') {
+      setShowFinishModal(true)
+    }
+  }, [finished])
 
   // Show not connected, loading, error, no projects messages & redirect if user has no score
   if (!isConnected || !address)
@@ -42,11 +57,14 @@ const MyVotes = () => {
   }
 
   return (
-    <div className='flex flex-wrap justify-center gap-10'>
-      {pairCards.slice(0, pairsCap).map((card: MyVoteCardType, index: number) => (
-        <PairCard key={index} {...card} />
-      ))}
-    </div>
+    <>
+      <div className='flex flex-wrap justify-center gap-10'>
+        {pairCards.slice(0, pairsCap).map((card: MyVoteCardType) => (
+          <PairCard key={card.pairIndex} {...card} />
+        ))}
+      </div>
+      <FinishModal show={showFinishModal} onClose={() => setShowFinishModal(false)} />
+    </>
   )
 }
 

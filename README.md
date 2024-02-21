@@ -6,13 +6,11 @@ Retroactive public goods funding is the concept of rewarding efforts that have a
 
 Putting this power into the hands of a diverse range of ecosystem participants can make it easier to target areas that are overlooked by centralized allocation bodies.
 
-View Demo: TODO
-
 ## Forking PairDrop
 
 Below you will find instructions on how to fork PairDrop so you can use it to distribute funding in your community.
 
-Video walkthrough: TODO
+Video walkthrough: https://youtu.be/AGIjEzD5PL4
 
 ### Documentation:
 
@@ -79,7 +77,7 @@ PairDrop's innovative approach to funding relies on a sophisticated data handlin
 
 ## License
 
-PairDrop is released under the MIT License, encouraging open-source collaboration and contributions.
+PairDrop is released under MIT License. Feel free to fork, modify, and use it in your projects.
 
 ## Acknowledgements
 

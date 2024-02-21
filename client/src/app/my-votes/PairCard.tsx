@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { MyVoteCardType } from '@/types'
+import useEditVotedPairStore from '@/stores/useEditVotedPairStore'
 
 // My Votes Page - Pair Card Component
 const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex }: MyVoteCardType) => {
   const router = useRouter()
+  const { setVotedProjectId } = useEditVotedPairStore()
 
   // Get project IDs and icons
   const firstProjectId = firstProject?.projectId
@@ -12,18 +14,20 @@ const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex
   const votedProjectId = votedProject?.projectId
   const projectIcons = [firstProject?.projectIcon, secondProject?.projectIcon]
 
+  const handleEditVote = () => {
+    votedProjectId && setVotedProjectId(votedProjectId)
+    router.push(`/vote?edit=${pairIndex}`)
+  }
+
   return (
     <div
+      key={pairIndex}
       className={`flex h-[185px] w-[315px] flex-col items-center border-[6px] bg-aquamarine-400 
             ${status === 'displayed' ? 'border-indigo-600' : 'border-indigo-300'} ${
               status !== 'hidden' && 'cursor-pointer'
             }`}
       onClick={() => {
-        status === 'displayed'
-          ? router.push(`/vote`)
-          : status === 'voted'
-            ? router.push(`/vote?voted=${votedProjectId}&edit=${pairIndex}`)
-            : null
+        status === 'displayed' ? router.push(`/vote`) : status === 'voted' ? handleEditVote() : null
       }}
     >
       {status === 'hidden' ? (
@@ -62,7 +66,7 @@ const PairCard = ({ firstProject, secondProject, status, votedProject, pairIndex
                   icon && (
                     <>
                       <Image
-                        key={icon}
+                        key={index}
                         src={icon}
                         alt={`${status} Icon`}
                         width={60}

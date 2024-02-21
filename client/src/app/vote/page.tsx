@@ -9,15 +9,18 @@ import { useModal } from '@/hooks/useModal'
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react'
 import { useSearchParams } from 'next/navigation'
 import { votePage, pairsCap } from '@/config'
+import useShowCountPageStore from '@/stores/useShowCountPageStore'
+import useEditVotedPairStore from '@/stores/useEditVotedPairStore'
 
 // Vote Page
 const Vote = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { setShowCountPage } = useShowCountPageStore()
 
   // Search params to check if user is editing a vote
   const edit = searchParams.get('edit') || undefined
-  const votedProjectId = searchParams.get('voted') || undefined
+  const { votedProjectId } = useEditVotedPairStore()
 
   const { isConnected, address } = useWeb3ModalAccount()
   const [currentPair, setCurrentPair] = useState(1)
@@ -36,6 +39,11 @@ const Vote = () => {
   const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
   const { vote } = useVote(address, selectedProjectId)
   const { updateVote } = useUpdateVote(address, firstProjectId, secondProjectId, selectedProjectId)
+
+  // set setShowCountPage to false by default
+  useEffect(() => {
+    setShowCountPage(false)
+  }, [setShowCountPage])
 
   // Set initial values for pair data
   useEffect(() => {
@@ -57,7 +65,7 @@ const Vote = () => {
         setSelectedProjectId(Number(votedProjectId))
       }
     }
-  }, [edit, pairData, myScoreData])
+  }, [edit, pairData, myScoreData, votedProjectId, router])
 
   // Show not connected, loading, error, no projects messages & redirect if user has no score
   if (!isConnected || !address)
@@ -90,7 +98,7 @@ const Vote = () => {
     } else if (currentPair === pairsCap) {
       setShouldFetchPair(false)
       await vote()
-      router.push('/my-votes')
+      router.push('/my-votes?finished=true')
     } else if (selectedProjectId) {
       await vote()
       setRefetchPair(!refetchPair)

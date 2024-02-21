@@ -14,10 +14,13 @@ import Web3Token from 'web3-token'
 import { formatAddress } from '@/utils'
 import useOutsideClick from '@/hooks/useOutsideClick'
 import { useMyScoreData } from '@/hooks/useDataAPI'
+import useMyScoreStore from '@/stores/useMyScoreStore'
 
 // Connect Wallet Component
 export default function ConnectWallet({ buttonText }: { buttonText: string }) {
+  const { userScore, setUserScore } = useMyScoreStore()
   const [isMounted, setIsMounted] = useState(false)
+  const [refetchScore, setRefetchScore] = useState(false)
   const [walletDropdown, setWalletDropdown] = useState(false)
   const { open } = useWeb3Modal()
   const { open: isModalOpen } = useWeb3ModalState()
@@ -25,8 +28,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
   const { disconnect } = useDisconnect()
   const { walletProvider } = useWeb3ModalProvider()
   const { setThemeMode } = useWeb3ModalTheme()
-  const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address)
-  const [userScore, setUserScore] = useState<number | null>(null)
+  const { myScoreData, isMyScoreLoading, isMyScoreError } = useMyScoreData(address, refetchScore)
   let signer: Signer
   setThemeMode('light')
 
@@ -37,7 +39,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
     if (myScoreData && !isMyScoreLoading && !isMyScoreError) {
       setUserScore(myScoreData.score)
     }
-  }, [myScoreData, isMyScoreLoading, isMyScoreError])
+  }, [myScoreData, isMyScoreLoading, isMyScoreError, setUserScore])
 
   // Reload page on account change
   useEffect(() => {
@@ -86,6 +88,7 @@ export default function ConnectWallet({ buttonText }: { buttonText: string }) {
             expires_in: '1y',
           })
           localStorage.setItem(`auth_${address.toLowerCase()}`, token)
+          setRefetchScore(!refetchScore)
         } catch (error) {
           console.error('Error obtaining token:', error)
         }
