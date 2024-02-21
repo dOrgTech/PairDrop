@@ -215,7 +215,16 @@ export const aboutPage = {
       common pitfalls of funding mechanisms like cognitive overload and favoritism, while making the process fun and
       painless. PairDrop assigns each voter a random sample of the funding targets as sets of pairs (e.g. six sets of
       two). All the voter has to do is select the more deserving option from each of the pairs and the algorithm handles
-      the rest! <br />
+      the rest! To fork the codebase, visit the open source repo{' '}
+      <a
+        href='https://github.com/dOrgTech/PairDrop'
+        target='_blank'
+        rel='noopener noreferrer'
+        className='break-words underline'
+      >
+        Here
+      </a>
+      .<br />
       <br /> Under the hood, PairDrop uses the{' '}
       <a
         href='/assets/misc/BudgetingBoxes.pdf'
@@ -237,18 +246,6 @@ export const aboutPage = {
       have performed different on-chain actions in the Ethereum ecosystem such as donating to public goods, voting in
       DAOs, holding identity credentials, deploying smart contracts, claiming relevant POAPs and more! Check it out for
       inspiration and get in touch if you need help developing your own tailored dataset.
-      <br />
-      <br />
-      To fork the codebase, visit the open source repo{' '}
-      <a
-        href='https://github.com/dOrgTech/PairDrop'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='break-words underline'
-      >
-        Here
-      </a>
-      .
     </>
   ),
   secondTitle: 'ABOUT DAO DROPS',
