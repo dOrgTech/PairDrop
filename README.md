@@ -10,7 +10,7 @@ Putting this power into the hands of a diverse range of ecosystem participants c
 
 Below you will find instructions on how to fork PairDrop so you can use it to distribute funding in your community.
 
-Video walkthrough: https://youtu.be/AGIjEzD5PL4
+Video walkthrough: https://youtu.be/lHeeqnbutm0
 
 ### Documentation:
 

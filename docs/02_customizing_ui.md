@@ -42,6 +42,34 @@ For custom styles that may not fit within the Tailwind configuration, the **[glo
 
 You can override default styles or add new styles for specific elements across the application by specifying CSS rules in this file.
 
+## Walkthrough Video Customization
+
+To enhance the understanding and engagement of your participants, PairDrop features a StartModal component that includes a step with a walkthrough video. This video serves as a comprehensive guide, showing voters the goals, guidelines, and an example of the voting process for your community funding round.
+
+### Adding Your Walkthrough Video
+
+You can personalize the voting experience by creating and incorporating your own walkthrough video. Once your video is ready, it should be placed in the following location within your project's directory: `client/public/assets/videos/walkthrough.mp4`
+
+### Configuring the StartModal Component
+
+To update the walkthrough video path, navigate to the **[config.tsx](../client/src/config.tsx)** file located in `client/src/config.tsx`. Within the `startModal` object, find the step titled 'HOW TO VOTE:', and replace the `walkthroughVideoPath` value with the path to your new video:
+
+```javascript
+walkthroughVideoPath: '/assets/videos/walkthrough.mp4',
+```
+
+This customization allows you to directly communicate with your voters, guiding them through the voting process with visuals and instructions tailored to your specific funding round's objectives.
+
+### Best Practices for Creating Your Walkthrough Video
+
+When creating your walkthrough video, consider the following best practices to ensure it is effective and engaging:
+
+1. **Clarity and Conciseness:** Keep your video straightforward and to the point. Aim for a duration that is long enough to cover all necessary information but short enough to maintain viewer interest.
+
+2. **Highlight Objectives:** Clearly articulate the goals of your funding round. Help viewers understand the impact their votes can have on the community or project.
+
+3. **Demonstrate the Voting Process:** Provide a step-by-step guide on how to navigate the PairDrop platform and cast votes. Use visual aids or screen captures to enhance understanding.
+
 ## Customizing Number of Project Pairs
 
 ### Adjusting Pair Count in the Client

@@ -63,7 +63,7 @@ export const heading = {
   countdownGoText: 'GO!',
   homePage: {
     title: 'FUNDING\nREIMAGINED',
-    subtitle: 'Connect your wallet to begin\nyour pairwise adventure.',
+    subtitle: 'Connect your wallet to begin\nyour PairDrop adventure.',
     learnMoreLink: '/about',
     learnMoreButtonText: 'LEARN MORE',
     exploreProjectsLink: '/explore',
@@ -130,8 +130,7 @@ export const startModal = {
     {
       title: 'HOW TO VOTE:',
       description: `A quick demonstration on how to use PairDrop.`,
-      videoURL: 'https://www.youtube.com/embed/YIBy9JfMIlE',
-      altText: 'How to Vote Video Placeholder',
+      walkthroughVideoPath: '/assets/videos/walkthrough.mp4',
     },
     {
       title: 'ESTIMATED TIME TO COMPLETE:',
@@ -301,8 +300,7 @@ export const faq = {
           </a>{' '}
           - You’ll find everything you need there to fork the codebase and run your own round. From there, you just need
           to choose what the focus or scope of your round will be, and prepare how you will handle nominations and
-          communications for the round. You’ll find general guidance for running rounds here - Gitcoin’s modules for
-          EasyRetroPGF - the PairDrop team co-created that training.
+          communications for the round.
         </>
       ),
     },
