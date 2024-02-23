@@ -97,13 +97,10 @@ const StartModal: React.FC<StartModalProps> = ({ show, onClose, userScore, addre
               <>
                 <h4>{startModal.steps[2].title}</h4>
                 <p className='mb-4 md:mb-8'>{startModal.steps[2].description}</p>
-                <iframe
-                  className='mb-2 aspect-video w-full cursor-pointer'
-                  src={startModal.steps[2].videoURL}
-                  title={startModal.steps[2].title}
-                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                  allowFullScreen
-                ></iframe>
+                <video className='mb-2 aspect-[1.6] w-full cursor-pointer' controls>
+                  <source src={startModal.steps[2].walkthroughVideoPath} type='video/mp4' />
+                  Your browser does not support the video tag.
+                </video>
               </>
             )}
 
