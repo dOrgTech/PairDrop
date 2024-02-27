@@ -50,13 +50,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <head>
         <title>{rootLayout.siteTitle}</title>
-        {/* <meta name='viewport' content='width=500, shrink-to-fit=yes, maximum-scale=1, user-scalable=0' /> */}
         <link rel='shortcut icon' href='/favicon.ico' />
         <link rel='icon' type='image/png' sizes='16x16' href='/favicons/favicon-16x16.png' />
         <link rel='icon' type='image/png' sizes='32x32' href='/favicons/favicon-32x32.png' />
         <link rel='apple-touch-icon' sizes='180x180' href='/favicons/apple-touch-icon.png' />
         <link rel='icon' type='image/png' sizes='192x192' href='/favicons/android-chrome-192x192.png' />
         <link rel='icon' type='image/png' sizes='512x512' href='/favicons/android-chrome-512x512.png' />
+
+        <meta name='title' content='PairDrop' />
+        <meta property='og:type' content='website' />
+        <meta property='og:title' content='PairDrop' />
+        <meta
+          property='og:description'
+          content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
+        />
+        <meta property='og:image' content='/metaimage.png' />
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:title' content='PairDrop' />
+        <meta
+          property='twitter:description'
+          content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
+        />
+        <meta property='twitter:image' content='/metaimage.png' />
+
         <meta name='theme-color' content='#ffffff' />
         <link rel='manifest' href='/manifest.json' />
       </head>
