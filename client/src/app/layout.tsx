@@ -57,15 +57,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='icon' type='image/png' sizes='192x192' href='/favicons/android-chrome-192x192.png' />
         <link rel='icon' type='image/png' sizes='512x512' href='/favicons/android-chrome-512x512.png' />
 
+        {/* Primary Meta Tags */}
         <meta name='title' content='PairDrop' />
+        <meta
+          name='description'
+          content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
+        />
+
+        {/* Open Graph / Facebook */}
         <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://pairdrop.daodrops.io' />
         <meta property='og:title' content='PairDrop' />
         <meta
           property='og:description'
           content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
         />
         <meta property='og:image' content='/metaimage.png' />
+
+        {/* Twitter */}
         <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:url' content='https://pairdrop.daodrops.io' />
         <meta property='twitter:title' content='PairDrop' />
         <meta
           property='twitter:description'
