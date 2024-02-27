@@ -60,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='title' content='PairDrop' />
         <meta property='og:type' content='website' />
         <meta property='og:title' content='PairDrop' />
+        <meta property='og:url' content='https://pairdrop.daodrops.io' />
         <meta
           property='og:description'
           content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property='og:image' content='/metaimage.png' />
         <meta property='twitter:card' content='summary_large_image' />
         <meta property='twitter:title' content='PairDrop' />
+        <meta property='twitter:url' content='https://pairdrop.daodrops.io' />
         <meta
           property='twitter:description'
           content='PairDrop is a forkable template for running community allocation rounds. It leverages random sampling and pairwise comparison to make decision-making fun and efficient while minimizing favoritism and bias.'
